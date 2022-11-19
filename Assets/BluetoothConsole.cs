@@ -164,9 +164,11 @@ public class BluetoothConsole : MonoBehaviour
         }
 
         var taskS = JoystickTask(ctrlCharacteristic);
+        /*
         var taskX = SensorXTask(orientationXCharacteristic);
         var taskY = SensorYTask(orientationYCharacteristic);
         var taskZ = SensorZTask(orientationZCharacteristic);
+        */
 
         await Task.WhenAll(taskS);
 
