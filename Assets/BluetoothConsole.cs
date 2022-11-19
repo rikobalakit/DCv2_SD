@@ -157,14 +157,16 @@ public class BluetoothConsole : MonoBehaviour
         {
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
+        
+        orientationY = await orientationXCharacteristic.ReadValueAsync(timeout);
+        orientationZ = await orientationYCharacteristic.ReadValueAsync(timeout);
+        orientationX = await orientationZCharacteristic.ReadValueAsync(timeout);
+
 
         while (true)
         {
             
-            orientationY = await orientationXCharacteristic.ReadValueAsync(timeout);
-            orientationZ = await orientationYCharacteristic.ReadValueAsync(timeout);
-            orientationX = await orientationZCharacteristic.ReadValueAsync(timeout);
-            
+
             await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
             //ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
 
