@@ -17,6 +17,7 @@ using Tmds.DBus;
 using bluez.DBus;
 // See https://developers.redhat.com/blog/2017/09/18/connecting-net-core-d-bus/ or https://github.com/tmds/Tmds.DBus
 using Tmds.DBus;
+using Debug = UnityEngine.Debug;
 
 
 public class BluetoothConsole : MonoBehaviour
@@ -24,129 +25,139 @@ public class BluetoothConsole : MonoBehaviour
 
     [SerializeField]
     private Text _console;
-    
+
     private void Start()
     {
-        _console.text += "\n"+ "Initialized";
+        _console.text += "\n" + "Initialized";
     }
 
     public void Scan()
     {
-        _console.text += "\n"+ "Not implemented";
+        _console.text += "\n" + "Not implemented";
 
         var adapterName = "hci0";
 
         var adapterObjectPath = $"/org/bluez/{adapterName}";
         var adapter = Connection.System.CreateProxy<IAdapter1>(BluezConstants.DBusService, adapterObjectPath);
+
         if (adapter == null)
         {
-            _console.text += "\n"+ ($"Bluetooth adapter '{adapterName}' not found.");
+            _console.text += "\n" + ($"Bluetooth adapter '{adapterName}' not found.");
         }
         else
         {
-            _console.text += "\n"+ "Adapter found";
+            _console.text += "\n" + "Adapter found";
         }
 
         ScanAsync(adapter);
-        
+
         // Find the Bluetooth peripheral.
 
-        
+
     }
 
     private async void ScanAsync(IAdapter1 adapter)
     {
         var deviceAddress = "84:F7:03:A9:7D:76";
 
-        
+
         var device = await adapter.GetDeviceAsync(deviceAddress);
+
         if (device == null)
         {
-            _console.text += "\n"+ $"Bluetooth peripheral with address '{deviceAddress}' not found. Use `bluetoothctl` or Bluetooth Manager to scan and possibly pair first.";
+            _console.text += "\n" +
+                $"Bluetooth peripheral with address '{deviceAddress}' not found. Use `bluetoothctl` or Bluetooth Manager to scan and possibly pair first.";
             return;
         }
 
-        _console.text += "\n"+ $"Found robot named {await device.GetNameAsync()}";
-
-              
-          _console.text += "\n"+ ("Connecting...");
-          await device.ConnectAsync();
-
-          
-          
-          //await WaitForPropertyValueAsync<bool>("Connected", device.GetConnectedAsync(), value: true, 5);
-          _console.text += "\n"+ ("Connected.");
+        _console.text += "\n" + $"Found robot named {await device.GetNameAsync()}";
 
 
-          
-    var servicesUUID = await device.GetUUIDsAsync();
-    _console.text += "\n"+($"Device offers {servicesUUID.Length} service(s).");
+        _console.text += "\n" + ("Connecting...");
+        await device.ConnectAsync();
 
-    var deviceInfoServiceFound = servicesUUID.Any(uuid => String.Equals(uuid, GattConstants.DeviceInformationServiceUUID, StringComparison.OrdinalIgnoreCase));
-    if (!deviceInfoServiceFound)
-    {
-      _console.text += "\n"+("Device doesn't have the Device Information Service. Try pairing first?");
-      return;
-    }
 
-    // _console.text += "\n"+("Retrieving Device Information service...");
-    var service = await device.GetServiceAsync(GattConstants.DeviceInformationServiceUUID);
-    var orientationXCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationXUUID);
+        //await WaitForPropertyValueAsync<bool>("Connected", device.GetConnectedAsync(), value: true, 5);
+        _console.text += "\n" + ("Connected.");
+
+
+        var servicesUUID = await device.GetUUIDsAsync();
+        _console.text += "\n" + ($"Device offers {servicesUUID.Length} service(s).");
+
+        var deviceInfoServiceFound = servicesUUID.Any(uuid => String.Equals(uuid, GattConstants.DeviceInformationServiceUUID, StringComparison.OrdinalIgnoreCase));
+
+        if (!deviceInfoServiceFound)
+        {
+            _console.text += "\n" + ("Device doesn't have the Device Information Service. Try pairing first?");
+            return;
+        }
+
+        // _console.text += "\n"+("Retrieving Device Information service...");
+        var service = await device.GetServiceAsync(GattConstants.DeviceInformationServiceUUID);
+        var orientationXCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationXUUID);
 
         var orientationYCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationYUUID);
 
-            var orientationZCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationZUUID);
-    var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
+        var orientationZCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationZUUID);
+        var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
 
+        byte[] orientationX, orientationY, orientationZ;
+        var timeout = TimeSpan.FromSeconds(5);
+        int characteristicsFound = 0;
 
-    var timeout = TimeSpan.FromSeconds(5);
-    int characteristicsFound = 0;
-    if (orientationXCharacteristic != null)
-    {
-        characteristicsFound++;
-        _console.text += "\n"+("Reading orientationXCharacteristic...");
-        var modelNameBytes = await orientationXCharacteristic.ReadValueAsync(timeout);
-        _console.text += "\n"+($"orientationXCharacteristic: {Encoding.UTF8.GetString(modelNameBytes)}");
-    }
+        if (orientationXCharacteristic != null)
+        {
+            characteristicsFound++;
+            _console.text += "\n" + ("Reading orientationXCharacteristic...");
+            orientationX = await orientationXCharacteristic.ReadValueAsync(timeout);
+            _console.text += "\n" + ($"orientationXCharacteristic: {Encoding.UTF8.GetString(orientationX)}");
+        }
 
         if (orientationYCharacteristic != null)
-    {
-        characteristicsFound++;
-        _console.text += "\n"+("Reading orientationYCharacteristic...");
-        var modelNameBytes = await orientationYCharacteristic.ReadValueAsync(timeout);
-        _console.text += "\n"+($"orientationYCharacteristic: {Encoding.UTF8.GetString(modelNameBytes)}");
+        {
+            characteristicsFound++;
+            _console.text += "\n" + ("Reading orientationYCharacteristic...");
+            orientationY = await orientationYCharacteristic.ReadValueAsync(timeout);
+            _console.text += "\n" + ($"orientationYCharacteristic: {Encoding.UTF8.GetString(orientationY)}");
+        }
+
+
+        if (orientationZCharacteristic != null)
+        {
+            characteristicsFound++;
+            _console.text += "\n" + ("Reading orientationZCharacteristic...");
+            orientationZ = await orientationZCharacteristic.ReadValueAsync(timeout);
+            _console.text += "\n" + ($"orientationZCharacteristic: {Encoding.UTF8.GetString(orientationZ)}");
+        }
+
+
+        if (ctrlCharacteristic != null)
+        {
+            characteristicsFound++;
+            _console.text += "\n" + ("Reading ctrlCharacteristic...");
+            var manufacturerBytes = await ctrlCharacteristic.ReadValueAsync(timeout);
+            _console.text += "\n" + ($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
+            
+            await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
+        }
+
+
+        if (characteristicsFound == 0)
+        {
+            _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
+        }
+
+        while (true)
+        {
+            orientationX = await orientationXCharacteristic.ReadValueAsync(timeout);
+            orientationY = await orientationYCharacteristic.ReadValueAsync(timeout);
+            orientationZ = await orientationZCharacteristic.ReadValueAsync(timeout);
+            //ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
+            
+            Debug.LogError($"orientation: ({orientationX:0.0}, {orientationY:0.0}, {orientationZ:0.0})");
+        }
+
     }
-
-
-    if (orientationZCharacteristic != null)
-    {
-        characteristicsFound++;
-        _console.text += "\n"+("Reading orientationZCharacteristic...");
-        var modelNameBytes = await orientationZCharacteristic.ReadValueAsync(timeout);
-        _console.text += "\n"+($"orientationZCharacteristic: {Encoding.UTF8.GetString(modelNameBytes)}");
-    }
-
-
-    if (ctrlCharacteristic != null)
-    {
-        characteristicsFound++;
-        _console.text += "\n"+("Reading ctrlCharacteristic...");
-        var manufacturerBytes = await ctrlCharacteristic.ReadValueAsync(timeout);
-        _console.text += "\n"+($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
-
-
-        await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
-    }
-
-
-    if (characteristicsFound == 0)
-    {
-        _console.text += "\n"+("Model name and manufacturer characteristics not found.");
-    }
-  
-        
-    }
-
 
 }
 
@@ -237,140 +248,147 @@ class Program
 */
 
 
-
 // Extensions that make it easier to get a D-Bus object or read a characteristic value.
 static class Extensions
 {
-  public static Task<IReadOnlyList<IDevice1>> GetDevicesAsync(this IAdapter1 adapter)
-  {
-    return GetProxiesAsync<IDevice1>(adapter, BluezConstants.Device1Interface);
-  }
 
-  public static async Task<IDevice1> GetDeviceAsync(this IAdapter1 adapter, string deviceAddress)
-  {
-    var devices = await GetProxiesAsync<IDevice1>(adapter, BluezConstants.Device1Interface);
-    var matches = new List<IDevice1>();
-    foreach (var device in devices)
+    public static Task<IReadOnlyList<IDevice1>> GetDevicesAsync(this IAdapter1 adapter)
     {
-      if (String.Equals(await device.GetAddressAsync(), deviceAddress, StringComparison.OrdinalIgnoreCase))
-      {
-          matches.Add(device);
-      }
+        return GetProxiesAsync<IDevice1>(adapter, BluezConstants.Device1Interface);
     }
 
-    // BlueZ can get in a weird state, probably due to random public BLE addresses.
-    if (matches.Count > 1)
+    public static async Task<IDevice1> GetDeviceAsync(this IAdapter1 adapter, string deviceAddress)
     {
-        throw new Exception($"{matches.Count} devices found with the address {deviceAddress}!");
+        var devices = await GetProxiesAsync<IDevice1>(adapter, BluezConstants.Device1Interface);
+        var matches = new List<IDevice1>();
+
+        foreach (var device in devices)
+        {
+            if (String.Equals(await device.GetAddressAsync(), deviceAddress, StringComparison.OrdinalIgnoreCase))
+            {
+                matches.Add(device);
+            }
+        }
+
+        // BlueZ can get in a weird state, probably due to random public BLE addresses.
+        if (matches.Count > 1)
+        {
+            throw new Exception($"{matches.Count} devices found with the address {deviceAddress}!");
+        }
+
+        return matches.FirstOrDefault();
     }
 
-    return matches.FirstOrDefault();
-  }
-
-  public static async Task<IGattService1> GetServiceAsync(this IDevice1 device, string serviceUUID)
-  {
-    var services = await GetProxiesAsync<IGattService1>(device, BluezConstants.GattServiceInterface);
-
-    foreach (var service in services)
+    public static async Task<IGattService1> GetServiceAsync(this IDevice1 device, string serviceUUID)
     {
-      if (String.Equals(await service.GetUUIDAsync(), serviceUUID, StringComparison.OrdinalIgnoreCase))
-      {
-        return service;
-      }
+        var services = await GetProxiesAsync<IGattService1>(device, BluezConstants.GattServiceInterface);
+
+        foreach (var service in services)
+        {
+            if (String.Equals(await service.GetUUIDAsync(), serviceUUID, StringComparison.OrdinalIgnoreCase))
+            {
+                return service;
+            }
+        }
+
+        return null;
     }
 
-    return null;
-  }
-
-  public static async Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattService1 service, string characteristicUUID)
-  {
-    var characteristics = await GetProxiesAsync<IGattCharacteristic1>(service, BluezConstants.GattCharacteristicInterface);
-
-    foreach (var characteristic in characteristics)
+    public static async Task<IGattCharacteristic1> GetCharacteristicAsync(this IGattService1 service, string characteristicUUID)
     {
-      if (String.Equals(await characteristic.GetUUIDAsync(), characteristicUUID, StringComparison.OrdinalIgnoreCase))
-      {
-        return characteristic;
-      }
+        var characteristics = await GetProxiesAsync<IGattCharacteristic1>(service, BluezConstants.GattCharacteristicInterface);
+
+        foreach (var characteristic in characteristics)
+        {
+            if (String.Equals(await characteristic.GetUUIDAsync(), characteristicUUID, StringComparison.OrdinalIgnoreCase))
+            {
+                return characteristic;
+            }
+        }
+
+        return null;
     }
 
-    return null;
-  }
-
-  public static async Task<byte[]> ReadValueAsync(this IGattCharacteristic1 characteristic, TimeSpan timeout)
-  {
-    var options = new Dictionary<string, object>();
-    var readTask = characteristic.ReadValueAsync(options);
-    var timeoutTask = Task.Delay(timeout);
-
-    await Task.WhenAny(new Task[] { readTask, timeoutTask });
-    if (!readTask.IsCompleted)
+    public static async Task<byte[]> ReadValueAsync(this IGattCharacteristic1 characteristic, TimeSpan timeout)
     {
-      throw new TimeoutException("Timed out waiting to read characteristic value.");
+        var options = new Dictionary<string, object>();
+        var readTask = characteristic.ReadValueAsync(options);
+        var timeoutTask = Task.Delay(timeout);
+
+        await Task.WhenAny(new Task[] {readTask, timeoutTask});
+
+        if (!readTask.IsCompleted)
+        {
+            throw new TimeoutException("Timed out waiting to read characteristic value.");
+        }
+
+        return await readTask;
     }
 
-    return await readTask;
-  }
 
-  
-  public static async Task WriteValueAsync(this IGattCharacteristic1 characteristic, byte[] newValue, TimeSpan timeout)
-  {
-    var options = new Dictionary<string, object>();
-    var writeTask = characteristic.WriteValueAsync(newValue, options);
-    var timeoutTask = Task.Delay(timeout);
-
-    await Task.WhenAny(new Task[] { writeTask, timeoutTask });
-    if (!writeTask.IsCompleted)
+    public static async Task WriteValueAsync(this IGattCharacteristic1 characteristic, byte[] newValue, TimeSpan timeout)
     {
-      throw new TimeoutException("Timed out waiting to read characteristic value.");
+        var options = new Dictionary<string, object>();
+        var writeTask = characteristic.WriteValueAsync(newValue, options);
+        var timeoutTask = Task.Delay(timeout);
+
+        await Task.WhenAny(new Task[] {writeTask, timeoutTask});
+
+        if (!writeTask.IsCompleted)
+        {
+            throw new TimeoutException("Timed out waiting to read characteristic value.");
+        }
+
+        return;
     }
 
-    return;
-  }
+    private static async Task<IReadOnlyList<T>> GetProxiesAsync<T>(IDBusObject rootObject, string interfaceName)
+    {
+        // Console.WriteLine("GetProxiesAsync called.");
+        var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DBusService, "/");
+        var objects = await objectManager.GetManagedObjectsAsync();
 
-  private static async Task<IReadOnlyList<T>> GetProxiesAsync<T>(IDBusObject rootObject, string interfaceName)
-  {
-    // Console.WriteLine("GetProxiesAsync called.");
-    var objectManager = Connection.System.CreateProxy<IObjectManager>(BluezConstants.DBusService, "/");
-    var objects = await objectManager.GetManagedObjectsAsync();
+        var matchingObjects = objects
+            .Where(obj => obj.Value.Keys.Contains(interfaceName))
+            .Select(obj => obj.Key)
+            .Where(objectPath => objectPath.ToString().StartsWith($"{rootObject.ObjectPath}/"));
 
-    var matchingObjects = objects
-      .Where(obj => obj.Value.Keys.Contains(interfaceName))
-      .Select(obj => obj.Key)
-      .Where(objectPath => objectPath.ToString().StartsWith($"{rootObject.ObjectPath}/"));
+        var proxies = matchingObjects
+            .Select(objectPath => Connection.System.CreateProxy<T>(BluezConstants.DBusService, objectPath))
+            .ToList();
 
-    var proxies = matchingObjects
-      .Select(objectPath => Connection.System.CreateProxy<T>(BluezConstants.DBusService, objectPath))
-      .ToList();
+        // Console.WriteLine($"GetProxiesAsync returning {proxies.Count} proxies of type {typeof(T)}.");
+        return proxies;
+    }
 
-    // Console.WriteLine($"GetProxiesAsync returning {proxies.Count} proxies of type {typeof(T)}.");
-    return proxies;
-  }
 }
 
 
 static class GattConstants
 {
-  // "Device Information" GATT service
-  // https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=244369
-  public const string DeviceInformationServiceUUID = "7ac5d0b9-a214-4c2b-b02a-7d300d756709";
-  public const string ModelNameCharacteristicUUID = "00002a24-0000-1000-8000-00805f9b34fb";
-  public const string ManufacturerNameCharacteristicUUID = "00002a29-0000-1000-8000-00805f9b34fb";
-  public const string OrientationXUUID = "f73d52bf-8891-4b29-9dfd-a0d15bb97dde";
-  public const string OrientationYUUID = "0deca531-882b-4d28-98a7-8f906aaddc10";
 
-  public const string OrientationZUUID = "07e30a15-9505-4e3e-b9cd-3bd36b29d148";
+    // "Device Information" GATT service
+    // https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=244369
+    public const string DeviceInformationServiceUUID = "7ac5d0b9-a214-4c2b-b02a-7d300d756709";
+    public const string ModelNameCharacteristicUUID = "00002a24-0000-1000-8000-00805f9b34fb";
+    public const string ManufacturerNameCharacteristicUUID = "00002a29-0000-1000-8000-00805f9b34fb";
+    public const string OrientationXUUID = "f73d52bf-8891-4b29-9dfd-a0d15bb97dde";
+    public const string OrientationYUUID = "0deca531-882b-4d28-98a7-8f906aaddc10";
 
-  public const string CtrlUUID = "1d340766-ffa2-4aed-b03d-cf3796a46d82";
+    public const string OrientationZUUID = "07e30a15-9505-4e3e-b9cd-3bd36b29d148";
+
+    public const string CtrlUUID = "1d340766-ffa2-4aed-b03d-cf3796a46d82";
+
 }
-
 
 
 static class BluezConstants
 {
-  public const string DBusService = "org.bluez";
-  public const string Adapter1Interface = "org.bluez.Adapter1";
-  public const string Device1Interface = "org.bluez.Device1";
-  public const string GattServiceInterface = "org.bluez.GattService1";
-  public const string GattCharacteristicInterface = "org.bluez.GattCharacteristic1";
+
+    public const string DBusService = "org.bluez";
+    public const string Adapter1Interface = "org.bluez.Adapter1";
+    public const string Device1Interface = "org.bluez.Device1";
+    public const string GattServiceInterface = "org.bluez.GattService1";
+    public const string GattCharacteristicInterface = "org.bluez.GattCharacteristic1";
+
 }

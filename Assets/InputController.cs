@@ -30,8 +30,7 @@ public class InputController : MonoBehaviour
         float ly = Input.GetAxis("LY");
         float rx = Input.GetAxis("RX");
         float ry = Input.GetAxis("RY");
-
-        Debug.Log($"lx: {lx}, ly: {ly}, rx: {rx}, ry: {ry}, ");
+        
         _dotL.anchoredPosition = new Vector2(lx * 40, ly * -40);
         _dotR.anchoredPosition = new Vector2(rx * 40, ry * -40);
 
