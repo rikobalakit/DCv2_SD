@@ -108,16 +108,16 @@ public class BluetoothConsole : MonoBehaviour
         var orientationXCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationXUUID);
 
         var orientationYCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationYUUID);
-
-        await orientationXCharacteristic.WatchPropertiesAsync(OnOrientationXChanged);
-
+        
         var orientationZCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationZUUID);
         var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
 
         byte[] orientationX, orientationY, orientationZ;
-        var timeout = TimeSpan.FromSeconds(5);
         int characteristicsFound = 0;
 
+        var timeout = TimeSpan.FromSeconds(5);
+
+        
         if (orientationXCharacteristic != null)
         {
             characteristicsFound++;
@@ -159,22 +159,44 @@ public class BluetoothConsole : MonoBehaviour
         {
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
-        
-        orientationY = await orientationXCharacteristic.ReadValueAsync(timeout);
-        orientationZ = await orientationYCharacteristic.ReadValueAsync(timeout);
-        orientationX = await orientationZCharacteristic.ReadValueAsync(timeout);
+
+        Task.Run(() => JoystickTask(ctrlCharacteristic));
+        Task.Run(() => SensorTask(orientationXCharacteristic, orientationYCharacteristic, orientationZCharacteristic));
+
+
+
+    }
+
+    private async Task JoystickTask(IGattCharacteristic1 characteristic1)
+    {
+        var timeout = TimeSpan.FromSeconds(5);
+
         
         while (true)
         {
-            await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
+            await characteristic1.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
         }
-
     }
-
-    public void OnOrientationXChanged(PropertyChanges propertyChanges)
+    
+    private async Task SensorTask(IGattCharacteristic1 characteristicX, IGattCharacteristic1 characteristicY, IGattCharacteristic1 characteristicZ)
     {
-        Debug.LogError("property orientation x changed");
+        var timeout = TimeSpan.FromSeconds(5);
+
+        
+        while (true)
+        {
+            byte[] orientationX, orientationY, orientationZ;
+            
+            orientationY = await characteristicX.ReadValueAsync(timeout);
+            orientationZ = await characteristicY.ReadValueAsync(timeout);
+            orientationX = await characteristicZ.ReadValueAsync(timeout);
+            
+            _currentOrientation = new Vector3(float.Parse(Encoding.UTF8.GetString(orientationX)),
+                float.Parse(Encoding.UTF8.GetString(orientationY)),float.Parse(Encoding.UTF8.GetString(orientationZ)));
+
+        }
     }
+    
     
     
 }
