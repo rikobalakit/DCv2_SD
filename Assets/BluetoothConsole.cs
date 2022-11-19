@@ -30,7 +30,6 @@ public class BluetoothConsole : MonoBehaviour
     private float _currentOrientationY;
     private float _currentOrientationZ;
 
-
     [SerializeField]
     private Transform _rotateCube;
 
@@ -170,6 +169,12 @@ public class BluetoothConsole : MonoBehaviour
             orientationAll = await characteristicAll.ReadValueAsync(timeout);
             var allString = Encoding.UTF8.GetString(orientationAll);
             Debug.LogError($"All values: {allString}");
+            
+            string[] words = allString.Split(' ');
+
+            _currentOrientationX = float.Parse(words[0]);
+            _currentOrientationY = float.Parse(words[1]);
+            _currentOrientationZ = float.Parse(words[2]);
         }
     }
 
