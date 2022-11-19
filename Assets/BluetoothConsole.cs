@@ -168,7 +168,7 @@ public class BluetoothConsole : MonoBehaviour
         var taskY = SensorYTask(orientationYCharacteristic);
         var taskZ = SensorZTask(orientationZCharacteristic);
 
-        await Task.WhenAll(taskS, taskX, taskY, taskZ);
+        await Task.WhenAll(taskS, taskX);
 
     }
 
