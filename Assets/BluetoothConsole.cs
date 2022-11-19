@@ -154,7 +154,7 @@ public class BluetoothConsole : MonoBehaviour
             orientationZ = await orientationZCharacteristic.ReadValueAsync(timeout);
             //ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
             
-            Debug.LogError($"orientation: ({orientationX:0.0}, {orientationY:0.0}, {orientationZ:0.0})");
+            Debug.LogError($"orientation: ({Encoding.UTF8.GetString(orientationX):0.0}, {Encoding.UTF8.GetString(orientationY):0.0}, {Encoding.UTF8.GetString(orientationZ):0.0})");
         }
 
     }
