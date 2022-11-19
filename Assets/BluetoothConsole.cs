@@ -26,11 +26,14 @@ public class BluetoothConsole : MonoBehaviour
     [SerializeField]
     private Text _console;
 
-    private Vector3 _currentOrientation;
+    private float _currentOrientationX;
+    private float _currentOrientationY;
+    private float _currentOrientationZ;
+
 
     [SerializeField]
     private Transform _rotateCube;
-    
+
     private void Start()
     {
         _console.text += "\n" + "Initialized";
@@ -38,7 +41,7 @@ public class BluetoothConsole : MonoBehaviour
 
     private void Update()
     {
-        _rotateCube.localRotation =  Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientation), Time.deltaTime * 10f);
+        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ), Time.deltaTime * 10f);
     }
 
 
@@ -66,7 +69,7 @@ public class BluetoothConsole : MonoBehaviour
 
 
     }
-    
+
     private async void ScanAsync(IAdapter1 adapter)
     {
         var deviceAddress = "84:F7:03:A9:7D:76";
@@ -108,7 +111,7 @@ public class BluetoothConsole : MonoBehaviour
         var orientationXCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationXUUID);
 
         var orientationYCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationYUUID);
-        
+
         var orientationZCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationZUUID);
         var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
 
@@ -117,7 +120,7 @@ public class BluetoothConsole : MonoBehaviour
 
         var timeout = TimeSpan.FromSeconds(5);
 
-        
+
         if (orientationXCharacteristic != null)
         {
             characteristicsFound++;
@@ -160,10 +163,12 @@ public class BluetoothConsole : MonoBehaviour
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
 
-        var task1 = JoystickTask(ctrlCharacteristic);
-        var task2 = SensorTask(orientationXCharacteristic, orientationYCharacteristic, orientationZCharacteristic);
+        var taskS = JoystickTask(ctrlCharacteristic);
+        var taskX = SensorXTask(orientationXCharacteristic);
+        var taskY = SensorYTask(orientationYCharacteristic);
+        var taskZ = SensorZTask(orientationZCharacteristic);
 
-        await Task.WhenAll(task1, task2);
+        await Task.WhenAll(taskS, taskX, taskY, taskZ);
 
     }
 
@@ -171,34 +176,53 @@ public class BluetoothConsole : MonoBehaviour
     {
         var timeout = TimeSpan.FromSeconds(5);
 
-        
+
         while (true)
         {
             await characteristic1.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
         }
     }
-    
-    private async Task SensorTask(IGattCharacteristic1 characteristicX, IGattCharacteristic1 characteristicY, IGattCharacteristic1 characteristicZ)
+
+    private async Task SensorXTask(IGattCharacteristic1 characteristicX)
     {
         var timeout = TimeSpan.FromSeconds(5);
 
-        
+
         while (true)
         {
-            byte[] orientationX, orientationY, orientationZ;
-            
-            orientationY = await characteristicX.ReadValueAsync(timeout);
-            orientationZ = await characteristicY.ReadValueAsync(timeout);
-            orientationX = await characteristicZ.ReadValueAsync(timeout);
-            
-            _currentOrientation = new Vector3(float.Parse(Encoding.UTF8.GetString(orientationX)),
-                float.Parse(Encoding.UTF8.GetString(orientationY)),float.Parse(Encoding.UTF8.GetString(orientationZ)));
+            byte[] orientationY;
 
+            orientationY = await characteristicX.ReadValueAsync(timeout);
+
+
+            _currentOrientationY = float.Parse(Encoding.UTF8.GetString(orientationY));
         }
     }
-    
-    
-    
+
+    private async Task SensorYTask(IGattCharacteristic1 characteristicY)
+    {
+        var timeout = TimeSpan.FromSeconds(5);
+
+        while (true)
+        {
+            byte[] orientationZ;
+            orientationZ = await characteristicY.ReadValueAsync(timeout);
+            _currentOrientationX = float.Parse(Encoding.UTF8.GetString(orientationZ));
+        }
+    }
+
+    private async Task SensorZTask(IGattCharacteristic1 characteristicZ)
+    {
+        var timeout = TimeSpan.FromSeconds(5);
+
+        while (true)
+        {
+            byte[] orientationX;
+            orientationX = await characteristicZ.ReadValueAsync(timeout);
+            _currentOrientationX = float.Parse(Encoding.UTF8.GetString(orientationX));
+        }
+    }
+
 }
 
 /*
