@@ -40,7 +40,7 @@ public class BluetoothConsole : MonoBehaviour
 
     private void Update()
     {
-        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ), Time.deltaTime * 10f);
+        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ), Time.deltaTime * 1f);
     }
 
 
@@ -153,7 +153,7 @@ public class BluetoothConsole : MonoBehaviour
         var timeout = TimeSpan.FromSeconds(5);
 
 
-        while (true)
+        while (Application.isPlaying)
         {
             await characteristic1.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
         }
@@ -163,7 +163,7 @@ public class BluetoothConsole : MonoBehaviour
     {
         var timeout = TimeSpan.FromSeconds(5);
 
-        while (true)
+        while (Application.isPlaying)
         {
             byte[] orientationAll;
             orientationAll = await characteristicAll.ReadValueAsync(timeout);

@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.DCv2_SD.iml
+# Datasource local storage ignored files
+/../../../../../../../:\Unity Projects\DCv2_SD\DCv2_SD\.idea\.idea.DCv2_SD\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
