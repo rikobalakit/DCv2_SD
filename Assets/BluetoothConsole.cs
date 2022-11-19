@@ -153,9 +153,9 @@ public class BluetoothConsole : MonoBehaviour
 
         var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
         
-        var taskAll = SensorAllTask(orientationAllCharacteristic);
+        //var taskAll = SensorAllTask(orientationAllCharacteristic);
 
-        await Task.WhenAll(taskS, taskAll);
+        await Task.WhenAll(taskS);
 
     }
 
@@ -166,8 +166,8 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
-            var writeL = characteristicL.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("LY") * 90f + 90f:0}"), timeout);
-            var writeR = characteristicR.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
+            var writeL = characteristicL.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("LY") * -90f + 90f:0}"), timeout);
+            var writeR = characteristicR.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * -90f + 90f:0}"), timeout);
 
             await Task.WhenAll(writeL, writeR);
         }
