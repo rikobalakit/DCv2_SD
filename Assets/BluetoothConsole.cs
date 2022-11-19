@@ -160,9 +160,10 @@ public class BluetoothConsole : MonoBehaviour
 
         while (true)
         {
-            orientationX = await orientationXCharacteristic.ReadValueAsync(timeout);
-            orientationY = await orientationYCharacteristic.ReadValueAsync(timeout);
-            orientationZ = await orientationZCharacteristic.ReadValueAsync(timeout);
+            
+            orientationY = await orientationXCharacteristic.ReadValueAsync(timeout);
+            orientationZ = await orientationYCharacteristic.ReadValueAsync(timeout);
+            orientationX = await orientationZCharacteristic.ReadValueAsync(timeout);
             
             await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
             //ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
