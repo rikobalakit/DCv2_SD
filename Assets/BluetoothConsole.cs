@@ -66,7 +66,7 @@ public class BluetoothConsole : MonoBehaviour
 
 
     }
-
+    
     private async void ScanAsync(IAdapter1 adapter)
     {
         var deviceAddress = "84:F7:03:A9:7D:76";
@@ -108,6 +108,8 @@ public class BluetoothConsole : MonoBehaviour
         var orientationXCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationXUUID);
 
         var orientationYCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationYUUID);
+
+        await orientationXCharacteristic.WatchPropertiesAsync(OnOrientationXChanged);
 
         var orientationZCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationZUUID);
         var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
@@ -161,25 +163,20 @@ public class BluetoothConsole : MonoBehaviour
         orientationY = await orientationXCharacteristic.ReadValueAsync(timeout);
         orientationZ = await orientationYCharacteristic.ReadValueAsync(timeout);
         orientationX = await orientationZCharacteristic.ReadValueAsync(timeout);
-
-
+        
         while (true)
         {
-            
-
             await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
-            //ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
-
-
-            _currentOrientation = new Vector3(float.Parse(Encoding.UTF8.GetString(orientationX)),
-                float.Parse(Encoding.UTF8.GetString(orientationY)),
-                float.Parse(Encoding.UTF8.GetString(orientationZ)));
-
-            //Debug.LogError($"orientation: ({Encoding.UTF8.GetString(orientationX):0.0}, {Encoding.UTF8.GetString(orientationY):0.0}, {Encoding.UTF8.GetString(orientationZ):0.0})");
         }
 
     }
 
+    public void OnOrientationXChanged(PropertyChanges propertyChanges)
+    {
+        Debug.LogError("property orientation x changed");
+    }
+    
+    
 }
 
 /*
