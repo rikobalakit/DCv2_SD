@@ -151,7 +151,7 @@ public class BluetoothConsole : MonoBehaviour
             var manufacturerBytes = await ctrlCharacteristic.ReadValueAsync(timeout);
             _console.text += "\n" + ($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
 
-            await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
+            await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("INIT"), timeout);
         }
 
 
@@ -160,10 +160,10 @@ public class BluetoothConsole : MonoBehaviour
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
 
-        Task.Run(() => JoystickTask(ctrlCharacteristic));
-        Task.Run(() => SensorTask(orientationXCharacteristic, orientationYCharacteristic, orientationZCharacteristic));
+        var task1 = JoystickTask(ctrlCharacteristic);
+        var task2 = SensorTask(orientationXCharacteristic, orientationYCharacteristic, orientationZCharacteristic);
 
-
+        await Task.WhenAll(task1, task2);
 
     }
 
