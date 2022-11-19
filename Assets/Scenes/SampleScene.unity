@@ -578,6 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _console: {fileID: 970267120}
+  _rotateCube: {fileID: 1055292830}
 --- !u!1 &779310267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,7 +1191,6 @@ GameObject:
   - component: {fileID: 1055292829}
   - component: {fileID: 1055292828}
   - component: {fileID: 1055292827}
-  - component: {fileID: 1055292826}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1198,28 +1198,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1055292826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055292825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543ddbe12367a4899b011d43ef41f357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enablePositionNoise: 0
-  _enableRotationNoise: 1
-  _positionFrequency: 0.2
-  _rotationFrequency: 0.1
-  _positionAmplitude: 0.5
-  _rotationAmplitude: 360
-  _positionScale: {x: 1, y: 1, z: 1}
-  _rotationScale: {x: 1, y: 1, z: 1}
-  _positionFractalLevel: 3
-  _rotationFractalLevel: 3
 --- !u!65 &1055292827
 BoxCollider:
   m_ObjectHideFlags: 0

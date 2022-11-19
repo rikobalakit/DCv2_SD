@@ -26,10 +26,21 @@ public class BluetoothConsole : MonoBehaviour
     [SerializeField]
     private Text _console;
 
+    private Vector3 _currentOrientation;
+
+    [SerializeField]
+    private Transform _rotateCube;
+    
     private void Start()
     {
         _console.text += "\n" + "Initialized";
     }
+
+    private void Update()
+    {
+        _rotateCube.localRotation = Quaternion.Euler(_currentOrientation);
+    }
+
 
     public void Scan()
     {
@@ -137,7 +148,7 @@ public class BluetoothConsole : MonoBehaviour
             _console.text += "\n" + ("Reading ctrlCharacteristic...");
             var manufacturerBytes = await ctrlCharacteristic.ReadValueAsync(timeout);
             _console.text += "\n" + ($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
-            
+
             await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
         }
 
@@ -153,8 +164,13 @@ public class BluetoothConsole : MonoBehaviour
             orientationY = await orientationYCharacteristic.ReadValueAsync(timeout);
             orientationZ = await orientationZCharacteristic.ReadValueAsync(timeout);
             //ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("180"), timeout);
-            
-            Debug.LogError($"orientation: ({Encoding.UTF8.GetString(orientationX):0.0}, {Encoding.UTF8.GetString(orientationY):0.0}, {Encoding.UTF8.GetString(orientationZ):0.0})");
+
+
+            _currentOrientation = new Vector3(float.Parse(Encoding.UTF8.GetString(orientationX)),
+                float.Parse(Encoding.UTF8.GetString(orientationY)),
+                float.Parse(Encoding.UTF8.GetString(orientationZ)));
+
+            //Debug.LogError($"orientation: ({Encoding.UTF8.GetString(orientationX):0.0}, {Encoding.UTF8.GetString(orientationY):0.0}, {Encoding.UTF8.GetString(orientationZ):0.0})");
         }
 
     }
