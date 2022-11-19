@@ -40,7 +40,7 @@ public class BluetoothConsole : MonoBehaviour
 
     private void Update()
     {
-        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ), Time.deltaTime * 1f);
+        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ), Time.deltaTime * 10f);
     }
 
 
@@ -108,8 +108,10 @@ public class BluetoothConsole : MonoBehaviour
         var service = await device.GetServiceAsync(GattConstants.DeviceInformationServiceUUID);
 
         var orientationAllCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationAllUUID);
-        var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
+        var ctrlLCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlLUUID);
+        var ctrlRCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlRUUID);
 
+        
         byte[] orientationAll;
         int characteristicsFound = 0;
 
@@ -124,23 +126,32 @@ public class BluetoothConsole : MonoBehaviour
         }
 
 
-        if (ctrlCharacteristic != null)
+        if (ctrlLCharacteristic != null)
         {
             characteristicsFound++;
-            _console.text += "\n" + ("Reading ctrlCharacteristic...");
-            var manufacturerBytes = await ctrlCharacteristic.ReadValueAsync(timeout);
+            _console.text += "\n" + ("Reading ctrlLCharacteristic...");
+            var manufacturerBytes = await ctrlLCharacteristic.ReadValueAsync(timeout);
             _console.text += "\n" + ($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
 
-            await ctrlCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("INIT"), timeout);
+            await ctrlLCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("INIT"), timeout);
         }
 
+        if (ctrlRCharacteristic != null)
+        {
+            characteristicsFound++;
+            _console.text += "\n" + ("Reading ctrlRCharacteristic...");
+            var manufacturerBytes = await ctrlRCharacteristic.ReadValueAsync(timeout);
+            _console.text += "\n" + ($"ctrlRCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
+
+            await ctrlRCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("INIT"), timeout);
+        }
 
         if (characteristicsFound == 0)
         {
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
 
-        var taskS = JoystickTask(ctrlCharacteristic);
+        var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
         
         var taskAll = SensorAllTask(orientationAllCharacteristic);
 
@@ -148,14 +159,17 @@ public class BluetoothConsole : MonoBehaviour
 
     }
 
-    private async Task JoystickTask(IGattCharacteristic1 characteristic1)
+    private async Task JoystickTask(IGattCharacteristic1 characteristicL, IGattCharacteristic1 characteristicR)
     {
         var timeout = TimeSpan.FromSeconds(5);
 
 
         while (Application.isPlaying)
         {
-            await characteristic1.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
+            var writeL = characteristicL.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("LY") * 90f + 90f:0}"), timeout);
+            var writeR = characteristicR.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * 90f + 90f:0}"), timeout);
+
+            await Task.WhenAll(writeL, writeR);
         }
     }
 
@@ -389,14 +403,10 @@ static class GattConstants
     // "Device Information" GATT service
     // https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=244369
     public const string DeviceInformationServiceUUID = "7ac5d0b9-a214-4c2b-b02a-7d300d756709";
-    public const string ModelNameCharacteristicUUID = "00002a24-0000-1000-8000-00805f9b34fb";
-    public const string ManufacturerNameCharacteristicUUID = "00002a29-0000-1000-8000-00805f9b34fb";
-    public const string OrientationXUUID = "f73d52bf-8891-4b29-9dfd-a0d15bb97dde";
-    public const string OrientationYUUID = "0deca531-882b-4d28-98a7-8f906aaddc10";
 
-    public const string OrientationZUUID = "07e30a15-9505-4e3e-b9cd-3bd36b29d148";
+    public const string CtrlLUUID = "1d340766-ffa2-4aed-b03d-cf3796a46d82";
+    public const string CtrlRUUID = "ec7e03b4-d6d8-4ad7-a1e0-0e48fe405bb8";
 
-    public const string CtrlUUID = "1d340766-ffa2-4aed-b03d-cf3796a46d82";
     public const string OrientationAllUUID = "64dc361e-9e25-4ab9-aa07-4813b15f2c83";
 
 }
