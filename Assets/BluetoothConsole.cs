@@ -106,46 +106,16 @@ public class BluetoothConsole : MonoBehaviour
             return;
         }
 
-        // _console.text += "\n"+("Retrieving Device Information service...");
         var service = await device.GetServiceAsync(GattConstants.DeviceInformationServiceUUID);
-        var orientationXCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationXUUID);
-        var orientationYCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationYUUID);
-        var orientationZCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationZUUID);
+
         var orientationAllCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationAllUUID);
         var ctrlCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlUUID);
 
-        byte[] orientationX, orientationY, orientationZ, orientationAll;
+        byte[] orientationAll;
         int characteristicsFound = 0;
 
         var timeout = TimeSpan.FromSeconds(5);
 
-
-        if (orientationXCharacteristic != null)
-        {
-            characteristicsFound++;
-            _console.text += "\n" + ("Reading orientationXCharacteristic...");
-            orientationX = await orientationXCharacteristic.ReadValueAsync(timeout);
-            _console.text += "\n" + ($"orientationXCharacteristic: {Encoding.UTF8.GetString(orientationX)}");
-        }
-
-        if (orientationYCharacteristic != null)
-        {
-            characteristicsFound++;
-            _console.text += "\n" + ("Reading orientationYCharacteristic...");
-            orientationY = await orientationYCharacteristic.ReadValueAsync(timeout);
-            _console.text += "\n" + ($"orientationYCharacteristic: {Encoding.UTF8.GetString(orientationY)}");
-        }
-
-
-        if (orientationZCharacteristic != null)
-        {
-            characteristicsFound++;
-            _console.text += "\n" + ("Reading orientationZCharacteristic...");
-            orientationZ = await orientationZCharacteristic.ReadValueAsync(timeout);
-            _console.text += "\n" + ($"orientationZCharacteristic: {Encoding.UTF8.GetString(orientationZ)}");
-        }
-        
-        
         if (orientationAllCharacteristic != null)
         {
             characteristicsFound++;
@@ -174,11 +144,6 @@ public class BluetoothConsole : MonoBehaviour
         var taskS = JoystickTask(ctrlCharacteristic);
         
         var taskAll = SensorAllTask(orientationAllCharacteristic);
-        
-        /*
-        var taskY = SensorYTask(orientationYCharacteristic);
-        var taskZ = SensorZTask(orientationZCharacteristic);
-        */
 
         await Task.WhenAll(taskS, taskAll);
 
@@ -195,46 +160,6 @@ public class BluetoothConsole : MonoBehaviour
         }
     }
 
-    private async Task SensorXTask(IGattCharacteristic1 characteristicX)
-    {
-        var timeout = TimeSpan.FromSeconds(5);
-
-
-        while (true)
-        {
-            byte[] orientationY;
-
-            orientationY = await characteristicX.ReadValueAsync(timeout);
-
-
-            _currentOrientationY = float.Parse(Encoding.UTF8.GetString(orientationY));
-        }
-    }
-
-    private async Task SensorYTask(IGattCharacteristic1 characteristicY)
-    {
-        var timeout = TimeSpan.FromSeconds(5);
-
-        while (true)
-        {
-            byte[] orientationZ;
-            orientationZ = await characteristicY.ReadValueAsync(timeout);
-            _currentOrientationX = float.Parse(Encoding.UTF8.GetString(orientationZ));
-        }
-    }
-
-    private async Task SensorZTask(IGattCharacteristic1 characteristicZ)
-    {
-        var timeout = TimeSpan.FromSeconds(5);
-
-        while (true)
-        {
-            byte[] orientationX;
-            orientationX = await characteristicZ.ReadValueAsync(timeout);
-            _currentOrientationX = float.Parse(Encoding.UTF8.GetString(orientationX));
-        }
-    }
-    
     private async Task SensorAllTask(IGattCharacteristic1 characteristicAll)
     {
         var timeout = TimeSpan.FromSeconds(5);
