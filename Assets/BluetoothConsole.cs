@@ -147,11 +147,20 @@ public class BluetoothConsole : MonoBehaviour
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
 
-        var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
+        bool skipSensorTask = true;
+        if (skipSensorTask)
+        {
+            var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
+            await Task.WhenAll(taskS);
+        }
+        else
+        {
+            var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
+            var taskAll = SensorAllTask(orientationAllCharacteristic);
+            await Task.WhenAll(taskS, taskAll);
+        }
         
-        var taskAll = SensorAllTask(orientationAllCharacteristic);
 
-        await Task.WhenAll(taskS, taskAll);
 
     }
 
