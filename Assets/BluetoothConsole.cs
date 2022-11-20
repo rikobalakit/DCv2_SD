@@ -149,9 +149,9 @@ public class BluetoothConsole : MonoBehaviour
 
         var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
         
-        //var taskAll = SensorAllTask(orientationAllCharacteristic);
+        var taskAll = SensorAllTask(orientationAllCharacteristic);
 
-        await Task.WhenAll(taskS);
+        await Task.WhenAll(taskS, taskAll);
 
     }
 
@@ -185,14 +185,14 @@ public class BluetoothConsole : MonoBehaviour
             
             byte[] orientationAll;
             orientationAll = await characteristicAll.ReadValueAsync(timeout);
-            var allString = Encoding.UTF8.GetString(orientationAll);
-            
-            
-            string[] words = allString.Split(' ');
+            byte[] xBytes = {orientationAll[0], orientationAll[1], orientationAll[2], orientationAll[3]};
+            byte[] yBytes = {orientationAll[4], orientationAll[5], orientationAll[6], orientationAll[7]};
+            byte[] zBytes = {orientationAll[8], orientationAll[9], orientationAll[10], orientationAll[11]};
 
-            _currentOrientationX = float.Parse(words[0]);
-            _currentOrientationY = float.Parse(words[1]);
-            _currentOrientationZ = float.Parse(words[2]);
+            
+            _currentOrientationX = BitConverter.ToInt32(xBytes);
+            _currentOrientationY = BitConverter.ToInt32(yBytes);
+            _currentOrientationZ = BitConverter.ToInt32(zBytes);
         }
     }
 
