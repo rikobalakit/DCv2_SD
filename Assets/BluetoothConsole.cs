@@ -172,13 +172,14 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
-            int lValue = (int)(Input.GetAxis("LY") * -90f + 90f);
-            int rValue = (int) (Input.GetAxis("RY") * -90f + 90f);
-            
-            var writeL = characteristicL.WriteValueAsync(BitConverter.GetBytes(lValue), timeout);
-            var writeR = characteristicR.WriteValueAsync(BitConverter.GetBytes(rValue), timeout);
+            short lValue = (short)(Input.GetAxis("LY") * -90f + 90f);
+            short rValue = (short) (Input.GetAxis("RY") * -90f + 90f);
 
-            await Task.WhenAll(writeL, writeR);
+            byte[] ctrlValue = BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).ToArray();
+            
+            var writeL = characteristicL.WriteValueAsync(ctrlValue, timeout);
+
+            await Task.WhenAll(writeL);
             
             Debug.LogError($"joystick task {Time.time:0.000}");
         }
