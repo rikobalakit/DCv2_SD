@@ -163,9 +163,10 @@ public class BluetoothConsole : MonoBehaviour
         while (Application.isPlaying)
         {
             int lValue = (int)(Input.GetAxis("LY") * -90f + 90f);
+            int rValue = (int) (Input.GetAxis("RY") * -90f + 90f);
             
             var writeL = characteristicL.WriteValueAsync(BitConverter.GetBytes(lValue), timeout);
-            var writeR = characteristicR.WriteValueAsync(Encoding.UTF8.GetBytes($"{Input.GetAxis("RY") * -90f + 90f:0}"), timeout);
+            var writeR = characteristicR.WriteValueAsync(BitConverter.GetBytes(rValue), timeout);
 
             await Task.WhenAll(writeL, writeR);
             
