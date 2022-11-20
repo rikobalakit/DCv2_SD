@@ -177,6 +177,9 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
+            continue;
+
+            
             Debug.LogError($"sensor task {Time.time:0.000}");
             
             byte[] orientationAll;
