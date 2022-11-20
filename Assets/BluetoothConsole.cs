@@ -121,7 +121,8 @@ public class BluetoothConsole : MonoBehaviour
             _console.text += "\n" + ($"orientationAllCharacteristic: {Encoding.UTF8.GetString(orientationAll)}");
         }
 
-
+        int defaultAngle = 90;
+        
         if (ctrlLCharacteristic != null)
         {
             characteristicsFound++;
@@ -129,7 +130,7 @@ public class BluetoothConsole : MonoBehaviour
             var manufacturerBytes = await ctrlLCharacteristic.ReadValueAsync(timeout);
             _console.text += "\n" + ($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
 
-            await ctrlLCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("INIT"), timeout);
+            await ctrlLCharacteristic.WriteValueAsync(BitConverter.GetBytes(defaultAngle), timeout);
         }
 
         if (ctrlRCharacteristic != null)
@@ -139,7 +140,7 @@ public class BluetoothConsole : MonoBehaviour
             var manufacturerBytes = await ctrlRCharacteristic.ReadValueAsync(timeout);
             _console.text += "\n" + ($"ctrlRCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
 
-            await ctrlRCharacteristic.WriteValueAsync(Encoding.UTF8.GetBytes("INIT"), timeout);
+            await ctrlRCharacteristic.WriteValueAsync(BitConverter.GetBytes(defaultAngle), timeout);
         }
 
         if (characteristicsFound == 0)
