@@ -42,7 +42,7 @@ public class BluetoothConsole : MonoBehaviour
 
     private void Update()
     {
-        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ),
+        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationY, _currentOrientationX, _currentOrientationZ),
             Time.deltaTime * 10f);
 
     }
