@@ -149,9 +149,9 @@ public class BluetoothConsole : MonoBehaviour
 
         var taskS = JoystickTask(ctrlLCharacteristic, ctrlRCharacteristic);
         
-        var taskAll = SensorAllTask(orientationAllCharacteristic);
+        //var taskAll = SensorAllTask(orientationAllCharacteristic);
 
-        await Task.WhenAll(taskS, taskAll);
+        await Task.WhenAll(taskS);
 
     }
 
@@ -177,8 +177,6 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
-            continue;
-
             
             Debug.LogError($"sensor task {Time.time:0.000}");
             
