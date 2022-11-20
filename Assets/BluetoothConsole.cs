@@ -37,17 +37,33 @@ public class BluetoothConsole : MonoBehaviour
     {
         Scan();
         _console.text += "\n" + "Initialized";
+        UpdateButtonText();
     }
 
     private void Update()
     {
         _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ),
             Time.deltaTime * 10f);
+
     }
 
     public void ToggleSensor()
     {
         _sensorEnabled = !_sensorEnabled;
+
+        UpdateButtonText();
+    }
+
+    private void UpdateButtonText()
+    {
+        if (_sensorEnabled)
+        {
+            _sensorButtonText.text = "DISABLE SENSOR";
+        }
+        else
+        {
+            _sensorButtonText.text = "ENABLE SENSOR";
+        }
     }
 
     public void Scan()
@@ -186,7 +202,7 @@ public class BluetoothConsole : MonoBehaviour
             if (_sensorEnabled)
             {
 
-                _sensorButtonText.text = "DISABLE SENSOR";
+                
                 byte[] orientationAll;
                 orientationAll = await characteristicAll.ReadValueAsync(timeout);
                 byte[] xBytes = {orientationAll[0], orientationAll[1]};
@@ -200,7 +216,7 @@ public class BluetoothConsole : MonoBehaviour
             }
             else
             {
-                _sensorButtonText.text = "ENABLE SENSOR";
+                
                 Task.Delay(1).Wait();
             }
         }
