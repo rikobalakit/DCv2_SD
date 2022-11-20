@@ -28,6 +28,11 @@ public class BluetoothConsole : MonoBehaviour
     [SerializeField]
     private Transform _rotateCube;
 
+    [SerializeField]
+    private TextMeshPro _sensorButtonText;
+
+    private bool _sensorEnabled;
+
     private void Start()
     {
         Scan();
@@ -36,9 +41,14 @@ public class BluetoothConsole : MonoBehaviour
 
     private void Update()
     {
-        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ), Time.deltaTime * 10f);
+        _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationX, _currentOrientationY, _currentOrientationZ),
+            Time.deltaTime * 10f);
     }
 
+    public void ToggleSensor()
+    {
+        _sensorEnabled = !_sensorEnabled;
+    }
 
     public void Scan()
     {
@@ -106,7 +116,7 @@ public class BluetoothConsole : MonoBehaviour
         var orientationAllCharacteristic = await service.GetCharacteristicAsync(GattConstants.OrientationAllUUID);
         var ctrlAllCharacteristic = await service.GetCharacteristicAsync(GattConstants.CtrlAllUUID);
 
-        
+
         byte[] orientationAll;
         int characteristicsFound = 0;
 
@@ -121,7 +131,7 @@ public class BluetoothConsole : MonoBehaviour
         }
 
         int defaultAngle = 90;
-        
+
         if (ctrlAllCharacteristic != null)
         {
             characteristicsFound++;
@@ -129,25 +139,16 @@ public class BluetoothConsole : MonoBehaviour
             var manufacturerBytes = await ctrlAllCharacteristic.ReadValueAsync(timeout);
             _console.text += "\n" + ($"ctrlCharacteristic: {Encoding.UTF8.GetString(manufacturerBytes)}");
         }
-        
+
         if (characteristicsFound == 0)
         {
             _console.text += "\n" + ("Model name and manufacturer characteristics not found.");
         }
 
-        bool skipSensorTask = true;
-        if (skipSensorTask)
-        {
-            var taskS = JoystickTask(ctrlAllCharacteristic);
-            await Task.WhenAll(taskS);
-        }
-        else
-        {
-            var taskS = JoystickTask(ctrlAllCharacteristic);
-            var taskAll = SensorAllTask(orientationAllCharacteristic);
-            await Task.WhenAll(taskS, taskAll);
-        }
-        
+
+        var taskS = JoystickTask(ctrlAllCharacteristic);
+        var taskAll = SensorAllTask(orientationAllCharacteristic);
+        await Task.WhenAll(taskS, taskAll);
 
 
     }
@@ -159,16 +160,16 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
-            short lValue = (short)(Input.GetAxis("LY") * -90f + 90f);
+            short lValue = (short) (Input.GetAxis("LY") * -90f + 90f);
             short rValue = (short) (Input.GetAxis("RY") * -90f + 90f);
 
             byte[] ctrlValue = BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).ToArray();
-            
+
             Debug.LogError($"ctrl length is {ctrlValue.Length}");
             var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
 
             await Task.WhenAll(writeL);
-            
+
             Debug.LogError($"joystick task {Time.time:0.000}");
         }
     }
@@ -179,19 +180,29 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
-            
-            Debug.LogError($"sensor task {Time.time:0.000}");
-            
-            byte[] orientationAll;
-            orientationAll = await characteristicAll.ReadValueAsync(timeout);
-            byte[] xBytes = {orientationAll[0], orientationAll[1]};
-            byte[] yBytes = {orientationAll[2], orientationAll[3]};
-            byte[] zBytes = {orientationAll[4], orientationAll[5]};
 
-            
-            _currentOrientationX = (float)BitConverter.ToInt16(xBytes);
-            _currentOrientationY = (float)BitConverter.ToInt16(yBytes);
-            _currentOrientationZ = (float)BitConverter.ToInt16(zBytes);
+            Debug.LogError($"sensor task {Time.time:0.000}");
+
+            if (_sensorEnabled)
+            {
+
+                _sensorButtonText.text = "DISABLE SENSOR";
+                byte[] orientationAll;
+                orientationAll = await characteristicAll.ReadValueAsync(timeout);
+                byte[] xBytes = {orientationAll[0], orientationAll[1]};
+                byte[] yBytes = {orientationAll[2], orientationAll[3]};
+                byte[] zBytes = {orientationAll[4], orientationAll[5]};
+
+
+                _currentOrientationX = (float) BitConverter.ToInt16(xBytes);
+                _currentOrientationY = (float) BitConverter.ToInt16(yBytes);
+                _currentOrientationZ = (float) BitConverter.ToInt16(zBytes);
+            }
+            else
+            {
+                _sensorButtonText.text = "ENABLE SENSOR";
+                Task.Delay(1).Wait();
+            }
         }
     }
 
@@ -377,7 +388,7 @@ static class Extensions
 
         return;
     }
-    
+
     public static async Task NotifyValueAsync(this IGattCharacteristic1 characteristic, byte[] newValue, TimeSpan timeout)
     {
         var options = new Dictionary<string, object>();
