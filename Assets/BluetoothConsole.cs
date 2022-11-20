@@ -164,6 +164,7 @@ public class BluetoothConsole : MonoBehaviour
 
             byte[] ctrlValue = BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).ToArray();
             
+            Debug.LogError($"ctrl length is {ctrlValue.Length}");
             var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
 
             await Task.WhenAll(writeL);
