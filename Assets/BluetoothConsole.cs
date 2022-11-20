@@ -199,26 +199,18 @@ public class BluetoothConsole : MonoBehaviour
 
             Debug.LogError($"sensor task {Time.time:0.000}");
 
-            if (_sensorEnabled)
-            {
 
-                
-                byte[] orientationAll;
-                orientationAll = await characteristicAll.ReadValueAsync(timeout);
-                byte[] xBytes = {orientationAll[0], orientationAll[1]};
-                byte[] yBytes = {orientationAll[2], orientationAll[3]};
-                byte[] zBytes = {orientationAll[4], orientationAll[5]};
+            byte[] orientationAll;
+            orientationAll = await characteristicAll.ReadValueAsync(timeout);
+            byte[] xBytes = {orientationAll[0], orientationAll[1]};
+            byte[] yBytes = {orientationAll[2], orientationAll[3]};
+            byte[] zBytes = {orientationAll[4], orientationAll[5]};
 
 
-                _currentOrientationX = (float) BitConverter.ToInt16(xBytes);
-                _currentOrientationY = (float) BitConverter.ToInt16(yBytes);
-                _currentOrientationZ = (float) BitConverter.ToInt16(zBytes);
-            }
-            else
-            {
-                
-                Task.Delay(1).Wait();
-            }
+            _currentOrientationX = (float) BitConverter.ToInt16(xBytes);
+            _currentOrientationY = (float) BitConverter.ToInt16(yBytes);
+            _currentOrientationZ = (float) BitConverter.ToInt16(zBytes);
+
         }
     }
 
