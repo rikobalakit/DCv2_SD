@@ -24,14 +24,16 @@ public class BluetoothConsole : MonoBehaviour
     private float _currentOrientationX;
     private float _currentOrientationY;
     private float _currentOrientationZ;
+    private float _currentBatteryVoltage;
 
     [SerializeField]
     private Transform _rotateCube;
 
     [SerializeField]
-    private Button _sensorButtonText;
+    private Text _voltageText;
 
     private bool _sensorEnabled;
+
 
     private void Start()
     {
@@ -46,6 +48,16 @@ public class BluetoothConsole : MonoBehaviour
         // note: XYZ is ZXY
         _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationZ, _currentOrientationX, _currentOrientationY),
             Time.deltaTime * 10f);
+        
+        _voltageText.text = $"{_currentBatteryVoltage:0.00}";
+        if (_sensorEnabled)
+        {
+            _voltageText.text += "\nIMU ENABLED";
+        }
+        else
+        {
+            _voltageText.text += "\nIMU DISABLED";
+        }
 
     }
 
@@ -207,11 +219,12 @@ public class BluetoothConsole : MonoBehaviour
             byte[] xBytes = {orientationAll[0], orientationAll[1]};
             byte[] yBytes = {orientationAll[2], orientationAll[3]};
             byte[] zBytes = {orientationAll[4], orientationAll[5]};
-
+            byte[] voltageBytes = {orientationAll[6], orientationAll[7]};
 
             _currentOrientationX = (float) BitConverter.ToInt16(xBytes);
             _currentOrientationY = (float) BitConverter.ToInt16(yBytes);
             _currentOrientationZ = (float) BitConverter.ToInt16(zBytes);
+            _currentBatteryVoltage = (float) BitConverter.ToInt16(voltageBytes) / 1000f;
 
         }
     }
