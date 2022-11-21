@@ -32,7 +32,7 @@ public class BluetoothConsole : MonoBehaviour
     [SerializeField]
     private Text _voltageText;
 
-    private bool _sensorEnabled;
+    private bool _sensorEnabled = true;
 
 
     private void Start()
