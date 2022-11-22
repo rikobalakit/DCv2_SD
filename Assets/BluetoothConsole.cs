@@ -107,7 +107,7 @@ public class BluetoothConsole : MonoBehaviour
 
     private async void ScanAsync(IAdapter1 adapter)
     {
-        var deviceAddress = "84:F7:03:A9:7D:76";
+        var deviceAddress = "58:CF:79:F1:76:7A";
 
 
         var device = await adapter.GetDeviceAsync(deviceAddress);
@@ -190,10 +190,14 @@ public class BluetoothConsole : MonoBehaviour
 
         while (Application.isPlaying)
         {
-            short lValue = (short) (Input.GetAxis("LY") * -90f + 90f);
-            short rValue = (short) (Input.GetAxis("RY") * -90f + 90f);
+            short safetyOffset = 0;
+            
+            short lValue = (short)((Input.GetAxis("LY") * -90f + 90f) + safetyOffset);
+            short rValue = (short)((Input.GetAxis("RY") * -90f + 90f) + safetyOffset);
+            short w0Value = (short)(90+ safetyOffset);
+            short w1Value = (short)(90+ safetyOffset);
 
-            byte[] ctrlValue = BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).ToArray();
+            byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value)).Concat(BitConverter.GetBytes(w1Value))).ToArray();
 
             Debug.LogError($"ctrl length is {ctrlValue.Length}");
             var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
