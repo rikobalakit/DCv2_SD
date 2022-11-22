@@ -34,6 +34,8 @@ public class InputController : MonoBehaviour
         _dotL.anchoredPosition = new Vector2(lx * 80, ly * -80);
         _dotR.anchoredPosition = new Vector2(rx * 80, ry * -80);
 
+        //Debug.LogError($"L2: {Input.GetAxis("L2")}");
+
     }
 
 }

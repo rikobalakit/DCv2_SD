@@ -194,17 +194,17 @@ public class BluetoothConsole : MonoBehaviour
             
             short lValue = (short)((Input.GetAxis("LY") * -90f + 90f) + safetyOffset);
             short rValue = (short)((Input.GetAxis("RY") * -90f + 90f) + safetyOffset);
-            short w0Value = (short)(90+ safetyOffset);
-            short w1Value = (short)(90+ safetyOffset);
+            short w0Value = (short)((Input.GetAxis("L2") * -90f + 90f) + safetyOffset);
+            short w1Value = (short)((Input.GetAxis("R2") * -90f + 90f) + safetyOffset);
 
             byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value)).Concat(BitConverter.GetBytes(w1Value))).ToArray();
 
-            Debug.LogError($"ctrl length is {ctrlValue.Length}");
+
             var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
 
             await Task.WhenAll(writeL);
 
-            Debug.LogError($"joystick task {Time.time:0.000}");
+            //Debug.LogError($"joystick task {Time.time:0.000}");
         }
     }
 
@@ -215,7 +215,7 @@ public class BluetoothConsole : MonoBehaviour
         while (Application.isPlaying)
         {
 
-            Debug.LogError($"sensor task {Time.time:0.000}");
+            //Debug.LogError($"sensor task {Time.time:0.000}");
 
 
             byte[] orientationAll;
