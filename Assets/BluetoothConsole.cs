@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -35,8 +36,13 @@ public class BluetoothConsole : MonoBehaviour
     private bool _sensorEnabled = true;
 
 
-    private void Start()
+    private IEnumerator Start()
     {
+        while (InputManager.I == null)
+        {
+            yield return null;
+        }
+        
         Scan();
         _console.text += "\n" + "Initialized";
         UpdateButtonText();
