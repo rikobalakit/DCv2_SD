@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,7 +47,7 @@ public class InputManager : MonoBehaviour
     
     public float R2
     {
-        get { return _l2; }
+        get { return _r2; }
     }
     
     public float LX
@@ -56,7 +57,7 @@ public class InputManager : MonoBehaviour
     
     public float RX
     {
-        get { return _lx; }
+        get { return _rx; }
     }
     
     public float LY
@@ -66,7 +67,7 @@ public class InputManager : MonoBehaviour
     
     public float RY
     {
-        get { return _ly; }
+        get { return _ry; }
     }
 
     private void Start()
@@ -76,7 +77,7 @@ public class InputManager : MonoBehaviour
             Debug.LogError("cannot initialize another input manager");
         }
     }
-
+    
     private void Update()
     {
         float dpadY = Input.GetAxis("DPAD_Y");
@@ -88,8 +89,10 @@ public class InputManager : MonoBehaviour
         
         _l2 = Input.GetAxis("L2");
         _r2 = Input.GetAxis("R2");
+        
         _lx = Input.GetAxis("LX");
         _rx = Input.GetAxis("RX");
+        
         _ly = Input.GetAxis("LY");
         _ry = Input.GetAxis("RY");
 

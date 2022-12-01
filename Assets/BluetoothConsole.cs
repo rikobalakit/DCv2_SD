@@ -233,6 +233,8 @@ public class BluetoothConsole : MonoBehaviour
 
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f) + safetyOffset);
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f) + safetyOffset);
+            
+            Debug.LogError($"new values to be sent: {lValue}, {rValue}, {w0Value}, {w1Value}");
 
             byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value))
                 .Concat(BitConverter.GetBytes(w1Value))).ToArray();
