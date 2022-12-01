@@ -257,9 +257,9 @@ public class BluetoothConsole : MonoBehaviour
             byte[] zBytes = {orientationAll[4], orientationAll[5]};
             byte[] voltageBytes = {orientationAll[6], orientationAll[7]};
 
-            _currentOrientationX = (float) BitConverter.ToInt16(xBytes);
+            _currentOrientationX = (float) BitConverter.ToInt16(zBytes);
             _currentOrientationY = (float) BitConverter.ToInt16(yBytes);
-            _currentOrientationZ = (float) BitConverter.ToInt16(zBytes);
+            _currentOrientationZ = (float) BitConverter.ToInt16(xBytes);
             _currentBatteryVoltage = (float) BitConverter.ToInt16(voltageBytes) / 1000f;
 
         }
