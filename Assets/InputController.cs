@@ -25,7 +25,6 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         float lx = Input.GetAxis("LX");
         float ly = Input.GetAxis("LY");
         float rx = Input.GetAxis("RX");
@@ -33,9 +32,6 @@ public class InputController : MonoBehaviour
         
         _dotL.anchoredPosition = new Vector2(lx * 80, ly * -80);
         _dotR.anchoredPosition = new Vector2(rx * 80, ry * -80);
-
-        //Debug.LogError($"L2: {Input.GetAxis("L2")}");
-
     }
 
 }
