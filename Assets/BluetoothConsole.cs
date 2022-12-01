@@ -49,7 +49,7 @@ public class BluetoothConsole : MonoBehaviour
         _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationZ, _currentOrientationX, _currentOrientationY),
             Time.deltaTime * 10f);
 
-        _voltageText.text = $"{_currentBatteryVoltage:0.00}";
+        _voltageText.text = $"{_currentBatteryVoltage:0.00} V";
 
         if (_sensorEnabled)
         {
