@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -91,6 +92,12 @@ public class InputManager : MonoBehaviour
         _rx = Input.GetAxis("RX");
         _ly = Input.GetAxis("LY");
         _ry = Input.GetAxis("RY");
+
+        if (Input.GetButton("M") && Input.GetButton("S"))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
     }
 
 }
