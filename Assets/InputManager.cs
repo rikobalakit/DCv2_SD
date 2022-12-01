@@ -76,6 +76,8 @@ public class InputManager : MonoBehaviour
         {
             Debug.LogError("cannot initialize another input manager");
         }
+
+        I = this;
     }
     
     private void Update()
