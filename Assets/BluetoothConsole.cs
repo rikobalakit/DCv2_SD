@@ -44,12 +44,13 @@ public class BluetoothConsole : MonoBehaviour
 
     private void Update()
     {
-        
+
         // note: XYZ is ZXY
         _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationZ, _currentOrientationX, _currentOrientationY),
             Time.deltaTime * 10f);
-        
+
         _voltageText.text = $"{_currentBatteryVoltage:0.00}";
+
         if (_sensorEnabled)
         {
             _voltageText.text += "\nIMU ENABLED";
@@ -186,18 +187,46 @@ public class BluetoothConsole : MonoBehaviour
     private async Task JoystickTask(IGattCharacteristic1 characteristicAll)
     {
         var timeout = TimeSpan.FromSeconds(5);
-
+        short lValue;
+        short rValue;
 
         while (Application.isPlaying)
         {
             short safetyOffset = 0;
-            
-            short lValue = (short)((Input.GetAxis("LY") * -90f + 90f) + safetyOffset);
-            short rValue = (short)((Input.GetAxis("RY") * -90f + 90f) + safetyOffset);
-            short w0Value = (short)((Input.GetAxis("L2") * -90f + 90f) + safetyOffset);
-            short w1Value = (short)((Input.GetAxis("R2") * -90f + 90f) + safetyOffset);
 
-            byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value)).Concat(BitConverter.GetBytes(w1Value))).ToArray();
+            if (InputManager.I.DPadUpPressed)
+            {
+                lValue = 180;
+                rValue = 180;
+            }
+            else if (InputManager.I.DPadDownPressed)
+            {
+                lValue = 0;
+                rValue = 0;
+            }
+            else if (InputManager.I.DPadLeftPressed)
+            {
+                lValue = 0;
+                rValue = 180;
+            }
+            else if (InputManager.I.DPadRightPressed)
+            {
+                lValue = 180;
+                rValue = 0;
+            }
+            else
+            {
+                lValue = (short) ((Input.GetAxis("LY") * -90f + 90f) + safetyOffset);
+                rValue = (short) ((Input.GetAxis("RY") * -90f + 90f) + safetyOffset);
+
+            }
+
+
+            short w0Value = (short) ((Input.GetAxis("L2") * -90f + 90f) + safetyOffset);
+            short w1Value = (short) ((Input.GetAxis("R2") * -90f + 90f) + safetyOffset);
+
+            byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value))
+                .Concat(BitConverter.GetBytes(w1Value))).ToArray();
 
 
             var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
