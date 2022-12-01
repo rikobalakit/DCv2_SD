@@ -11,6 +11,13 @@ public class InputManager : MonoBehaviour
     private bool _dPadLeftPressed = false;
     private bool _dPadRightPressed = false;
 
+    private float _l2;
+    private float _r2;
+    private float _lx;
+    private float _rx;
+    private float _ly;
+    private float _ry;
+
     public bool DPadUpPressed
     {
         get { return _dPadUpPressed; }
@@ -26,9 +33,39 @@ public class InputManager : MonoBehaviour
         get { return _dPadLeftPressed; }
     }
 
-    public bool DPadDRightPressed
+    public bool DPadRightPressed
     {
         get { return _dPadRightPressed; }
+    }
+
+    public float L2
+    {
+        get { return _l2; }
+    }
+    
+    public float R2
+    {
+        get { return _l2; }
+    }
+    
+    public float LX
+    {
+        get { return _lx; }
+    }
+    
+    public float RX
+    {
+        get { return _lx; }
+    }
+    
+    public float LY
+    {
+        get { return _ly; }
+    }
+    
+    public float RY
+    {
+        get { return _ly; }
     }
 
     private void Start()
@@ -47,6 +84,13 @@ public class InputManager : MonoBehaviour
         _dPadDownPressed = dpadY > 0f;
         _dPadLeftPressed = dpadX < 0f;
         _dPadRightPressed = dpadX > 0f;
+        
+        _l2 = Input.GetAxis("L2");
+        _r2 = Input.GetAxis("R2");
+        _lx = Input.GetAxis("LX");
+        _rx = Input.GetAxis("RX");
+        _ly = Input.GetAxis("LY");
+        _ry = Input.GetAxis("RY");
     }
 
 }

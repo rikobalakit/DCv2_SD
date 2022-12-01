@@ -194,36 +194,39 @@ public class BluetoothConsole : MonoBehaviour
         {
             short safetyOffset = 0;
 
+            const short amountToThrottle = 30;
+            const short forwardAngle = 90 + amountToThrottle;
+            const short reverseAngle = 90 - amountToThrottle;
+            
             if (InputManager.I.DPadUpPressed)
             {
-                lValue = 180;
-                rValue = 180;
+                lValue = forwardAngle;
+                rValue = forwardAngle;
             }
             else if (InputManager.I.DPadDownPressed)
             {
-                lValue = 0;
-                rValue = 0;
+                lValue = reverseAngle;
+                rValue = reverseAngle;
             }
             else if (InputManager.I.DPadLeftPressed)
             {
-                lValue = 0;
-                rValue = 180;
+                lValue = reverseAngle;
+                rValue = forwardAngle;
             }
             else if (InputManager.I.DPadRightPressed)
             {
-                lValue = 180;
-                rValue = 0;
+                lValue = forwardAngle;
+                rValue = reverseAngle;
             }
             else
             {
-                lValue = (short) ((Input.GetAxis("LY") * -90f + 90f) + safetyOffset);
-                rValue = (short) ((Input.GetAxis("RY") * -90f + 90f) + safetyOffset);
+                lValue = (short) ((short) (InputManager.I.LY * -90f + 90f) + safetyOffset);
+                rValue = (short) ((short) (InputManager.I.RY * -90f + 90f) + safetyOffset);
 
             }
 
-
-            short w0Value = (short) ((Input.GetAxis("L2") * -90f + 90f) + safetyOffset);
-            short w1Value = (short) ((Input.GetAxis("R2") * -90f + 90f) + safetyOffset);
+            short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f) + safetyOffset);
+            short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f) + safetyOffset);
 
             byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value))
                 .Concat(BitConverter.GetBytes(w1Value))).ToArray();
