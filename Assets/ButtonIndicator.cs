@@ -63,11 +63,14 @@ public class ButtonIndicator : MonoBehaviour
         {
             if (String.IsNullOrEmpty(_buttonName))
             {
-                _backgroundPanel.color = new Color(1f, 1f, 1f, 0.05f);
+                _backgroundPanel.color = _colorOff;
                 return;
             }
             
-            
+            float triggerValue = Input.GetAxis(_buttonName);
+            {
+                _backgroundPanel.color = Color.Lerp(_colorInactive, _colorActive, triggerValue);
+            }
         }
         else if (_buttonType == ButtonType.DPadUp)
         {
