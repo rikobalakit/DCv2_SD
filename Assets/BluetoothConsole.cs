@@ -288,9 +288,9 @@ public class BluetoothConsole : MonoBehaviour
             float orientationJ = (float) BitConverter.ToSingle(orientationKBytes);
             float orientationK = (float) BitConverter.ToSingle(orientationIBytes);
             
-            float bnoAccelerationX = (float) BitConverter.ToInt16(bnoAccelerationXBytes);
-            float bnoAccelerationY = (float) BitConverter.ToInt16(bnoAccelerationYBytes);
-            float bnoAccelerationZ = (float) BitConverter.ToInt16(bnoAccelerationZBytes);
+            float bnoAccelerationX = (float) BitConverter.ToInt16(bnoAccelerationXBytes)/1000f;
+            float bnoAccelerationY = (float) BitConverter.ToInt16(bnoAccelerationYBytes)/1000f;
+            float bnoAccelerationZ = (float) BitConverter.ToInt16(bnoAccelerationZBytes)/1000f;
             
             float lisAccelerationX = (float) BitConverter.ToInt16(lisAccelerationXBytes);
             float lisAccelerationY = (float) BitConverter.ToInt16(lisAccelerationYBytes);
