@@ -19,6 +19,45 @@ public class TelemetryValues : MonoBehaviour
     public float EscUsedMah;
     public float EscRpm;
 
+    public Vector3 Acceleration
+    {
+        get
+        {
+            float x;
+            float y;
+            float z;
+            
+            if (Mathf.Abs(BnoAcceleration.x) < 10)
+            {
+                x = BnoAcceleration.x;
+            }
+            else
+            {
+                x = LisAcceleration.x;
+            }
+            
+            if (Mathf.Abs(BnoAcceleration.y) < 10)
+            {
+                y = BnoAcceleration.y;
+            }
+            else
+            {
+                y = LisAcceleration.y;
+            }
+            
+            if (Mathf.Abs(BnoAcceleration.z) < 10)
+            {
+                z = BnoAcceleration.z;
+            }
+            else
+            {
+                z = LisAcceleration.z;
+            }
+
+            return new Vector3(x, y, z);
+        }
+    }
+
     public void Start()
     {
         if (I != null)
