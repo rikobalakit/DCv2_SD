@@ -86,7 +86,7 @@ public class RobotOrientationDisplay : MonoBehaviour
             $"{TelemetryValues.I.EscCurrent:0.0} A\n" +
             $"{TelemetryValues.I.EscUsedMah:0.0} mAH\n" +
             $"{TelemetryValues.I.EscRpm:0.0} eRPM\n\n" +
-            $"{TelemetryValues.I.BnoTemp:0.0} eRPM\n\n" +
+            $"{TelemetryValues.I.BnoTemp:0.0} C\n\n" +
             $"{TelemetryValues.I.BnoCalibrationSystem:0}\n" +
             $"{TelemetryValues.I.BnoCalibrationGyro:0}\n" +
             $"{TelemetryValues.I.BnoCalibrationAccelerometer:0}\n" +

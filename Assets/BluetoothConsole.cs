@@ -244,8 +244,8 @@ public class BluetoothConsole : MonoBehaviour
             byte[] escUsedMahBytes = {orientationAll[35], orientationAll[36]};
             byte[] escRpmBytes = {orientationAll[37], orientationAll[38]};
             
-            byte[] bnoTempBytes = {orientationAll[39], orientationAll[40], orientationAll[41], orientationAll[42]};
-            byte[] bnoCalibrationBytes = {orientationAll[43], orientationAll[44], orientationAll[45], orientationAll[46]};
+            byte[] bnoTempBytes = {orientationAll[39]};
+            byte[] bnoCalibrationBytes = {orientationAll[40], orientationAll[41], orientationAll[42], orientationAll[43]};
 
             //
 
@@ -270,12 +270,12 @@ public class BluetoothConsole : MonoBehaviour
             float escUsedMah = (float) BitConverter.ToInt16(escUsedMahBytes);
             float escRpm = (float) BitConverter.ToInt16(escRpmBytes);
 
-            float bnoTemp = BitConverter.ToSingle(bnoTempBytes);
+            int bnoTemp = (int)bnoTempBytes[0];
 
-            int bnoCalibrationSystem = bnoCalibrationBytes[0];
-            int bnoCalibrationGyro = bnoCalibrationBytes[1];
-            int bnoCalibrationAccelerometer = bnoCalibrationBytes[2];
-            int bnoCalibrationMagnetometer = bnoCalibrationBytes[3];
+            int bnoCalibrationSystem = (int)bnoCalibrationBytes[0];
+            int bnoCalibrationGyro = (int)bnoCalibrationBytes[1];
+            int bnoCalibrationAccelerometer = (int)bnoCalibrationBytes[2];
+            int bnoCalibrationMagnetometer = (int)bnoCalibrationBytes[3];
 
             TelemetryValues.I.BatteryVoltage = batteryVoltage;
             TelemetryValues.I.Orientatation = new Quaternion(orientationI, orientationJ, orientationK, orientationR);
