@@ -18,6 +18,14 @@ public class TelemetryValues : MonoBehaviour
     public float EscCurrent;
     public float EscUsedMah;
     public float EscRpm;
+    
+    public float BnoTemp;
+
+    public int BnoCalibrationSystem;
+    public int BnoCalibrationGyro;
+    public int BnoCalibrationAccelerometer;
+    public int BnoCalibrationMagnetometer;
+
 
     public Vector3 Acceleration
     {

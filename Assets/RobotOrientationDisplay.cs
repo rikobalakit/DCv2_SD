@@ -74,17 +74,22 @@ public class RobotOrientationDisplay : MonoBehaviour
 
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
 
-        _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:0.0}\n\n" +
-            $"{wrapEulerAngle(-eulerAngles.y):0.0} ({getHeadingAngleFromRobotRotation()})\n" +
-            $"{wrapEulerAngle(eulerAngles.z):0.0}\n" +
-            $"{wrapEulerAngle(-eulerAngles.x):0.0}\n\n" +
-            $"{calculatedAcceleration.x:0.0}\n" +
-            $"{calculatedAcceleration.y:0.0}\n" +
-            $"{calculatedAcceleration.z:0.0}\n\n" +
-            $"{TelemetryValues.I.EscTemperature:0.0}\n" +
-            $"{TelemetryValues.I.EscVoltage:0.0}\n" +
-            $"{TelemetryValues.I.EscCurrent:0.0}\n" +
-            $"{TelemetryValues.I.EscUsedMah:0.0}\n" +
-            $"{TelemetryValues.I.EscRpm:0.0}\n";
+        _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:0.0} V\n\n" +
+            $"{wrapEulerAngle(-eulerAngles.y):0.0}° ({getHeadingAngleFromRobotRotation()})\n" +
+            $"{wrapEulerAngle(eulerAngles.z):0.0}°\n" +
+            $"{wrapEulerAngle(-eulerAngles.x):0.0}°\n\n" +
+            $"{calculatedAcceleration.x/9.8:0.0} G\n" +
+            $"{calculatedAcceleration.y/9.8:0.0} G\n" +
+            $"{calculatedAcceleration.z/9.8:0.0} G\n\n" +
+            $"{TelemetryValues.I.EscTemperature:0.0} C\n" +
+            $"{TelemetryValues.I.EscVoltage:0.0} V\n" +
+            $"{TelemetryValues.I.EscCurrent:0.0} A\n" +
+            $"{TelemetryValues.I.EscUsedMah:0.0} mAH\n" +
+            $"{TelemetryValues.I.EscRpm:0.0} eRPM\n\n" +
+            $"{TelemetryValues.I.BnoTemp:0.0} eRPM\n\n" +
+            $"{TelemetryValues.I.BnoCalibrationSystem:0}\n" +
+            $"{TelemetryValues.I.BnoCalibrationGyro:0}\n" +
+            $"{TelemetryValues.I.BnoCalibrationAccelerometer:0}\n" +
+            $"{TelemetryValues.I.BnoCalibrationMagnetometer:0}\n";
     }
 }

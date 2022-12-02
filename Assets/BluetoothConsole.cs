@@ -243,6 +243,9 @@ public class BluetoothConsole : MonoBehaviour
             byte[] escCurrentBytes = {orientationAll[33], orientationAll[34]};
             byte[] escUsedMahBytes = {orientationAll[35], orientationAll[36]};
             byte[] escRpmBytes = {orientationAll[37], orientationAll[38]};
+            
+            byte[] bnoTempBytes = {orientationAll[39], orientationAll[40], orientationAll[41], orientationAll[42]};
+            byte[] bnoCalibrationBytes = {orientationAll[43], orientationAll[44], orientationAll[45], orientationAll[46]};
 
             //
 
@@ -267,6 +270,13 @@ public class BluetoothConsole : MonoBehaviour
             float escUsedMah = (float) BitConverter.ToInt16(escUsedMahBytes);
             float escRpm = (float) BitConverter.ToInt16(escRpmBytes);
 
+            float bnoTemp = BitConverter.ToSingle(bnoTempBytes);
+
+            int bnoCalibrationSystem = bnoCalibrationBytes[0];
+            int bnoCalibrationGyro = bnoCalibrationBytes[1];
+            int bnoCalibrationAccelerometer = bnoCalibrationBytes[2];
+            int bnoCalibrationMagnetometer = bnoCalibrationBytes[3];
+
             TelemetryValues.I.BatteryVoltage = batteryVoltage;
             TelemetryValues.I.Orientatation = new Quaternion(orientationI, orientationJ, orientationK, orientationR);
             TelemetryValues.I.BnoAcceleration = new Vector3(bnoAccelerationX, bnoAccelerationY, bnoAccelerationZ);
@@ -276,6 +286,11 @@ public class BluetoothConsole : MonoBehaviour
             TelemetryValues.I.EscCurrent = escCurrent;
             TelemetryValues.I.EscUsedMah = escUsedMah;
             TelemetryValues.I.EscRpm = escRpm;
+            TelemetryValues.I.BnoTemp = bnoTemp;
+            TelemetryValues.I.BnoCalibrationSystem = bnoCalibrationSystem;
+            TelemetryValues.I.BnoCalibrationGyro = bnoCalibrationGyro;
+            TelemetryValues.I.BnoCalibrationAccelerometer = bnoCalibrationAccelerometer;
+            TelemetryValues.I.BnoCalibrationMagnetometer = bnoCalibrationMagnetometer;
 
 
         }

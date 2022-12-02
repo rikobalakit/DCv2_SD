@@ -1675,6 +1675,11 @@ MonoBehaviour:
   EscCurrent: 0
   EscUsedMah: 0
   EscRpm: 0
+  BnoTemp: 0
+  BnoCalibrationSystem: 0
+  BnoCalibrationGyro: 0
+  BnoCalibrationAccelerometer: 0
+  BnoCalibrationMagnetometer: 0
 --- !u!114 &574888232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5748,7 +5753,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Battery\r\n\nHeading\nRoll\nPitch\n\nAccel.X    \r\nAccel.Y    \r\nAccel.Z   
-    \r\n\nWeapon.Temp\r\nWeapon.Volt\r\nWeapon.Curr\r\nWeapon.Used\r\nWeapon.RPM "
+    \r\n\nWeapon.Temp\r\nWeapon.Volt\r\nWeapon.Curr\r\nWeapon.Used\r\nWeapon.eRPM
+    \n\nSystem.Temp\n\nSystem.Calibrated\nGyro.Calibrated\nAccel.Calibrated\nMagneto.Calibrated"
 --- !u!222 &1717946100
 CanvasRenderer:
   m_ObjectHideFlags: 0
