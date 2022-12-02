@@ -13,9 +13,22 @@ public class RobotOrientationDisplay : MonoBehaviour
 
     [SerializeField]
     private Text _telemetryTextBox;
+
+    float wrapEulerAngle(float inputAngle)
+    {
+        while (inputAngle > 180)
+        {
+            inputAngle -= 360;
+        }
+
+        while (inputAngle < -180)
+        {
+            inputAngle += 360;
+        }
+        return inputAngle;
+    }
+
     
-
-
     void Update()
     {
         if (TelemetryValues.I == null)
@@ -38,9 +51,9 @@ public class RobotOrientationDisplay : MonoBehaviour
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
 
         _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:0.0}\n\n" +
-            $"{-eulerAngles.y:0.0}\n" +
-            $"{eulerAngles.z:0.0}\n" +
-            $"{-eulerAngles.x:0.0}\n\n" +
+            $"{wrapEulerAngle(-eulerAngles.y):0.0}\n" +
+            $"{wrapEulerAngle(eulerAngles.z):0.0}\n" +
+            $"{wrapEulerAngle(-eulerAngles.x):0.0}\n\n" +
             $"{calculatedAcceleration.x:0.0}\n" +
             $"{calculatedAcceleration.y:0.0}\n" +
             $"{calculatedAcceleration.z:0.0}\n\n" +
