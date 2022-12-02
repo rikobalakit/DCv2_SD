@@ -14,6 +14,7 @@ public class RobotOrientationDisplay : MonoBehaviour
     [SerializeField]
     private Text _telemetryTextBox;
 
+
     float wrapEulerAngle(float inputAngle)
     {
         while (inputAngle > 180)
@@ -28,6 +29,29 @@ public class RobotOrientationDisplay : MonoBehaviour
         return inputAngle;
     }
 
+    string getHeadingAngleFromRobotRotation()
+    {
+        var angleToWorkWith = wrapEulerAngle(_robotTransform.eulerAngles.y);
+        // 360 is N, 90 is E
+        if (angleToWorkWith <= -135f || angleToWorkWith >= 135f)
+        {
+            return "S";
+        }
+        else if (angleToWorkWith >= -45f && angleToWorkWith <= 45f)
+        {
+            return "N";
+        }
+        else if (angleToWorkWith >= -135 && angleToWorkWith <= -45f)
+        {
+            return "E";
+        }
+        else if (angleToWorkWith >= 45f && angleToWorkWith <= 135f)
+        {
+            return "W";
+        }
+
+        return "";
+    }
     
     void Update()
     {
@@ -41,7 +65,7 @@ public class RobotOrientationDisplay : MonoBehaviour
         {
             _robotTransform.localRotation = Quaternion.Euler(-eulerAngles.x, -eulerAngles.y, eulerAngles.z);
         }
-        
+
         if (Input.GetKey("1") && Input.GetKey("3"))
         {
 			var currentSpin = _robotTransform.localRotation.eulerAngles.y;
@@ -51,7 +75,7 @@ public class RobotOrientationDisplay : MonoBehaviour
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
 
         _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:0.0}\n\n" +
-            $"{wrapEulerAngle(-eulerAngles.y):0.0}\n" +
+            $"{wrapEulerAngle(-eulerAngles.y):0.0} ({getHeadingAngleFromRobotRotation()})\n" +
             $"{wrapEulerAngle(eulerAngles.z):0.0}\n" +
             $"{wrapEulerAngle(-eulerAngles.x):0.0}\n\n" +
             $"{calculatedAcceleration.x:0.0}\n" +
