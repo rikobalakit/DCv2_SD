@@ -10,6 +10,7 @@ public class ButtonIndicator : MonoBehaviour
     private enum ButtonType
     {
         Button,
+        Key,
         Trigger,
         DPadLeft,
         DPadRight,
@@ -51,6 +52,31 @@ public class ButtonIndicator : MonoBehaviour
                 _backgroundPanel.color = _colorUp;
             }
             else if (Input.GetButton(_buttonName))
+            {
+                _backgroundPanel.color = _colorActive;
+            }
+            else
+            {
+                _backgroundPanel.color = _colorInactive;
+            }
+        }
+        else if (_buttonType == ButtonType.Key)
+        {
+            if (String.IsNullOrEmpty(_buttonName))
+            {
+                _backgroundPanel.color = _colorOff;
+                return;
+            }
+            
+            if (Input.GetKeyDown(_buttonName))
+            {
+                _backgroundPanel.color = _colorDown;
+            }
+            else if (Input.GetKeyUp(_buttonName))
+            {
+                _backgroundPanel.color = _colorUp;
+            }
+            else if (Input.GetKey(_buttonName))
             {
                 _backgroundPanel.color = _colorActive;
             }
