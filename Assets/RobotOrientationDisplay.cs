@@ -36,18 +36,18 @@ public class RobotOrientationDisplay : MonoBehaviour
 
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
 
-        _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage}\n" +
-            $"{TelemetryValues.I.Orientatation.w}\n" +
-            $"{TelemetryValues.I.Orientatation.x}\n" +
-            $"{TelemetryValues.I.Orientatation.y}\n" +
-            $"{TelemetryValues.I.Orientatation.z}\n" +
-            $"{calculatedAcceleration.x}\n" +
-            $"{calculatedAcceleration.y}\n" +
-            $"{calculatedAcceleration.z}\n" +
-            $"{TelemetryValues.I.EscTemperature}\n" +
-            $"{TelemetryValues.I.EscVoltage}\n" +
-            $"{TelemetryValues.I.EscCurrent}\n" +
-            $"{TelemetryValues.I.EscUsedMah}\n" +
-            $"{TelemetryValues.I.EscRpm}\n";
+        _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:00.0}\n" +
+            $"{TelemetryValues.I.Orientatation.w:00.0}\n" +
+            $"{TelemetryValues.I.Orientatation.x:00.0}\n" +
+            $"{TelemetryValues.I.Orientatation.y:00.0}\n" +
+            $"{TelemetryValues.I.Orientatation.z:00.0}\n" +
+            $"{calculatedAcceleration.x:00.0}\n" +
+            $"{calculatedAcceleration.y:00.0}\n" +
+            $"{calculatedAcceleration.z:00.0}\n" +
+            $"{TelemetryValues.I.EscTemperature:00.0}\n" +
+            $"{TelemetryValues.I.EscVoltage:00.0}\n" +
+            $"{TelemetryValues.I.EscCurrent:00.0}\n" +
+            $"{TelemetryValues.I.EscUsedMah:00.0}\n" +
+            $"{TelemetryValues.I.EscRpm:00.0}\n";
     }
 }
