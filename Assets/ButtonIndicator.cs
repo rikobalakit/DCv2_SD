@@ -9,13 +9,13 @@ public class ButtonIndicator : MonoBehaviour
 
     private enum ButtonType
     {
-        Button,
-        Key,
-        Trigger,
-        DPadLeft,
-        DPadRight,
-        DPadUp,
-        DPadDown
+        Button = 0,
+        Key = 1,
+        Trigger = 2,
+        DPadLeft = 3,
+        DPadRight = 4,
+        DPadUp = 5,
+        DPadDown = 6
     }
     
     [SerializeField]

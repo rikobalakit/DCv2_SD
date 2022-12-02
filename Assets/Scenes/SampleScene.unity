@@ -468,7 +468,7 @@ PrefabInstance:
     - target: {fileID: 7193218622150371276, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
       propertyPath: _buttonType
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8534506067064263291, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
@@ -2209,7 +2209,7 @@ PrefabInstance:
     - target: {fileID: 7193218622150371276, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
       propertyPath: _buttonType
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8534506067064263291, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
@@ -4657,7 +4657,7 @@ PrefabInstance:
     - target: {fileID: 7193218622150371276, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
       propertyPath: _buttonType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8534506067064263291, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
@@ -4849,7 +4849,7 @@ PrefabInstance:
     - target: {fileID: 7193218622150371276, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
       propertyPath: _buttonType
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8534506067064263291, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
@@ -6375,7 +6375,7 @@ PrefabInstance:
     - target: {fileID: 7193218622150371276, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
       propertyPath: _buttonType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8534506067064263291, guid: 7ecb3025684fda441ad8efe8162348dc,
         type: 3}
