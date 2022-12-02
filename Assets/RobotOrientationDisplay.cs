@@ -21,7 +21,8 @@ public class RobotOrientationDisplay : MonoBehaviour
         
         if (Input.GetKey("1") && Input.GetKey("3"))
         {
-            _robotOffsetRotationTransform.localRotation = Quaternion.Euler(0f, -_robotTransform.rotation.y, 0f);
+			var currentSpin = _robotTransform.localRotation.eulerAngles.y;
+            _robotOffsetRotationTransform.localRotation = Quaternion.Euler(0f, -currentSpin, 0f);
         }
     }
 }
