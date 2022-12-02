@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c26b0572db37bb4d85937b306d35624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _console: {fileID: 970267120}
+  _console: {fileID: 970267122}
   _rotateCube: {fileID: 213673046}
   _voltageText: {fileID: 1717946099}
 --- !u!114 &574888230
@@ -2957,7 +2957,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4426674e4ba547642bab4907c1706db9, type: 3}
-    m_FontSize: 24
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -3312,7 +3312,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4426674e4ba547642bab4907c1706db9, type: 3}
-    m_FontSize: 24
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -3323,7 +3323,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '123456789012345
+  m_Text: '123456789012345678901
 
     2
 
@@ -3351,7 +3351,21 @@ MonoBehaviour:
 
     14
 
-    15'
+    15
+
+    6
+
+    7
+
+    8
+
+    9
+
+    0
+
+    1
+
+    2'
 --- !u!222 &970267121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3374,10 +3388,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentLogLevel: 3
   m_status: 
-  m_totalLines: 15
-  m_lineLength: 15
+  m_totalLines: 21
+  m_lineLength: 22
   m_text: {fileID: 970267120}
   m_identifiers: []
+  m_useTimestamps: 0
+  m_autoResizeOnStart: 1
 --- !u!1 &977874829
 GameObject:
   m_ObjectHideFlags: 0
@@ -5720,7 +5736,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4426674e4ba547642bab4907c1706db9, type: 3}
-    m_FontSize: 24
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -5731,8 +5747,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Battery\r\nO.R    \r\nO.I    \r\nO.J    \r\nO.K    \r\nA.X    \r\nA.Y   
-    \r\nA.Z    \r\nW.Temp\r\nW.Volt\r\nW.Curr\r\nW.Used\r\nW.RPM "
+  m_Text: "Battery\r\n\nRoll\nPitch\nYaw\n\nAccel.X    \r\nAccel.Y    \r\nAccel.Z   
+    \r\n\nWeapon.Temp\r\nWeapon.Volt\r\nWeapon.Curr\r\nWeapon.Used\r\nWeapon.RPM "
 --- !u!222 &1717946100
 CanvasRenderer:
   m_ObjectHideFlags: 0

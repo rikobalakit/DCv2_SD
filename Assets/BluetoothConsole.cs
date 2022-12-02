@@ -38,7 +38,7 @@ public class BluetoothConsole : MonoBehaviour
         {
             yield return null;
         }
-        _console.LogText("Initialized");
+        _console.LogText("Scan Started");
         
         Scan();
 
@@ -129,7 +129,7 @@ public class BluetoothConsole : MonoBehaviour
         if (orientationAllCharacteristic != null)
         {
             characteristicsFound++;
-            _console.LogText(("Reading Telem."));
+            _console.LogText(("Get Telemetry"));
         }
 
         int defaultAngle = 90;
@@ -137,6 +137,7 @@ public class BluetoothConsole : MonoBehaviour
         if (ctrlAllCharacteristic != null)
         {
             characteristicsFound++;
+            _console.LogText(("Set Control"));
         }
 
         if (characteristicsFound == 0)
@@ -144,7 +145,7 @@ public class BluetoothConsole : MonoBehaviour
             _console.LogText(("No GATTChar found"));
         }
 
-
+        _console.LogText("Initialized");
         var taskS = JoystickTask(ctrlAllCharacteristic);
         var taskAll = SensorAllTask(orientationAllCharacteristic);
         await Task.WhenAll(taskS, taskAll);

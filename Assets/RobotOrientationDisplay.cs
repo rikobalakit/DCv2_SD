@@ -14,17 +14,18 @@ public class RobotOrientationDisplay : MonoBehaviour
     [SerializeField]
     private Text _telemetryTextBox;
     
+
+
     void Update()
     {
         if (TelemetryValues.I == null)
         {
             return;
         }
-        
+        var eulerAngles = TelemetryValues.I.Orientatation.eulerAngles;
+
         if (_robotTransform != null)
         {
-            var eulerAngles = TelemetryValues.I.Orientatation.eulerAngles;
-            
             _robotTransform.localRotation = Quaternion.Euler(-eulerAngles.x, -eulerAngles.y, eulerAngles.z);
         }
         
@@ -36,18 +37,17 @@ public class RobotOrientationDisplay : MonoBehaviour
 
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
 
-        _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:00.0}\n" +
-            $"{TelemetryValues.I.Orientatation.w:00.0}\n" +
-            $"{TelemetryValues.I.Orientatation.x:00.0}\n" +
-            $"{TelemetryValues.I.Orientatation.y:00.0}\n" +
-            $"{TelemetryValues.I.Orientatation.z:00.0}\n" +
-            $"{calculatedAcceleration.x:00.0}\n" +
-            $"{calculatedAcceleration.y:00.0}\n" +
-            $"{calculatedAcceleration.z:00.0}\n" +
-            $"{TelemetryValues.I.EscTemperature:00.0}\n" +
-            $"{TelemetryValues.I.EscVoltage:00.0}\n" +
-            $"{TelemetryValues.I.EscCurrent:00.0}\n" +
-            $"{TelemetryValues.I.EscUsedMah:00.0}\n" +
-            $"{TelemetryValues.I.EscRpm:00.0}\n";
+        _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:0.0}\n\n" +
+            $"{-eulerAngles.y:0.0}\n" +
+            $"{eulerAngles.z:0.0}\n" +
+            $"{-eulerAngles.x:0.0}\n\n" +
+            $"{calculatedAcceleration.x:0.0}\n" +
+            $"{calculatedAcceleration.y:0.0}\n" +
+            $"{calculatedAcceleration.z:0.0}\n\n" +
+            $"{TelemetryValues.I.EscTemperature:0.0}\n" +
+            $"{TelemetryValues.I.EscVoltage:0.0}\n" +
+            $"{TelemetryValues.I.EscCurrent:0.0}\n" +
+            $"{TelemetryValues.I.EscUsedMah:0.0}\n" +
+            $"{TelemetryValues.I.EscRpm:0.0}\n";
     }
 }

@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ConsoleOutput.Initialize();
-        
-        ConsoleOutput.LogText("peee poooo i234 njfsd pee pooopooo");
     }
 
 }
