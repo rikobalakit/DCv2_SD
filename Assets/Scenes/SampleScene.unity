@@ -154,6 +154,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1717946098}
+  - {fileID: 925686421}
   m_Father: {fileID: 872436577}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1426,6 +1427,7 @@ GameObject:
   - component: {fileID: 574888227}
   - component: {fileID: 574888229}
   - component: {fileID: 574888230}
+  - component: {fileID: 574888231}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1487,6 +1489,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32bf2125a3c62754c9e61ef0953bb402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &574888231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574888226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f79590f975a9eb45b3530cd89d14c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BatteryVoltage: 0
+  Orientatation: {x: 0, y: 0, z: 0, w: 0}
+  BnoAcceleration: {x: 0, y: 0, z: 0}
+  LisAcceleration: {x: 0, y: 0, z: 0}
+  EscTemperature: 0
+  EscVoltage: 0
+  EscCurrent: 0
+  EscUsedMah: 0
+  EscRpm: 0
 --- !u!1 &626950560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,6 +2688,110 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905089258}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &925686420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 925686421}
+  - component: {fileID: 925686423}
+  - component: {fileID: 925686422}
+  m_Layer: 5
+  m_Name: Labels (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &925686421
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925686420}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 25537986}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &925686422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925686420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 4426674e4ba547642bab4907c1706db9, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 223
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000
+
+    0.000'
+--- !u!222 &925686423
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925686420}
+  m_CullTransparentMesh: 0
 --- !u!1001 &931293565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4271,7 +4398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dot: {fileID: 895500422}
   _field: {fileID: 1371327658}
-  _isLeftJoystick: 1
+  _isLeftJoystick: 0
 --- !u!114 &1371327660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5289,7 +5416,7 @@ GameObject:
   - component: {fileID: 1717946100}
   - component: {fileID: 1717946099}
   m_Layer: 5
-  m_Name: Voltage
+  m_Name: Labels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5337,7 +5464,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4426674e4ba547642bab4907c1706db9, type: 3}
-    m_FontSize: 32
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -5348,7 +5475,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 15.3 V
+  m_Text: "Battery\r\nO.R    \r\nO.I    \r\nO.J    \r\nO.K    \r\nA.X    \r\nA.Y   
+    \r\nA.Z    \r\nW.Temp\r\nW.Volt\r\nW.Curr\r\nW.Used\r\nW.RPM "
 --- !u!222 &1717946100
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -22,11 +22,6 @@ public class BluetoothConsole : MonoBehaviour
     [SerializeField]
     private Text _console;
 
-    private float _currentOrientationX;
-    private float _currentOrientationY;
-    private float _currentOrientationZ;
-    private float _currentBatteryVoltage;
-
     [SerializeField]
     private Transform _rotateCube;
 
@@ -42,7 +37,7 @@ public class BluetoothConsole : MonoBehaviour
         {
             yield return null;
         }
-        
+
         Scan();
         _console.text += "\n" + "Initialized";
         UpdateButtonText();
@@ -52,10 +47,12 @@ public class BluetoothConsole : MonoBehaviour
     {
 
         // note: XYZ is ZXY
+        /*
         _rotateCube.localRotation = Quaternion.Slerp(_rotateCube.localRotation, Quaternion.Euler(_currentOrientationZ, _currentOrientationX, _currentOrientationY),
             Time.deltaTime * 10f);
 
         _voltageText.text = $"{_currentBatteryVoltage:0.00} V";
+        */
 
         if (_sensorEnabled)
         {
@@ -203,7 +200,7 @@ public class BluetoothConsole : MonoBehaviour
             const short amountToThrottle = 30;
             const short forwardAngle = 90 + amountToThrottle;
             const short reverseAngle = 90 - amountToThrottle;
-            
+
             if (InputManager.I.DPadUpPressed)
             {
                 lValue = forwardAngle;
@@ -233,7 +230,7 @@ public class BluetoothConsole : MonoBehaviour
 
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f) + safetyOffset);
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f) + safetyOffset);
-            
+
             Debug.LogError($"new values to be sent: {lValue}, {rValue}, {w0Value}, {w1Value}");
 
             byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value))
@@ -260,15 +257,61 @@ public class BluetoothConsole : MonoBehaviour
 
             byte[] orientationAll;
             orientationAll = await characteristicAll.ReadValueAsync(timeout);
-            byte[] xBytes = {orientationAll[0], orientationAll[1]};
-            byte[] yBytes = {orientationAll[2], orientationAll[3]};
-            byte[] zBytes = {orientationAll[4], orientationAll[5]};
-            byte[] voltageBytes = {orientationAll[6], orientationAll[7]};
 
-            _currentOrientationX = (float) BitConverter.ToInt16(xBytes);
-            _currentOrientationY = (float) BitConverter.ToInt16(zBytes);
-            _currentOrientationZ = (float) BitConverter.ToInt16(yBytes);
-            _currentBatteryVoltage = (float) BitConverter.ToInt16(voltageBytes) / 1000f;
+            byte[] voltageBytes = {orientationAll[0], orientationAll[1]};
+
+            byte[] orientationRBytes = {orientationAll[2], orientationAll[3], orientationAll[4], orientationAll[5]};
+            byte[] orientationIBytes = {orientationAll[6], orientationAll[7], orientationAll[8], orientationAll[9]};
+            byte[] orientationJBytes = {orientationAll[10], orientationAll[11], orientationAll[12], orientationAll[13]};
+            byte[] orientationKBytes = {orientationAll[14], orientationAll[15], orientationAll[16], orientationAll[17]};
+
+            byte[] bnoAccelerationXBytes = {orientationAll[18], orientationAll[19]};
+            byte[] bnoAccelerationYBytes = {orientationAll[20], orientationAll[21]};
+            byte[] bnoAccelerationZBytes = {orientationAll[22], orientationAll[23]};
+
+            byte[] lisAccelerationXBytes = {orientationAll[24], orientationAll[25]};
+            byte[] lisAccelerationYBytes = {orientationAll[26], orientationAll[27]};
+            byte[] lisAccelerationZBytes = {orientationAll[28], orientationAll[29]};
+
+            byte[] escTemperatureBytes = {orientationAll[29], orientationAll[30]};
+            byte[] escVoltageBytes = {orientationAll[31], orientationAll[32]};
+            byte[] escCurrentBytes = {orientationAll[33], orientationAll[34]};
+            byte[] escUsedMahBytes = {orientationAll[35], orientationAll[36]};
+            byte[] escRpmBytes = {orientationAll[37], orientationAll[38]};
+
+            //
+
+            float batteryVoltage = (float) BitConverter.ToInt16(voltageBytes)/ 1000f;
+
+            float orientationR = (float) BitConverter.ToSingle(orientationRBytes);
+            float orientationI = (float) BitConverter.ToSingle(orientationJBytes);
+            float orientationJ = (float) BitConverter.ToSingle(orientationKBytes);
+            float orientationK = (float) BitConverter.ToSingle(orientationIBytes);
+            
+            float bnoAccelerationX = (float) BitConverter.ToInt16(bnoAccelerationXBytes);
+            float bnoAccelerationY = (float) BitConverter.ToInt16(bnoAccelerationYBytes);
+            float bnoAccelerationZ = (float) BitConverter.ToInt16(bnoAccelerationZBytes);
+            
+            float lisAccelerationX = (float) BitConverter.ToInt16(lisAccelerationXBytes);
+            float lisAccelerationY = (float) BitConverter.ToInt16(lisAccelerationYBytes);
+            float lisAccelerationZ = (float) BitConverter.ToInt16(lisAccelerationZBytes);
+            
+            float escTemperature = (float) BitConverter.ToInt16(escTemperatureBytes);
+            float escVoltage = (float) BitConverter.ToInt16(escVoltageBytes);
+            float escCurrent = (float) BitConverter.ToInt16(escCurrentBytes);
+            float escUsedMah = (float) BitConverter.ToInt16(escUsedMahBytes);
+            float escRpm = (float) BitConverter.ToInt16(escRpmBytes);
+
+            TelemetryValues.I.BatteryVoltage = batteryVoltage;
+            TelemetryValues.I.Orientatation = new Quaternion(orientationI, orientationJ, orientationK, orientationR);
+            TelemetryValues.I.BnoAcceleration = new Vector3(bnoAccelerationX, bnoAccelerationY, bnoAccelerationZ);
+            TelemetryValues.I.LisAcceleration = new Vector3(lisAccelerationX, lisAccelerationY, lisAccelerationZ);
+            TelemetryValues.I.EscTemperature = escTemperature;
+            TelemetryValues.I.EscVoltage = escVoltage;
+            TelemetryValues.I.EscCurrent = escCurrent;
+            TelemetryValues.I.EscUsedMah = escUsedMah;
+            TelemetryValues.I.EscRpm = escRpm;
+
 
         }
     }
