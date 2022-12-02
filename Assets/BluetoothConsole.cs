@@ -238,13 +238,13 @@ public class BluetoothConsole : MonoBehaviour
             byte[] lisAccelerationYBytes = {orientationAll[26], orientationAll[27]};
             byte[] lisAccelerationZBytes = {orientationAll[28], orientationAll[29]};
 
-            byte[] escTemperatureBytes = {orientationAll[29], orientationAll[30]};
-            byte[] escVoltageBytes = {orientationAll[31], orientationAll[32]};
-            byte[] escCurrentBytes = {orientationAll[33], orientationAll[34]};
-            byte[] escUsedMahBytes = {orientationAll[35], orientationAll[36]};
-            byte[] escRpmBytes = {orientationAll[37], orientationAll[38]};
+            byte[] escTemperatureBytes = {orientationAll[30], orientationAll[31]};
+            byte[] escVoltageBytes = {orientationAll[32], orientationAll[33]};
+            byte[] escCurrentBytes = {orientationAll[34], orientationAll[35]};
+            byte[] escUsedMahBytes = {orientationAll[36], orientationAll[37]};
+            byte[] escRpmBytes = {orientationAll[38], orientationAll[39]};
             
-            byte[] bnoTempBytes = {orientationAll[39], orientationAll[40]};
+            byte[] bnoTempBytes = {orientationAll[40]};
             byte[] bnoCalibrationBytes = {orientationAll[41], orientationAll[42], orientationAll[43], orientationAll[44]};
 
             //
@@ -270,7 +270,7 @@ public class BluetoothConsole : MonoBehaviour
             float escUsedMah = (float) BitConverter.ToInt16(escUsedMahBytes);
             float escRpm = (float) BitConverter.ToInt16(escRpmBytes);
 
-            int bnoTemp = BitConverter.ToInt16(bnoTempBytes);
+            int bnoTemp = bnoTempBytes[0];
 
             int bnoCalibrationSystem = bnoCalibrationBytes[0];
             int bnoCalibrationGyro = bnoCalibrationBytes[1];
