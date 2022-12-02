@@ -40,7 +40,7 @@ public class JoystickIndicator : MonoBehaviour
             y = Input.GetAxis("RY");
         }
         
-        _dot.anchoredPosition = new Vector2(x * 80, y * -80);
+        _dot.anchoredPosition = new Vector2(x * boundX, y * -boundY);
     }
 
 }
