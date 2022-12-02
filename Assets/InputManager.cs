@@ -13,6 +13,11 @@ public class InputManager : MonoBehaviour
     private bool _dPadLeftPressed = false;
     private bool _dPadRightPressed = false;
 
+    private bool _l3;
+    private bool _l4;
+    private bool _r3;
+    private bool _r4;
+    
     private float _l2;
     private float _r2;
     private float _lx;
@@ -48,6 +53,26 @@ public class InputManager : MonoBehaviour
     public float R2
     {
         get { return _r2; }
+    }
+    
+    public bool L3
+    {
+        get { return _l3; }
+    }
+    
+    public bool R3
+    {
+        get { return _r3; }
+    }
+    
+    public bool L4
+    {
+        get { return _l4; }
+    }
+    
+    public bool R4
+    {
+        get { return _r4; }
     }
     
     public float LX
@@ -97,6 +122,11 @@ public class InputManager : MonoBehaviour
         
         _ly = Input.GetAxis("LY");
         _ry = Input.GetAxis("RY");
+
+        _l3 = Input.GetKey("1");
+        _l4 = Input.GetKey("2");
+        _r3 = Input.GetKey("3");
+        _r4 = Input.GetKey("4");
 
         if (Input.GetButton("M") && Input.GetButton("S"))
         {
