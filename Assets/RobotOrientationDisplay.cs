@@ -43,11 +43,11 @@ public class RobotOrientationDisplay : MonoBehaviour
         }
         else if (angleToWorkWith >= -135 && angleToWorkWith <= -45f)
         {
-            return "E";
+            return "W";
         }
         else if (angleToWorkWith >= 45f && angleToWorkWith <= 135f)
         {
-            return "W";
+            return "E";
         }
 
         return "";

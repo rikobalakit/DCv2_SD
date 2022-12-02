@@ -5747,7 +5747,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Battery\r\n\nRoll\nPitch\nYaw\n\nAccel.X    \r\nAccel.Y    \r\nAccel.Z   
+  m_Text: "Battery\r\n\nHeading\nRoll\nPitch\n\nAccel.X    \r\nAccel.Y    \r\nAccel.Z   
     \r\n\nWeapon.Temp\r\nWeapon.Volt\r\nWeapon.Curr\r\nWeapon.Used\r\nWeapon.RPM "
 --- !u!222 &1717946100
 CanvasRenderer:
