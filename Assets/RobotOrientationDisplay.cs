@@ -14,7 +14,7 @@ public class RobotOrientationDisplay : MonoBehaviour
         {
             var eulerAngles = TelemetryValues.I.Orientatation.eulerAngles;
             
-            _robotTransform.rotation = Quaternion.Euler(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+            _robotTransform.localRotation = Quaternion.Euler(-eulerAngles.x, -eulerAngles.y, eulerAngles.z);
         }
     }
 }
