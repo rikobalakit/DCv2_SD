@@ -1591,6 +1591,8 @@ GameObject:
   - component: {fileID: 574888230}
   - component: {fileID: 574888231}
   - component: {fileID: 574888232}
+  - component: {fileID: 574888234}
+  - component: {fileID: 574888233}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1688,6 +1690,35 @@ MonoBehaviour:
   _robotOffsetRotationTransform: {fileID: 421626704}
   _robotTransform: {fileID: 204587678}
   _telemetryTextBox: {fileID: 925686422}
+--- !u!114 &574888233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574888226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ece82523ea5f21479fe5ed00a9e5b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentLogLevel: 3
+  m_status: 
+  m_targetIdentifier: Log
+--- !u!114 &574888234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574888226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e563cbe6fcb12d0408f14096c5792973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConsoleOutput: {fileID: 970267122}
+  consoleStringInput: {fileID: 574888233}
 --- !u!1 &626950560
 GameObject:
   m_ObjectHideFlags: 0
@@ -3231,8 +3262,9 @@ GameObject:
   - component: {fileID: 970267119}
   - component: {fileID: 970267121}
   - component: {fileID: 970267120}
+  - component: {fileID: 970267122}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ConsoleLog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3291,7 +3323,35 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: '123456789012345
+
+    2
+
+    3
+
+    4
+
+    5
+
+    6
+
+    7
+
+    8
+
+    9
+
+    10
+
+    11
+
+    12
+
+    13
+
+    14
+
+    15'
 --- !u!222 &970267121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3300,6 +3360,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 970267118}
   m_CullTransparentMesh: 0
+--- !u!114 &970267122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970267118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979963129400bac4088a50ba88a798c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentLogLevel: 3
+  m_status: 
+  m_totalLines: 15
+  m_lineLength: 15
+  m_text: {fileID: 970267120}
+  m_identifiers: []
 --- !u!1 &977874829
 GameObject:
   m_ObjectHideFlags: 0
