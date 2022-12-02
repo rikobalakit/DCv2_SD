@@ -64,7 +64,7 @@ public class RobotOrientationDisplay : MonoBehaviour
         if (_robotTransform != null)
         {
             
-            _robotTransform.localRotation = Quaternion.Slerp(_robotTransform.localRotation, Quaternion.Euler(-eulerAngles.x, -eulerAngles.y, eulerAngles.z), Time.deltaTime)  ;
+            _robotTransform.localRotation = Quaternion.Slerp(_robotTransform.localRotation, Quaternion.Euler(-eulerAngles.x, -eulerAngles.y, eulerAngles.z), 0.8f)  ;
         }
 
         if (Input.GetKey("1") && Input.GetKey("3"))
