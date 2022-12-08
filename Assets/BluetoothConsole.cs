@@ -218,6 +218,8 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.AddRange(BitConverter.GetBytes(w1Value));
             ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime));
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
+            
+            Debug.LogError($"heading: {headingDirection}");
 
             byte[] ctrlValue = ctrlValueList.ToArray();
 
