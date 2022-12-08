@@ -203,7 +203,7 @@ public class BluetoothConsole : MonoBehaviour
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f));
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f));
 
-            short headingDirection = (short)(Mathf.Rad2Deg * Mathf.Atan(InputManager.I.RY/InputManager.I.RX));
+            short headingDirection = (short)(Mathf.Rad2Deg * Mathf.Atan(-InputManager.I.RX/InputManager.I.RY));
             short driveThrottle = (short)(InputManager.I.LY * 100);
 
             short SecurityBytes = 0x69;
