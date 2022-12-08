@@ -204,10 +204,15 @@ public class BluetoothConsole : MonoBehaviour
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f));
 
             var headingDirectionRaw = (Mathf.Rad2Deg * Mathf.Atan(InputManager.I.RY/InputManager.I.RX)) + 90f;
-
+            
             if (headingDirectionRaw > 180f)
             {
                 headingDirectionRaw -= 360f;
+            }
+
+            if (InputManager.I.RX < 0f)
+            {
+                headingDirectionRaw -= 180f;
             }
             
             short driveThrottle = (short)(InputManager.I.LY * 100);
