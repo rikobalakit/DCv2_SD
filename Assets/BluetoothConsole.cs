@@ -268,7 +268,7 @@ public class BluetoothConsole : MonoBehaviour
             byte[] bnoTempBytes = {orientationAll[40]};
             byte[] bnoCalibrationBytes = {orientationAll[41], orientationAll[42], orientationAll[43], orientationAll[44]};
 
-            byte[] smartHeadingOffsetBytes = {orientationAll[46], orientationAll[45]};
+            byte[] smartHeadingOffsetBytes = {orientationAll[45], orientationAll[46]};
             //
 
             float batteryVoltage = (float) BitConverter.ToInt16(voltageBytes) / 1000f;
