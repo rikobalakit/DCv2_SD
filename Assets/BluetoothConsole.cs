@@ -203,7 +203,7 @@ public class BluetoothConsole : MonoBehaviour
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f));
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f));
 
-            short headingDirection = (short)(Mathf.Rad2Deg * Mathf.Atan(InputManager.I.LY/InputManager.I.LX));
+            short headingDirection = (short)(Mathf.Rad2Deg * Mathf.Atan(InputManager.I.RY/InputManager.I.RX));
             short driveThrottle = (short)(InputManager.I.LY * 100);
 
             short SecurityBytes = 0x69;
@@ -224,9 +224,9 @@ public class BluetoothConsole : MonoBehaviour
             byte[] ctrlValue = ctrlValueList.ToArray();
 
 
-            var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
+            var writeAll = characteristicAll.WriteValueAsync(ctrlValue, timeout);
 
-            await Task.WhenAll(writeL);
+            await Task.WhenAll(writeAll);
 
             //Debug.LogError($"joystick task {Time.time:0.000}");
         }
