@@ -99,16 +99,18 @@ public class InputManager : MonoBehaviour
     {
         get
         {
+            
+            if (Input.GetButton("Y"))
+            {
+                return 1001;
+            }
 
             if ((new Vector2(RX, RY)).magnitude < 0.1f) // dead zone
             {
                 return 1000;
             }
 
-            if (Input.GetButton("Y"))
-            {
-                return 1001;
-            }
+    
             
             var headingDirectionRaw = (Mathf.Rad2Deg * Mathf.Atan(RY/RX)) + 90f;
             
