@@ -197,9 +197,18 @@ public class BluetoothConsole : MonoBehaviour
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f) + safetyOffset);
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f) + safetyOffset);
 
+            short SecurityBytes = 0x69;
 
-            byte[] ctrlValue = (BitConverter.GetBytes(lValue).Concat(BitConverter.GetBytes(rValue)).Concat(BitConverter.GetBytes(w0Value))
-                .Concat(BitConverter.GetBytes(w1Value))).ToArray();
+            List<byte> ctrlValueList = new List<byte>();
+            ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(lValue));
+            ctrlValueList.AddRange(BitConverter.GetBytes(rValue));
+            ctrlValueList.AddRange(BitConverter.GetBytes(w0Value));
+            ctrlValueList.AddRange(BitConverter.GetBytes(w1Value));
+            ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime));
+            ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
+
+            byte[] ctrlValue = ctrlValueList.ToArray();
 
 
             var writeL = characteristicAll.WriteValueAsync(ctrlValue, timeout);
