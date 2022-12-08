@@ -203,17 +203,7 @@ public class BluetoothConsole : MonoBehaviour
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f));
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f));
 
-            var headingDirectionRaw = (Mathf.Rad2Deg * Mathf.Atan(InputManager.I.RY/InputManager.I.RX)) + 90f;
-            
-            if (headingDirectionRaw > 180f)
-            {
-                headingDirectionRaw -= 360f;
-            }
 
-            if (InputManager.I.RX < 0f)
-            {
-                headingDirectionRaw -= 180f;
-            }
             
             short driveThrottle = (short)(InputManager.I.LY * 100);
 
@@ -221,7 +211,7 @@ public class BluetoothConsole : MonoBehaviour
 
             List<byte> ctrlValueList = new List<byte>();
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes((short)headingDirectionRaw));
+            ctrlValueList.AddRange(BitConverter.GetBytes((short)InputManager.I.Heading));
             ctrlValueList.AddRange(BitConverter.GetBytes(driveThrottle));
             ctrlValueList.AddRange(BitConverter.GetBytes(lValue));
             ctrlValueList.AddRange(BitConverter.GetBytes(rValue));
@@ -230,8 +220,6 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime));
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
             
-            Debug.LogError($"heading: {headingDirectionRaw}");
-
             byte[] ctrlValue = ctrlValueList.ToArray();
 
 

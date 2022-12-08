@@ -95,6 +95,32 @@ public class InputManager : MonoBehaviour
         get { return _ry; }
     }
 
+    public short Heading
+    {
+        get
+        {
+
+            if ((new Vector2(RX, RY)).magnitude < 0.1f) // dead zone
+            {
+                return 1000;
+            }
+            
+            var headingDirectionRaw = (Mathf.Rad2Deg * Mathf.Atan(RY/RX)) + 90f;
+            
+            if (headingDirectionRaw > 180f)
+            {
+                headingDirectionRaw -= 360f;
+            }
+
+            if (RX < 0f)
+            {
+                headingDirectionRaw -= 180f;
+            }
+
+            return (short)headingDirectionRaw;
+        }
+    }
+
     private void Start()
     {
         if (I != null)
