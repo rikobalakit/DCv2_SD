@@ -38,6 +38,12 @@ public class BluetoothConsole : MonoBehaviour
         {
             yield return null;
         }
+        
+        while (HeartbeatController.I == null)
+        {
+            yield return null;
+        }
+        
         _console.LogText("Scan Started");
         
         Scan();
