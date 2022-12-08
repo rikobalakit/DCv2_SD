@@ -205,7 +205,7 @@ public class BluetoothConsole : MonoBehaviour
 
 
             
-            short driveThrottle = (short)(InputManager.I.LY * 100);
+            short driveThrottle = (short)(-InputManager.I.LY * 100);
 
             short SecurityBytes = 0x69;
 
