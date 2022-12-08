@@ -104,6 +104,11 @@ public class InputManager : MonoBehaviour
             {
                 return 1000;
             }
+
+            if (Input.GetButton("Y"))
+            {
+                return 1001;
+            }
             
             var headingDirectionRaw = (Mathf.Rad2Deg * Mathf.Atan(RY/RX)) + 90f;
             
