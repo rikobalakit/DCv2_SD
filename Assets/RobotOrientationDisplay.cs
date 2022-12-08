@@ -31,7 +31,7 @@ public class RobotOrientationDisplay : MonoBehaviour
 
     string getHeadingAngleFromRobotRotation()
     {
-        var angleToWorkWith = wrapEulerAngle(_robotTransform.eulerAngles.y);
+        var angleToWorkWith = wrapEulerAngle(_robotTransform.eulerAngles.y + TelemetryValues.I.SmartHeadingOffset);
         // 360 is N, 90 is E
         if (angleToWorkWith <= -135f || angleToWorkWith >= 135f)
         {
@@ -76,7 +76,7 @@ public class RobotOrientationDisplay : MonoBehaviour
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
 
         _telemetryTextBox.text = $"{TelemetryValues.I.BatteryVoltage:0.0} V\n\n" +
-            $"{wrapEulerAngle(-eulerAngles.y):0.0}° ({getHeadingAngleFromRobotRotation()})\n" +
+            $"{wrapEulerAngle(-eulerAngles.y + TelemetryValues.I.SmartHeadingOffset):0.0}° ({getHeadingAngleFromRobotRotation()})\n" +
             $"{wrapEulerAngle(eulerAngles.z):0.0}°\n" +
             $"{wrapEulerAngle(-eulerAngles.x):0.0}°\n\n" +
             $"{calculatedAcceleration.x/9.8:0.0} G\n" +
