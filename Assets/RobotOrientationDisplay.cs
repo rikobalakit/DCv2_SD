@@ -64,13 +64,13 @@ public class RobotOrientationDisplay : MonoBehaviour
         if (_robotTransform != null)
         {
             
-            _robotTransform.localRotation = Quaternion.Slerp(_robotTransform.localRotation, Quaternion.Euler(-eulerAngles.x, -eulerAngles.y, eulerAngles.z), 0.8f)  ;
+            _robotTransform.localRotation = Quaternion.Slerp(_robotTransform.localRotation, Quaternion.Euler(-eulerAngles.x, -eulerAngles.y + TelemetryValues.I.SmartHeadingOffset, eulerAngles.z), 0.8f)  ;
         }
 
         if (Input.GetKey("1") && Input.GetKey("3"))
         {
-			var currentSpin = _robotTransform.localRotation.eulerAngles.y;
-            _robotOffsetRotationTransform.localRotation = Quaternion.Euler(0f, -currentSpin, 0f);
+			//var currentSpin = _robotTransform.localRotation.eulerAngles.y;
+            //_robotOffsetRotationTransform.localRotation = Quaternion.Euler(0f, -currentSpin, 0f);
         }
 
         var calculatedAcceleration = TelemetryValues.I.Acceleration;
