@@ -268,6 +268,7 @@ public class BluetoothConsole : MonoBehaviour
             byte[] bnoTempBytes = {orientationAll[40]};
             byte[] bnoCalibrationBytes = {orientationAll[41], orientationAll[42], orientationAll[43], orientationAll[44]};
 
+            byte[] smartHeadingOffsetBytes = {orientationAll[46], orientationAll[45]};
             //
 
             float batteryVoltage = (float) BitConverter.ToInt16(voltageBytes) / 1000f;
@@ -276,6 +277,7 @@ public class BluetoothConsole : MonoBehaviour
             float orientationI = (float) BitConverter.ToSingle(orientationJBytes);
             float orientationJ = (float) BitConverter.ToSingle(orientationKBytes);
             float orientationK = (float) BitConverter.ToSingle(orientationIBytes);
+            int headingOffset = BitConverter.ToInt16(smartHeadingOffsetBytes);
 
             float bnoAccelerationX = (float) BitConverter.ToInt16(bnoAccelerationXBytes) / 1000f;
             float bnoAccelerationY = (float) BitConverter.ToInt16(bnoAccelerationYBytes) / 1000f;
@@ -312,6 +314,7 @@ public class BluetoothConsole : MonoBehaviour
             TelemetryValues.I.BnoCalibrationGyro = bnoCalibrationGyro;
             TelemetryValues.I.BnoCalibrationAccelerometer = bnoCalibrationAccelerometer;
             TelemetryValues.I.BnoCalibrationMagnetometer = bnoCalibrationMagnetometer;
+            TelemetryValues.I.SmartHeadingOffset = headingOffset;
 
 
         }

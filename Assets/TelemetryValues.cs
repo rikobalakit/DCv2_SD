@@ -26,6 +26,7 @@ public class TelemetryValues : MonoBehaviour
     public int BnoCalibrationAccelerometer;
     public int BnoCalibrationMagnetometer;
 
+    public int SmartHeadingOffset;
 
     public Vector3 Acceleration
     {
