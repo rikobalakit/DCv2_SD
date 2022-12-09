@@ -7,8 +7,8 @@ public class SoftValuesManager : MonoBehaviour
 {
 
     public float AngleToleranceNormalized = 0.5f;
-    public float TurningMultiplierNormalized = 0.25f;
-    public float AdditiveThrottleMultiplerNormalized = 0.75f;
+    public float TurningMultiplierNormalized = 0.5f;
+    public float AdditiveThrottleMultiplerNormalized = 0.5f;
 
     public static SoftValuesManager I;
 
