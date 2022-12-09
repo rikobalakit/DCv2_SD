@@ -120,7 +120,7 @@ public class InputManager : MonoBehaviour
         get
         {
             Int16 startBytes = 0b0000000000000000;
-            // order: (left to right bytes), A,B,X,Y,DU,DD,DL,DR,L1,R1, unused, unused, unused, unused, unused, unused
+            // order: (left to right bytes), A,B,X,Y,DU,DD,DL,DR,L1,R1, L-Joy engaged, R-joy engaged, unused, unused, unused, unused
 
             if (Input.GetButton("A"))
             {
@@ -162,11 +162,11 @@ public class InputManager : MonoBehaviour
             {
                 startBytes = (Int16)(0b0000000001000000 | startBytes);
             }
-            if ((new Vector2(LX, LY)).magnitude < 0.1f) // dead zone
+            if ((new Vector2(LX, LY)).magnitude > 0.1f) // dead zone
             {
                 startBytes = (Int16)(0b0000000000100000 | startBytes);
             }
-            if ((new Vector2(RX, RY)).magnitude < 0.1f) // dead zone
+            if ((new Vector2(RX, RY)).magnitude > 0.1f) // dead zone
             {
                 startBytes = (Int16)(0b0000000000010000 | startBytes);
             }
