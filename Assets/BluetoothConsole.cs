@@ -211,6 +211,7 @@ public class BluetoothConsole : MonoBehaviour
 
             List<byte> ctrlValueList = new List<byte>();
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.ButtonBytes));
             ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.Heading));
             ctrlValueList.AddRange(BitConverter.GetBytes(driveThrottle));
             ctrlValueList.AddRange(BitConverter.GetBytes(lValue));

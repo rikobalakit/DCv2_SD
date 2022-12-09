@@ -99,19 +99,6 @@ public class InputManager : MonoBehaviour
     {
         get
         {
-            
-            if (Input.GetButton("Y"))
-            {
-                return 1001;
-            }
-
-            if ((new Vector2(RX, RY)).magnitude < 0.1f) // dead zone
-            {
-                return 1000;
-            }
-
-    
-            
             var headingDirectionRaw = (Mathf.Rad2Deg * Mathf.Atan(RY/RX)) + 90f;
             
             if (headingDirectionRaw > 180f)
@@ -171,9 +158,17 @@ public class InputManager : MonoBehaviour
             {
                 startBytes = (Int16)(0b0000000010000000 | startBytes);
             }
-            if (Input.GetButton("L2"))
+            if (Input.GetButton("R1"))
             {
                 startBytes = (Int16)(0b0000000001000000 | startBytes);
+            }
+            if ((new Vector2(LX, LY)).magnitude < 0.1f) // dead zone
+            {
+                startBytes = (Int16)(0b0000000000100000 | startBytes);
+            }
+            if ((new Vector2(RX, RY)).magnitude < 0.1f) // dead zone
+            {
+                startBytes = (Int16)(0b0000000000010000 | startBytes);
             }
             
             
