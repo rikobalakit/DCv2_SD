@@ -2231,6 +2231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a61c4e46a35dc4ea6efd27c35dd907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _angleToleranceSlider: {fileID: 1966863803}
+  _turningMultiplierSlider: {fileID: 1983334023}
+  _additiveThrottleMultiplerSlider: {fileID: 1181812439}
   AngleToleranceNormalized: 0.5
   TurningMultiplierNormalized: 0.25
   AdditiveThrottleMultiplerNormalized: 0.75
