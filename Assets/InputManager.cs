@@ -128,6 +128,59 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public Int16 ButtonBytes
+    {
+        get
+        {
+            Int16 startBytes = 0b0000000000000000;
+            // order: (left to right bytes), A,B,X,Y,DU,DD,DL,DR,L1,R1, unused, unused, unused, unused, unused, unused
+
+            if (Input.GetButton("A"))
+            {
+                startBytes = (Int16)(0b1000000000000000 | startBytes);
+            }
+            if (Input.GetButton("B"))
+            {
+                startBytes = (Int16)(0b0100000000000000 | startBytes);
+            }
+            if (Input.GetButton("X"))
+            {
+                startBytes = (Int16)(0b0010000000000000 | startBytes);
+            }
+            if (Input.GetButton("Y"))
+            {
+                startBytes = (Int16)(0b0001000000000000 | startBytes);
+            }
+            if (_dPadUpPressed)
+            {
+                startBytes = (Int16)(0b0000100000000000 | startBytes);
+            }
+            if (_dPadDownPressed)
+            {
+                startBytes = (Int16)(0b0000010000000000 | startBytes);
+            }
+            if (_dPadLeftPressed)
+            {
+                startBytes = (Int16)(0b0000001000000000 | startBytes);
+            }
+            if (_dPadRightPressed)
+            {
+                startBytes = (Int16)(0b0000000100000000 | startBytes);
+            }
+            if (Input.GetButton("L1"))
+            {
+                startBytes = (Int16)(0b0000000010000000 | startBytes);
+            }
+            if (Input.GetButton("L2"))
+            {
+                startBytes = (Int16)(0b0000000001000000 | startBytes);
+            }
+            
+            
+            return startBytes;
+        }
+    }
+
     private void Start()
     {
         if (I != null)
@@ -166,6 +219,8 @@ public class InputManager : MonoBehaviour
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
+        
+        Debug.LogError($"button bytes: {ButtonBytes}");
     }
 
 }
