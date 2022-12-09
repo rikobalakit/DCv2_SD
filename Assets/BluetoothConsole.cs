@@ -220,8 +220,17 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.AddRange(BitConverter.GetBytes(rValue)); //10-11
             ctrlValueList.AddRange(BitConverter.GetBytes(w0Value)); //12-13
             ctrlValueList.AddRange(BitConverter.GetBytes(w1Value)); //14-15
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //16
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //18
+            //ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //16
+            //ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //18
+            
+            ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AngleToleranceNormalized)); //16
+            ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.TurningMultiplierNormalized)); //17
+            ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AdditiveThrottleMultiplerNormalized)); //18
+            ctrlValueList.Add(0x0); //19
+
+
+            
+            
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //20
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //22
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //24
