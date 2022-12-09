@@ -214,8 +214,6 @@ public class InputManager : MonoBehaviour
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
-        
-        Debug.LogError($"button bytes: {ButtonBytes}");
     }
 
 }
