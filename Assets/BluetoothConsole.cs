@@ -212,24 +212,24 @@ public class BluetoothConsole : MonoBehaviour
             short placeholderBytes = 0x00;
 
             List<byte> ctrlValueList = new List<byte>();
-            ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.ButtonBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.Heading));
-            ctrlValueList.AddRange(BitConverter.GetBytes(driveThrottle));
-            ctrlValueList.AddRange(BitConverter.GetBytes(lValue));
-            ctrlValueList.AddRange(BitConverter.GetBytes(rValue));
-            ctrlValueList.AddRange(BitConverter.GetBytes(w0Value));
-            ctrlValueList.AddRange(BitConverter.GetBytes(w1Value));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
-            ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime));
-            ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes)); //0-1
+            ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.ButtonBytes)); //2-3
+            ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.Heading)); //4-5
+            ctrlValueList.AddRange(BitConverter.GetBytes(driveThrottle)); //6-7
+            ctrlValueList.AddRange(BitConverter.GetBytes(lValue));//8-9
+            ctrlValueList.AddRange(BitConverter.GetBytes(rValue)); //10-11
+            ctrlValueList.AddRange(BitConverter.GetBytes(w0Value)); //12-13
+            ctrlValueList.AddRange(BitConverter.GetBytes(w1Value)); //14-15
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //16
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //18
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //20
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //22
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //24
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //26
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //28
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //30
+            ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime)); // 32-35
+            ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes)); //36-37
             
             byte[] ctrlValue = ctrlValueList.ToArray();
 
