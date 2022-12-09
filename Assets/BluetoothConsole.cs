@@ -209,6 +209,8 @@ public class BluetoothConsole : MonoBehaviour
 
             short SecurityBytes = 0x69;
 
+            short placeholderBytes = 0x00;
+
             List<byte> ctrlValueList = new List<byte>();
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
             ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.ButtonBytes));
@@ -218,6 +220,14 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.AddRange(BitConverter.GetBytes(rValue));
             ctrlValueList.AddRange(BitConverter.GetBytes(w0Value));
             ctrlValueList.AddRange(BitConverter.GetBytes(w1Value));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
+            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes));
             ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime));
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes));
             
