@@ -32,9 +32,9 @@ public class SoftValuesManager : MonoBehaviour
 
         I = this;
 
-        AngleToleranceNormalized = PlayerPrefs.GetFloat("AngleToleranceNormalized");
-        TurningMultiplierNormalized = PlayerPrefs.GetFloat("TurningMultiplierNormalized");
-        AdditiveThrottleMultiplerNormalized = PlayerPrefs.GetFloat("AdditiveThrottleMultiplerNormalized");
+        AngleToleranceNormalized = FBPP.GetFloat("AngleToleranceNormalized");
+        TurningMultiplierNormalized = FBPP.GetFloat("TurningMultiplierNormalized");
+        AdditiveThrottleMultiplerNormalized = FBPP.GetFloat("AdditiveThrottleMultiplerNormalized");
 
         _angleToleranceSlider.normalizedValue = AngleToleranceNormalized;
         _turningMultiplierSlider.normalizedValue = TurningMultiplierNormalized;
@@ -47,9 +47,9 @@ public class SoftValuesManager : MonoBehaviour
         TurningMultiplierNormalized = _turningMultiplierSlider.normalizedValue;
         AdditiveThrottleMultiplerNormalized = _additiveThrottleMultiplerSlider.normalizedValue;
         
-        PlayerPrefs.SetFloat("AngleToleranceNormalized", AngleToleranceNormalized);
-        PlayerPrefs.SetFloat("TurningMultiplierNormalized", TurningMultiplierNormalized);
-        PlayerPrefs.SetFloat("AdditiveThrottleMultiplerNormalized", AdditiveThrottleMultiplerNormalized);
+        FBPP.SetFloat("AngleToleranceNormalized", AngleToleranceNormalized);
+        FBPP.SetFloat("TurningMultiplierNormalized", TurningMultiplierNormalized);
+        FBPP.SetFloat("AdditiveThrottleMultiplerNormalized", AdditiveThrottleMultiplerNormalized);
     }
 
     public static byte NormalizedFloatToByte(float inputFloat)

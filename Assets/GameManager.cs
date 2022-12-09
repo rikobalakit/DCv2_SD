@@ -15,6 +15,17 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var config = new FBPPConfig()
+        {
+            SaveFileName = "settings.txt",
+            AutoSaveData = true,
+            ScrambleSaveData = false,
+            EncryptionSecret = "my-secret",
+            SaveFilePath = ""
+        };
+// pass it to FBPP
+        FBPP.Start(config);
+        
         ConsoleOutput.Initialize();
     }
 
