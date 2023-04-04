@@ -2899,6 +2899,7 @@ GameObject:
   - component: {fileID: 574888235}
   - component: {fileID: 574888236}
   - component: {fileID: 574888237}
+  - component: {fileID: 574888238}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2987,6 +2988,9 @@ MonoBehaviour:
   BnoCalibrationAccelerometer: 0
   BnoCalibrationMagnetometer: 0
   SmartHeadingOffset: 0
+  PcLogFileName: 
+  PcLogLinesLength: 0
+  SomethingChangedSinceLastLog: 1
 --- !u!114 &574888232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3087,6 +3091,18 @@ MonoBehaviour:
   _lowBatteryAudio: {fileID: 89583887}
   _criticalBatteryAudio: {fileID: 1752533563}
   _deadBatteryAudio: {fileID: 918454677}
+--- !u!114 &574888238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574888226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dfd9c55e1d905240a3926a77c34a1cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &592461120
 GameObject:
   m_ObjectHideFlags: 0

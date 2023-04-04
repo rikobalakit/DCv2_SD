@@ -28,6 +28,11 @@ public class TelemetryValues : MonoBehaviour
 
     public int SmartHeadingOffset;
 
+    public string PcLogFileName;
+    public int PcLogLinesLength;
+    public bool SomethingChangedSinceLastLog = true;
+    
+
     public Vector3 Acceleration
     {
         get
