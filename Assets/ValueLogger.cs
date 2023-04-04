@@ -39,6 +39,15 @@ public class ValueLogger : MonoBehaviour
         
         if (isInitialLine)
         {
+            logLineStringBuilder.Append("WeaponThrottle,");
+        }
+        else
+        {
+            logLineStringBuilder.Append($"{TelemetryValues.I.WeaponThrottle},");
+        }
+        
+        if (isInitialLine)
+        {
             logLineStringBuilder.Append("OrientationX,");
         }
         else
