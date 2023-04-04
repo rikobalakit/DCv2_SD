@@ -2990,7 +2990,6 @@ MonoBehaviour:
   SmartHeadingOffset: 0
   PcLogFileName: 
   PcLogLinesLength: 0
-  SomethingChangedSinceLastLog: 1
 --- !u!114 &574888232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3103,6 +3102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfd9c55e1d905240a3926a77c34a1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _console: {fileID: 970267122}
 --- !u!1 &592461120
 GameObject:
   m_ObjectHideFlags: 0

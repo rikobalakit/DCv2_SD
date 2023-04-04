@@ -30,8 +30,9 @@ public class TelemetryValues : MonoBehaviour
 
     public string PcLogFileName;
     public int PcLogLinesLength;
-    public bool SomethingChangedSinceLastLog = true;
-    
+    //public bool SomethingChangedSinceLastLog = true;
+
+    public Vector3 OrientationEuler => Orientatation.eulerAngles;
 
     public Vector3 Acceleration
     {
