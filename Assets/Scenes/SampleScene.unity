@@ -3055,9 +3055,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a61c4e46a35dc4ea6efd27c35dd907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxWeaponThrottleSlider: {fileID: 120668119}
   _angleToleranceSlider: {fileID: 1966863803}
   _turningMultiplierSlider: {fileID: 1983334023}
   _additiveThrottleMultiplerSlider: {fileID: 1181812439}
+  MaxWeaponThrottleNormalized: 0.5
   AngleToleranceNormalized: 0.5
   TurningMultiplierNormalized: 0.25
   AdditiveThrottleMultiplerNormalized: 0.75
@@ -7998,7 +8000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _labelText: {fileID: 1531994393}
   _min: 0
-  _max: 20
+  _max: 1
   _slider: {fileID: 120668119}
 --- !u!114 &1531994393
 MonoBehaviour:

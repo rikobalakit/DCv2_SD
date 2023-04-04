@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class SoftValuesManager : MonoBehaviour
 {
+    
+    [SerializeField]
+    private Slider _maxWeaponThrottleSlider;
 
     [SerializeField]
     private Slider _angleToleranceSlider;
@@ -16,6 +19,7 @@ public class SoftValuesManager : MonoBehaviour
     [SerializeField]
     private Slider _additiveThrottleMultiplerSlider;
     
+    public float MaxWeaponThrottleNormalized = 0.5f;
     public float AngleToleranceNormalized = 0.5f;
     public float TurningMultiplierNormalized = 0.5f;
     public float AdditiveThrottleMultiplerNormalized = 0.5f;
@@ -32,10 +36,12 @@ public class SoftValuesManager : MonoBehaviour
 
         I = this;
 
+        MaxWeaponThrottleNormalized = FBPP.GetFloat("MaxWeaponThrottleNormalized");
         AngleToleranceNormalized = FBPP.GetFloat("AngleToleranceNormalized");
         TurningMultiplierNormalized = FBPP.GetFloat("TurningMultiplierNormalized");
         AdditiveThrottleMultiplerNormalized = FBPP.GetFloat("AdditiveThrottleMultiplerNormalized");
 
+        _maxWeaponThrottleSlider.normalizedValue = MaxWeaponThrottleNormalized;
         _angleToleranceSlider.normalizedValue = AngleToleranceNormalized;
         _turningMultiplierSlider.normalizedValue = TurningMultiplierNormalized;
         _additiveThrottleMultiplerSlider.normalizedValue = AdditiveThrottleMultiplerNormalized;
@@ -43,10 +49,12 @@ public class SoftValuesManager : MonoBehaviour
 
     private void Update()
     {
+        MaxWeaponThrottleNormalized = _maxWeaponThrottleSlider.normalizedValue;
         AngleToleranceNormalized = _angleToleranceSlider.normalizedValue;
         TurningMultiplierNormalized = _turningMultiplierSlider.normalizedValue;
         AdditiveThrottleMultiplerNormalized = _additiveThrottleMultiplerSlider.normalizedValue;
         
+        FBPP.SetFloat("MaxWeaponThrottleNormalized", MaxWeaponThrottleNormalized);
         FBPP.SetFloat("AngleToleranceNormalized", AngleToleranceNormalized);
         FBPP.SetFloat("TurningMultiplierNormalized", TurningMultiplierNormalized);
         FBPP.SetFloat("AdditiveThrottleMultiplerNormalized", AdditiveThrottleMultiplerNormalized);

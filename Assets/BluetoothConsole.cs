@@ -226,7 +226,7 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AngleToleranceNormalized)); //16
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.TurningMultiplierNormalized)); //17
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AdditiveThrottleMultiplerNormalized)); //18
-            ctrlValueList.Add(0x0); //19
+            ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.MaxWeaponThrottleNormalized)); //19
 
 
             
