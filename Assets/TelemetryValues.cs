@@ -28,6 +28,8 @@ public class TelemetryValues : MonoBehaviour
 
     public int SmartHeadingOffset;
 
+    public float WeaponThrottle;
+
     public string PcLogFileName;
     public int PcLogLinesLength;
     //public bool SomethingChangedSinceLastLog = true;
