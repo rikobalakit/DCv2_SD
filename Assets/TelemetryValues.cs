@@ -59,7 +59,7 @@ public class TelemetryValues : MonoBehaviour
             }
             else
             {
-                y = LisAcceleration.y;
+                y = -LisAcceleration.y;
             }
             
             if (Mathf.Abs(BnoAcceleration.z) < 10)
@@ -68,7 +68,7 @@ public class TelemetryValues : MonoBehaviour
             }
             else
             {
-                z = LisAcceleration.z;
+                z = -LisAcceleration.z;
             }
 
             return new Vector3(x, y, z);
