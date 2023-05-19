@@ -11044,7 +11044,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0ad9be23d81968249add7a401f029f66, type: 3}
   _audioSource: {fileID: 2050553694}
   _testModeEnabled: 0
-  _telemetryValues: {fileID: 0}
+  _telemetryValues: {fileID: 574888231}
 --- !u!82 &2050553694
 AudioSource:
   m_ObjectHideFlags: 0
