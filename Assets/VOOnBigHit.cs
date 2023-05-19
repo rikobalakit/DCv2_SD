@@ -44,6 +44,7 @@ public class VOOnBigHit : MonoBehaviour
         }
         else
         {
+            Debug.LogError($"_telemetryValues.Acceleration.magnitude: {_telemetryValues.Acceleration.magnitude}");
             if (_telemetryValues.Acceleration.magnitude > 40f)
             {
                 PlayPainSound();
