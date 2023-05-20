@@ -101,9 +101,15 @@ public class BluetoothConsole : MonoBehaviour
 
         _console.LogText($"BLE Robot found");
 
+        var isPaired = await device.GetPairedAsync();
 
-        _console.LogText(("Pairing..."));
-        await device.PairAsync();
+        if (isPaired == false)
+        {
+            _console.LogText(("Found unpaired."));
+            _console.LogText(("Pairing..."));
+            await device.PairAsync();
+        }
+
         _console.LogText(("Connecting..."));
         await device.ConnectAsync();
 
@@ -182,7 +188,7 @@ public class BluetoothConsole : MonoBehaviour
 
             if (!connectedStatus)
             {
-                Debug.LogError("Connection to bot lost!");
+                Debug.LogError("Connection to bot lost! (on write)");
                 break;
             }
                 
@@ -293,7 +299,7 @@ public class BluetoothConsole : MonoBehaviour
 
             if (!connectedStatus)
             {
-                Debug.LogError("Connection to bot lost!");
+                Debug.LogError("Connection to bot lost! (on read)");
                 break;
             }
             
