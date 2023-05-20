@@ -468,8 +468,10 @@ static class Extensions
         foreach (var device in devices)
         {
             //if (String.Equals(await device.GetAddressAsync(), deviceAddress, StringComparison.OrdinalIgnoreCase))
+            var currentDeviceAddress = await device.GetAddressAsync();
             var currentDeviceName = await device.GetNameAsync();
             Debug.LogError($"currentDeviceName: {currentDeviceName}");
+            
             if(currentDeviceName.Contains(deviceName))
             {
                 matches.Add(device);
