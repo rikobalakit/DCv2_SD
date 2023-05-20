@@ -33,6 +33,15 @@ public class BluetoothConsole : MonoBehaviour
 
     private string _boardSelection = "A";
 
+    private bool _isConnected = false;
+
+    private bool _connectionAttemptActive = false;
+
+    public bool IsConnected
+    {
+        get { return _isConnected; }
+    }
+
 
     private IEnumerator Start()
     {
@@ -66,6 +75,14 @@ public class BluetoothConsole : MonoBehaviour
     {
     }
 
+    private void Update()
+    {
+        if (!_isConnected && !_connectionAttemptActive)
+        {
+            Scan();
+        }
+    }
+
     public void SetToBoardA()
     {
         _boardSelection = "A";
@@ -86,9 +103,11 @@ public class BluetoothConsole : MonoBehaviour
         PlayerPrefs.SetString("boardSelection", "C");
         _console.LogText($"Selected {_boardSelection}");
     }
+    
 
     public void Scan()
     {
+        _connectionAttemptActive = true;
         var adapterName = "hci0";
 
         var adapterObjectPath = $"/org/bluez/{adapterName}";
@@ -139,6 +158,7 @@ public class BluetoothConsole : MonoBehaviour
         {
             _console.LogText(
                 $"BLE Robot missing");
+            _connectionAttemptActive = false;
             return;
         }
 
@@ -176,6 +196,7 @@ public class BluetoothConsole : MonoBehaviour
         if (!deviceInfoServiceFound)
         {
             _console.LogText(("Missing DIS"));
+            _connectionAttemptActive = false;
             return;
         }
 
@@ -210,6 +231,9 @@ public class BluetoothConsole : MonoBehaviour
         }
 
         _console.LogText("Initialized");
+        _isConnected = true;
+        _connectionAttemptActive = false;
+        
         var taskS = JoystickTask(ctrlAllCharacteristic, device);
         var taskAll = SensorAllTask(orientationAllCharacteristic, device);
         await Task.WhenAll(taskS, taskAll);
@@ -240,6 +264,7 @@ public class BluetoothConsole : MonoBehaviour
             {
                 Debug.LogError("Connection to bot lost! (on write)");
                 _console.LogText(("Connection lost"));
+                _isConnected = false;
                 break;
             }
 
@@ -350,6 +375,7 @@ public class BluetoothConsole : MonoBehaviour
             {
                 Debug.LogError("Connection to bot lost! (on read)");
                 _console.LogText(("Connection lost"));
+                _isConnected = true;
                 break;
             }
 
