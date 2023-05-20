@@ -189,6 +189,7 @@ public class BluetoothConsole : MonoBehaviour
             if (!connectedStatus)
             {
                 Debug.LogError("Connection to bot lost! (on write)");
+                _console.LogText(("Connection lost"));
                 break;
             }
                 
@@ -300,6 +301,7 @@ public class BluetoothConsole : MonoBehaviour
             if (!connectedStatus)
             {
                 Debug.LogError("Connection to bot lost! (on read)");
+                _console.LogText(("Connection lost"));
                 break;
             }
             
