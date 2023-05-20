@@ -89,7 +89,7 @@ public class BluetoothConsole : MonoBehaviour
     {
         var deviceAddress = "58:CF:79:F3:29:BE";
         
-        var device = await adapter.GetDeviceAsyncAnyByName("ERGO");
+        var device = await adapter.GetDeviceAsyncAnyByName("DataCollector_");
         //var device = await adapter.GetDeviceAsync(deviceAddress);
 
         if (device == null)
