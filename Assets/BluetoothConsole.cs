@@ -31,6 +31,8 @@ public class BluetoothConsole : MonoBehaviour
 
     private bool _sensorEnabled = true;
 
+    private string _boardSelection = "A";
+
 
     private IEnumerator Start()
     {
@@ -43,8 +45,10 @@ public class BluetoothConsole : MonoBehaviour
         {
             yield return null;
         }
+
+        _boardSelection = PlayerPrefs.GetString("boardSelection", "A");
         
-        _console.LogText("Scan Started");
+        _console.LogText($"Scan Started, Board {_boardSelection}");
         
         Scan();
 
@@ -60,6 +64,27 @@ public class BluetoothConsole : MonoBehaviour
 
     private void UpdateButtonText()
     {
+    }
+
+    public void SetToBoardA()
+    {
+        _boardSelection= "A";
+        PlayerPrefs.SetString("boardSelection", "A");
+        _console.LogText($"Selected {_boardSelection}");
+    }
+    
+    public void SetToBoardB()
+    {
+        _boardSelection= "B";
+        PlayerPrefs.SetString("boardSelection", "B");
+        _console.LogText($"Selected {_boardSelection}");
+    }
+    
+    public void SetToBoardC()
+    {
+        _boardSelection = "C";
+        PlayerPrefs.SetString("boardSelection", "C");
+        _console.LogText($"Selected {_boardSelection}");
     }
 
     public void Scan()
@@ -87,10 +112,28 @@ public class BluetoothConsole : MonoBehaviour
 
     private async void ScanAsync(IAdapter1 adapter)
     {
-        var deviceAddress = "58:CF:79:F3:29:BE";
+        var deviceAddressA = "58:CF:79:F3:29:BE";
+        var deviceAddressB = "58:CF:79:F1:FD:46";
+        var deviceAddressC = "58:CF:79:EA:CE:FE";
         
-        var device = await adapter.GetDeviceAsyncAnyByName("DataCollector_");
-        //var device = await adapter.GetDeviceAsync(deviceAddress);
+        //var device = await adapter.GetDeviceAsyncAnyByName("DataCollector_");
+
+        var selectedDeviceAddress = deviceAddressA;
+        
+        switch(_boardSelection)
+        {
+            case "A":
+                selectedDeviceAddress = deviceAddressA;
+                break;
+            case "B":
+                selectedDeviceAddress = deviceAddressB;
+                break;
+            case "C":
+                selectedDeviceAddress = deviceAddressC;
+                break;
+        }
+        
+        var device = await adapter.GetDeviceAsync(selectedDeviceAddress);
 
         if (device == null)
         {
