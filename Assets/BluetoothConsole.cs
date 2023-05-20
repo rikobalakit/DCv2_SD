@@ -102,6 +102,8 @@ public class BluetoothConsole : MonoBehaviour
         _console.LogText($"BLE Robot found");
 
 
+        _console.LogText(("Pairing..."));
+        await device.PairAsync();
         _console.LogText(("Connecting..."));
         await device.ConnectAsync();
 
@@ -152,14 +154,14 @@ public class BluetoothConsole : MonoBehaviour
         }
 
         _console.LogText("Initialized");
-        var taskS = JoystickTask(ctrlAllCharacteristic);
-        var taskAll = SensorAllTask(orientationAllCharacteristic);
+        var taskS = JoystickTask(ctrlAllCharacteristic, device);
+        var taskAll = SensorAllTask(orientationAllCharacteristic, device);
         await Task.WhenAll(taskS, taskAll);
 
 
     }
 
-    private async Task JoystickTask(IGattCharacteristic1 characteristicAll)
+    private async Task JoystickTask(IGattCharacteristic1 characteristicAll, IDevice1 device)
     {
         var timeout = TimeSpan.FromSeconds(5);
         short lValue;
@@ -175,7 +177,15 @@ public class BluetoothConsole : MonoBehaviour
             {
                 await Task.Delay(10);
             }
-            
+
+            var connectedStatus = await device.GetConnectedAsync();
+
+            if (!connectedStatus)
+            {
+                Debug.LogError("Connection to bot lost!");
+                break;
+            }
+                
             lastTimeReadSensors = Time.time;
             
             short safetyOffset = 0;
@@ -255,14 +265,14 @@ public class BluetoothConsole : MonoBehaviour
 
 
             var writeAll = characteristicAll.WriteValueAsync(ctrlValue, timeout);
-
+            
             await Task.WhenAll(writeAll);
 
             //Debug.LogError($"joystick task {Time.time:0.000}");
         }
     }
 
-    private async Task SensorAllTask(IGattCharacteristic1 characteristicAll)
+    private async Task SensorAllTask(IGattCharacteristic1 characteristicAll, IDevice1 device)
     {
         var timeout = TimeSpan.FromSeconds(5);
 
@@ -277,6 +287,14 @@ public class BluetoothConsole : MonoBehaviour
             while (Time.time < (lastTimeReadSensors + readCooldown))
             {
                 await Task.Delay(10);
+            }
+            
+            var connectedStatus = await device.GetConnectedAsync();
+
+            if (!connectedStatus)
+            {
+                Debug.LogError("Connection to bot lost!");
+                break;
             }
             
             lastTimeReadSensors = Time.time;
@@ -490,7 +508,6 @@ static class Extensions
             //if (String.Equals(await device.GetAddressAsync(), deviceAddress, StringComparison.OrdinalIgnoreCase))
             var currentDeviceAddress = await device.GetAddressAsync();
             var currentDeviceName = await device.GetNameAsync();
-            Debug.LogError($"currentDeviceName: {currentDeviceName}");
             
             if(currentDeviceName.Contains(deviceName))
             {
