@@ -165,8 +165,19 @@ public class BluetoothConsole : MonoBehaviour
         short lValue;
         short rValue;
 
+        var lastTimeReadSensors = Time.time;
+        var readCooldown = 0.1f;
+        
         while (Application.isPlaying)
         {
+            
+            if (Time.time > (lastTimeReadSensors + readCooldown))
+            {
+                continue;
+            }
+            
+            lastTimeReadSensors = Time.time;
+            
             short safetyOffset = 0;
 
             const short amountToThrottle = 30;
@@ -255,11 +266,20 @@ public class BluetoothConsole : MonoBehaviour
     {
         var timeout = TimeSpan.FromSeconds(5);
 
+        var lastTimeReadSensors = Time.time;
+        var readCooldown = 0.1f;
+        
         while (Application.isPlaying)
         {
 
             //Debug.LogError($"sensor task {Time.time:0.000}");
 
+            if (Time.time > (lastTimeReadSensors + readCooldown))
+            {
+                continue;
+            }
+            
+            lastTimeReadSensors = Time.time;
 
             byte[] orientationAll;
             orientationAll = await characteristicAll.ReadValueAsync(timeout);
