@@ -40,16 +40,16 @@ public class BluetoothConsole : MonoBehaviour
         {
             yield return null;
         }
-        
+
         while (HeartbeatController.I == null)
         {
             yield return null;
         }
 
         _boardSelection = PlayerPrefs.GetString("boardSelection", "A");
-        
+
         _console.LogText($"Scan Started, Board {_boardSelection}");
-        
+
         Scan();
 
         UpdateButtonText();
@@ -68,18 +68,18 @@ public class BluetoothConsole : MonoBehaviour
 
     public void SetToBoardA()
     {
-        _boardSelection= "A";
+        _boardSelection = "A";
         PlayerPrefs.SetString("boardSelection", "A");
         _console.LogText($"Selected {_boardSelection}");
     }
-    
+
     public void SetToBoardB()
     {
-        _boardSelection= "B";
+        _boardSelection = "B";
         PlayerPrefs.SetString("boardSelection", "B");
         _console.LogText($"Selected {_boardSelection}");
     }
-    
+
     public void SetToBoardC()
     {
         _boardSelection = "C";
@@ -115,12 +115,12 @@ public class BluetoothConsole : MonoBehaviour
         var deviceAddressA = "58:CF:79:F3:29:BE";
         var deviceAddressB = "58:CF:79:F1:FD:46";
         var deviceAddressC = "58:CF:79:EA:CE:FE";
-        
+
         //var device = await adapter.GetDeviceAsyncAnyByName("DataCollector_");
 
         var selectedDeviceAddress = deviceAddressA;
-        
-        switch(_boardSelection)
+
+        switch (_boardSelection)
         {
             case "A":
                 selectedDeviceAddress = deviceAddressA;
@@ -132,7 +132,7 @@ public class BluetoothConsole : MonoBehaviour
                 selectedDeviceAddress = deviceAddressC;
                 break;
         }
-        
+
         var device = await adapter.GetDeviceAsync(selectedDeviceAddress);
 
         if (device == null)
@@ -144,6 +144,7 @@ public class BluetoothConsole : MonoBehaviour
 
         _console.LogText($"BLE Robot found");
 
+        /*
         var isPaired = await device.GetPairedAsync();
 
         if (isPaired == false)
@@ -152,13 +153,19 @@ public class BluetoothConsole : MonoBehaviour
             _console.LogText(("Pairing..."));
             await device.PairAsync();
         }
+        */
+        var isConnected = await device.GetConnectedAsync();
 
-        _console.LogText(("Connecting..."));
-        await device.ConnectAsync();
+        if (isConnected == false)
+        {
+            _console.LogText(("Not connected"));
+            _console.LogText(("Connecting..."));
+            await device.ConnectAsync();
+        }
 
 
         //await WaitForPropertyValueAsync<bool>("Connected", device.GetConnectedAsync(), value: true, 5);
-        _console.LogText(("Connected."));
+        _console.LogText(($"Connected to {_boardSelection}"));
 
 
         var servicesUUID = await device.GetUUIDsAsync();
@@ -218,10 +225,10 @@ public class BluetoothConsole : MonoBehaviour
 
         var lastTimeReadSensors = Time.time;
         var readCooldown = 0.05f;
-        
+
         while (Application.isPlaying)
         {
-            
+
             while (Time.time < (lastTimeReadSensors + readCooldown))
             {
                 await Task.Delay(10);
@@ -235,9 +242,9 @@ public class BluetoothConsole : MonoBehaviour
                 _console.LogText(("Connection lost"));
                 break;
             }
-                
+
             lastTimeReadSensors = Time.time;
-            
+
             short safetyOffset = 0;
 
             const short amountToThrottle = 30;
@@ -275,8 +282,8 @@ public class BluetoothConsole : MonoBehaviour
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f));
 
             TelemetryValues.I.WeaponThrottle = w1Value;
-            
-            short driveThrottle = (short)(-InputManager.I.LY * 100);
+
+            short driveThrottle = (short) (-InputManager.I.LY * 100);
 
             short SecurityBytes = 0x69;
 
@@ -287,21 +294,19 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.ButtonBytes)); //2-3
             ctrlValueList.AddRange(BitConverter.GetBytes(InputManager.I.Heading)); //4-5
             ctrlValueList.AddRange(BitConverter.GetBytes(driveThrottle)); //6-7
-            ctrlValueList.AddRange(BitConverter.GetBytes(lValue));//8-9
+            ctrlValueList.AddRange(BitConverter.GetBytes(lValue)); //8-9
             ctrlValueList.AddRange(BitConverter.GetBytes(rValue)); //10-11
             ctrlValueList.AddRange(BitConverter.GetBytes(w0Value)); //12-13
             ctrlValueList.AddRange(BitConverter.GetBytes(w1Value)); //14-15
             //ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //16
             //ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //18
-            
+
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AngleToleranceNormalized)); //16
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.TurningMultiplierNormalized)); //17
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AdditiveThrottleMultiplerNormalized)); //18
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.MaxWeaponThrottleNormalized)); //19
 
 
-            
-            
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //20
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //22
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //24
@@ -310,12 +315,12 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //30
             ctrlValueList.AddRange(BitConverter.GetBytes(HeartbeatController.I.HeartbeatTime)); // 32-35
             ctrlValueList.AddRange(BitConverter.GetBytes(SecurityBytes)); //36-37
-            
+
             byte[] ctrlValue = ctrlValueList.ToArray();
 
 
             var writeAll = characteristicAll.WriteValueAsync(ctrlValue, timeout);
-            
+
             await Task.WhenAll(writeAll);
 
             //Debug.LogError($"joystick task {Time.time:0.000}");
@@ -328,7 +333,7 @@ public class BluetoothConsole : MonoBehaviour
 
         var lastTimeReadSensors = Time.time;
         var readCooldown = 0.05f;
-        
+
         while (Application.isPlaying)
         {
 
@@ -338,7 +343,7 @@ public class BluetoothConsole : MonoBehaviour
             {
                 await Task.Delay(10);
             }
-            
+
             var connectedStatus = await device.GetConnectedAsync();
 
             if (!connectedStatus)
@@ -347,7 +352,7 @@ public class BluetoothConsole : MonoBehaviour
                 _console.LogText(("Connection lost"));
                 break;
             }
-            
+
             lastTimeReadSensors = Time.time;
 
             byte[] orientationAll;
@@ -373,7 +378,7 @@ public class BluetoothConsole : MonoBehaviour
             byte[] escCurrentBytes = {orientationAll[34], orientationAll[35]};
             byte[] escUsedMahBytes = {orientationAll[36], orientationAll[37]};
             byte[] escRpmBytes = {orientationAll[38], orientationAll[39]};
-            
+
             byte[] bnoTempBytes = {orientationAll[40]};
             byte[] bnoCalibrationBytes = {orientationAll[41], orientationAll[42], orientationAll[43], orientationAll[44]};
 
@@ -548,7 +553,7 @@ static class Extensions
 
         return matches.FirstOrDefault();
     }
-    
+
     public static async Task<IDevice1> GetDeviceAsyncAnyByName(this IAdapter1 adapter, string deviceName)
     {
         var devices = await GetProxiesAsync<IDevice1>(adapter, BluezConstants.Device1Interface);
@@ -559,8 +564,8 @@ static class Extensions
             //if (String.Equals(await device.GetAddressAsync(), deviceAddress, StringComparison.OrdinalIgnoreCase))
             var currentDeviceAddress = await device.GetAddressAsync();
             var currentDeviceName = await device.GetNameAsync();
-            
-            if(currentDeviceName.Contains(deviceName))
+
+            if (currentDeviceName.Contains(deviceName))
             {
                 matches.Add(device);
             }
