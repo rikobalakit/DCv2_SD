@@ -171,9 +171,9 @@ public class BluetoothConsole : MonoBehaviour
         while (Application.isPlaying)
         {
             
-            if (Time.time < (lastTimeReadSensors + readCooldown))
+            while (Time.time < (lastTimeReadSensors + readCooldown))
             {
-                continue;
+                await Task.Delay(10);
             }
             
             lastTimeReadSensors = Time.time;
@@ -274,9 +274,9 @@ public class BluetoothConsole : MonoBehaviour
 
             //Debug.LogError($"sensor task {Time.time:0.000}");
 
-            if (Time.time < (lastTimeReadSensors + readCooldown))
+            while (Time.time < (lastTimeReadSensors + readCooldown))
             {
-                continue;
+                await Task.Delay(10);
             }
             
             lastTimeReadSensors = Time.time;
