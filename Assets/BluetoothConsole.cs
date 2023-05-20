@@ -88,8 +88,8 @@ public class BluetoothConsole : MonoBehaviour
     private async void ScanAsync(IAdapter1 adapter)
     {
         var deviceAddress = "58:CF:79:F3:29:BE";
-
-
+        
+        var deviceFindingTest = await adapter.GetDeviceAsyncAnyByName("ERGO");
         var device = await adapter.GetDeviceAsync(deviceAddress);
 
         if (device == null)
@@ -455,6 +455,31 @@ static class Extensions
         if (matches.Count > 1)
         {
             throw new Exception($"{matches.Count} devices found with the address {deviceAddress}!");
+        }
+
+        return matches.FirstOrDefault();
+    }
+    
+    public static async Task<IDevice1> GetDeviceAsyncAnyByName(this IAdapter1 adapter, string deviceName)
+    {
+        var devices = await GetProxiesAsync<IDevice1>(adapter, BluezConstants.Device1Interface);
+        var matches = new List<IDevice1>();
+
+        foreach (var device in devices)
+        {
+            //if (String.Equals(await device.GetAddressAsync(), deviceAddress, StringComparison.OrdinalIgnoreCase))
+            var currentDeviceName = await device.GetNameAsync();
+            Debug.LogError($"currentDeviceName: {currentDeviceName}");
+            if(currentDeviceName.Contains(deviceName))
+            {
+                matches.Add(device);
+            }
+        }
+
+        // BlueZ can get in a weird state, probably due to random public BLE addresses.
+        if (matches.Count > 1)
+        {
+            throw new Exception($"{matches.Count} devices found with the name {deviceName}! Turn some off!!!");
         }
 
         return matches.FirstOrDefault();
