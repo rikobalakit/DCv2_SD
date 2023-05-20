@@ -165,16 +165,6 @@ public class BluetoothConsole : MonoBehaviour
 
         _console.LogText($"BLE Robot found");
 
-        /*
-        var isPaired = await device.GetPairedAsync();
-
-        if (isPaired == false)
-        {
-            _console.LogText(("Found unpaired."));
-            _console.LogText(("Pairing..."));
-            await device.PairAsync();
-        }
-        */
         var isConnected = await device.GetConnectedAsync();
 
         if (isConnected == false)
@@ -183,8 +173,7 @@ public class BluetoothConsole : MonoBehaviour
             _console.LogText(("Connecting..."));
             await device.ConnectAsync();
         }
-
-
+        
         //await WaitForPropertyValueAsync<bool>("Connected", device.GetConnectedAsync(), value: true, 5);
         _console.LogText(($"Connected to {_boardSelection}"));
 
@@ -462,93 +451,6 @@ public class BluetoothConsole : MonoBehaviour
     }
 
 }
-
-/*
-
-// Use the `bluetoothctl` command-line tool or the Bluetooth Manager GUI to scan for devices and possibly pair.
-// Then you can use this program to connect and print "Device Information" GATT service values.
-class Program
-{
-  static string defaultAdapterName = "hci0";
-  static TimeSpan timeout = TimeSpan.FromSeconds(15);
-
-  static async Task Main(string[] args)
-  {
-    if (args.Length < 1)
-    {
-      Console.WriteLine("Usage: BlueZExample <deviceAddress> [adapterName]");
-      Console.WriteLine("Example: BlueZExample AA:BB:CC:11:22:33 hci1");
-      return;
-    }
-
-    var deviceAddress = args[0];
-    var adapterName = args.Length > 1 ? args[1] : defaultAdapterName;
-
-    // Get the Bluetooth adapter.
-    var adapterObjectPath = $"/org/bluez/{adapterName}";
-    var adapter = Connection.System.CreateProxy<IAdapter1>(BluezConstants.DBusService, adapterObjectPath);
-    if (adapter == null)
-    {
-      Console.WriteLine($"Bluetooth adapter '{adapterName}' not found.");
-    }
-
-    // Find the Bluetooth peripheral.
-    var device = await adapter.GetDeviceAsync(deviceAddress);
-    if (device == null)
-    {
-      Console.WriteLine($"Bluetooth peripheral with address '{deviceAddress}' not found. Use `bluetoothctl` or Bluetooth Manager to scan and possibly pair first.");
-      return;
-    }
-
-    Console.WriteLine("Connecting...");
-    await device.ConnectAsync();
-    await WaitForPropertyValueAsync<bool>("Connected", device.GetConnectedAsync, value: true, timeout);
-    Console.WriteLine("Connected.");
-
-    Console.WriteLine("Waiting for services to resolve...");
-    await WaitForPropertyValueAsync<bool>("ServicesResolved", device.GetServicesResolvedAsync, value: true, timeout);
-
-    var servicesUUID = await device.GetUUIDsAsync();
-    Console.WriteLine($"Device offers {servicesUUID.Length} service(s).");
-
-    var deviceInfoServiceFound = servicesUUID.Any(uuid => String.Equals(uuid, GattConstants.DeviceInformationServiceUUID, StringComparison.OrdinalIgnoreCase));
-    if (!deviceInfoServiceFound)
-    {
-      Console.WriteLine("Device doesn't have the Device Information Service. Try pairing first?");
-      return;
-    }
-
-    // Console.WriteLine("Retrieving Device Information service...");
-    var service = await device.GetServiceAsync(GattConstants.DeviceInformationServiceUUID);
-    var modelNameCharacteristic = await service.GetCharacteristicAsync(GattConstants.ModelNameCharacteristicUUID);
-    var manufacturerCharacteristic = await service.GetCharacteristicAsync(GattConstants.ManufacturerNameCharacteristicUUID);
-
-    int characteristicsFound = 0;
-    if (modelNameCharacteristic != null)
-    {
-        characteristicsFound++;
-        Console.WriteLine("Reading model name characteristic...");
-        var modelNameBytes = await modelNameCharacteristic.ReadValueAsync(timeout);
-        Console.WriteLine($"Model name: {Encoding.UTF8.GetString(modelNameBytes)}");
-    }
-
-    if (manufacturerCharacteristic != null)
-    {
-        characteristicsFound++;
-        Console.WriteLine("Reading manufacturer characteristic...");
-        var manufacturerBytes = await manufacturerCharacteristic.ReadValueAsync(timeout);
-        Console.WriteLine($"Manufacturer: {Encoding.UTF8.GetString(manufacturerBytes)}");
-    }
-
-    if (characteristicsFound == 0)
-    {
-        Console.WriteLine("Model name and manufacturer characteristics not found.");
-    }
-  }
-
-
-*/
-
 
 // Extensions that make it easier to get a D-Bus object or read a characteristic value.
 static class Extensions
