@@ -166,7 +166,7 @@ public class BluetoothConsole : MonoBehaviour
         short rValue;
 
         var lastTimeReadSensors = Time.time;
-        var readCooldown = 0.1f;
+        var readCooldown = 0.05f;
         
         while (Application.isPlaying)
         {
@@ -267,7 +267,7 @@ public class BluetoothConsole : MonoBehaviour
         var timeout = TimeSpan.FromSeconds(5);
 
         var lastTimeReadSensors = Time.time;
-        var readCooldown = 0.1f;
+        var readCooldown = 0.05f;
         
         while (Application.isPlaying)
         {
