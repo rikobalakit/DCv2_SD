@@ -79,6 +79,7 @@ public class BluetoothConsole : MonoBehaviour
     {
         if (!_isConnected && !_connectionAttemptActive)
         {
+            _console.LogText($"Autoreconnect");
             Scan();
         }
     }
