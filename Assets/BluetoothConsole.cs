@@ -295,6 +295,8 @@ public class BluetoothConsole : MonoBehaviour
 
             short w0Value = (short) ((short) (InputManager.I.L2 * -90f + 90f));
             short w1Value = (short) ((short) (InputManager.I.R2 * -90f + 90f));
+            
+            Debug.LogError($"r2: {w1Value}");
 
             TelemetryValues.I.WeaponThrottle = w1Value;
 
