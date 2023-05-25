@@ -298,14 +298,14 @@ public class BluetoothConsole : MonoBehaviour
 
             if (InputManager.I.R1)
             {
-                w0Value = 180;
+                w1Value = 180;
             }
             
 
 
             TelemetryValues.I.WeaponThrottle = w1Value;
             
-            Debug.LogError($"r2: {w1Value}, r1 pressed? {InputManager.I.R1}");
+            Debug.LogError($"InputManager.I.L2: {InputManager.I.L2}, r1 pressed? {InputManager.I.R1}, w1 value: {w1Value}" );
 
             short driveThrottle = (short) (-InputManager.I.LY * 100);
 
