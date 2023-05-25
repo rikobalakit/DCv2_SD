@@ -301,9 +301,11 @@ public class BluetoothConsole : MonoBehaviour
                 w0Value = 180;
             }
             
-            Debug.LogError($"r2: {w1Value}");
+
 
             TelemetryValues.I.WeaponThrottle = w1Value;
+            
+            Debug.LogError($"r2: {w1Value}");
 
             short driveThrottle = (short) (-InputManager.I.LY * 100);
 
