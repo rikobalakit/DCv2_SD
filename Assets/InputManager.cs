@@ -13,6 +13,8 @@ public class InputManager : MonoBehaviour
     private bool _dPadLeftPressed = false;
     private bool _dPadRightPressed = false;
 
+    private bool _l1;
+    private bool _r1;
     private bool _l3;
     private bool _l4;
     private bool _r3;
@@ -53,6 +55,16 @@ public class InputManager : MonoBehaviour
     public float R2
     {
         get { return _r2; }
+    }
+    
+    public bool L1
+    {
+        get { return _l3; }
+    }
+    
+    public bool R1
+    {
+        get { return _r1; }
     }
     
     public bool L3
@@ -194,6 +206,9 @@ public class InputManager : MonoBehaviour
         _dPadDownPressed = dpadY > 0f;
         _dPadLeftPressed = dpadX < 0f;
         _dPadRightPressed = dpadX > 0f;
+
+        _l1 = Input.GetButton("L1");
+        _r1 = Input.GetButton("R1");
         
         _l2 = Input.GetAxis("L2");
         _r2 = Input.GetAxis("R2");
