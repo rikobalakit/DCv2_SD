@@ -305,7 +305,7 @@ public class BluetoothConsole : MonoBehaviour
 
             TelemetryValues.I.WeaponThrottle = w1Value;
             
-            Debug.LogError($"r2: {w1Value}");
+            Debug.LogError($"r2: {w1Value}, r1 pressed? {InputManager.I.R1}");
 
             short driveThrottle = (short) (-InputManager.I.LY * 100);
 
