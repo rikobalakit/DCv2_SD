@@ -1046,7 +1046,7 @@ GameObject:
   - component: {fileID: 120668118}
   - component: {fileID: 120668119}
   m_Layer: 5
-  m_Name: WeaponMaxThrottle
+  m_Name: AngleAttenuateWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6596,7 +6596,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Weapon Max
+  m_Text: Weapon Attenuation Angle
 --- !u!222 &1177661700
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8716,7 +8716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _labelText: {fileID: 1531994393}
   _min: 0
-  _max: 1
+  _max: 20
   _slider: {fileID: 120668119}
 --- !u!114 &1531994393
 MonoBehaviour:
