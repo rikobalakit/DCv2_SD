@@ -20,6 +20,8 @@ public class VOOnBigHit : MonoBehaviour
     private TelemetryValues _telemetryValues;
     
     private float _testModeLastTimeSoundPlayed = 0f;
+
+    private int _framesHighImpact = 0;
     
     public void PlayPainSound()
     {
@@ -45,9 +47,19 @@ public class VOOnBigHit : MonoBehaviour
         else
         {
             //Debug.LogError($"_telemetryValues.Acceleration.magnitude: {_telemetryValues.BnoAcceleration.magnitude}");
-            if (_telemetryValues.BnoAcceleration.magnitude > 20f)
+            if (_telemetryValues.BnoAcceleration.magnitude > 25f)
+            {
+                _framesHighImpact++;
+            }
+            else
+            {
+                _framesHighImpact = 0;
+            }
+
+            if (_framesHighImpact > 2)
             {
                 PlayPainSound();
+                _framesHighImpact = 0;
             }
         }
     }
