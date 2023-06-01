@@ -294,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &25537986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1817,6 +1817,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216720217}
   m_CullTransparentMesh: 0
+--- !u!1 &248954606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248954608}
+  - component: {fileID: 248954607}
+  m_Layer: 0
+  m_Name: FaceController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &248954607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248954606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e0ea56af8ff0946bdc4e94e540cb43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _avatarSpace: {fileID: 938328732}
+  _startingDefaultFace: {fileID: 2800000, guid: d74a304068676b74c9e27925d4cb7ad8,
+    type: 3}
+  _facesList:
+  - FaceName: Angry
+    FaceTexture: {fileID: 2800000, guid: 02ed521420aa26c4f809f0fdb879dbe6, type: 3}
+  - FaceName: Fighting
+    FaceTexture: {fileID: 2800000, guid: 82527ec26a0e9fb47b7267d0d0ba8486, type: 3}
+  - FaceName: Neutral
+    FaceTexture: {fileID: 2800000, guid: d74a304068676b74c9e27925d4cb7ad8, type: 3}
+  - FaceName: Sad
+    FaceTexture: {fileID: 2800000, guid: c106e519cbb9f894a9e855731406841f, type: 3}
+  - FaceName: Scared
+    FaceTexture: {fileID: 2800000, guid: 077e70ee484c99d41be820738fb9d497, type: 3}
+  - FaceName: Smiling
+    FaceTexture: {fileID: 2800000, guid: 817ca2b907463d249be52a1f230cbdfc, type: 3}
+  - FaceName: Determined
+    FaceTexture: {fileID: 2800000, guid: 3df8be97671b2884cb595077c7867df3, type: 3}
+  - FaceName: Smug
+    FaceTexture: {fileID: 2800000, guid: 4e3d45401a199c94eb234cf6ffc87823, type: 3}
+  - FaceName: Surprised
+    FaceTexture: {fileID: 2800000, guid: 5aebfeed72d6e414581f1b21c1162a0f, type: 3}
+  - FaceName: Tired
+    FaceTexture: {fileID: 2800000, guid: 7d11e47c99b7439468ea8f19255ebf27, type: 3}
+  - FaceName: Fighting2
+    FaceTexture: {fileID: 2800000, guid: dbe9d6b41dc02c9448fd79373d101d86, type: 3}
+  _testCycleAllFaces: 1
+--- !u!4 &248954608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248954606}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -39.595455, y: 1078.6858, z: -184.655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253874274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,6 +3599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _console: {fileID: 970267122}
+  _bluetoothController: {fileID: 574888229}
 --- !u!1 &592461120
 GameObject:
   m_ObjectHideFlags: 0
@@ -5694,8 +5766,9 @@ GameObject:
   - component: {fileID: 938328731}
   - component: {fileID: 938328733}
   - component: {fileID: 938328732}
+  - component: {fileID: 938328734}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: Image_Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5718,8 +5791,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 463.6, y: -207.88}
+  m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &938328732
 MonoBehaviour:
@@ -5735,13 +5808,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: d74a304068676b74c9e27925d4cb7ad8, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -5756,6 +5829,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938328730}
   m_CullTransparentMesh: 1
+--- !u!114 &938328734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938328730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543ddbe12367a4899b011d43ef41f357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enablePositionNoise: 1
+  _enableRotationNoise: 1
+  _positionFrequency: 0.2
+  _rotationFrequency: 0.2
+  _positionAmplitude: 5
+  _rotationAmplitude: 5
+  _positionScale: {x: 1, y: 1, z: 1}
+  _rotationScale: {x: 0, y: 0, z: 1}
+  _positionFractalLevel: 3
+  _rotationFractalLevel: 3
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6110,7 +6205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1005508554
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6151,7 +6246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Show Logs
+  m_text: SHOW LOGS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -11565,7 +11660,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Show Telemetry
+  m_text: SHOW TELEMETRY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}

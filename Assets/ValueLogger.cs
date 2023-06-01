@@ -8,6 +8,9 @@ public class ValueLogger : MonoBehaviour
 
     [SerializeField]
     private MonospaceTextLogOutput _console;
+
+    [SerializeField]
+    private BluetoothConsole _bluetoothController;
     
     private bool isInitialized = false;
 
@@ -313,8 +316,11 @@ public class ValueLogger : MonoBehaviour
         if (TelemetryValues.I == null)
         {
             return;
+        }
 
-            ;
+        if (!_bluetoothController.IsConnected)
+        {
+            return;
         }
 
         if (!isInitialized)

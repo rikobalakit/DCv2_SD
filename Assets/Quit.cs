@@ -21,7 +21,7 @@ public class Quit : MonoBehaviour
     {
         _isClicked = false;
         var elapsedTime = Time.time - _timeClickedDown;
-        Debug.LogError($"Click up after {elapsedTime}");
+
 
         if (elapsedTime < _timeToHoldToQuit)
         {
@@ -37,7 +37,7 @@ public class Quit : MonoBehaviour
     public void OnClickDown()
     {
         _isClicked = true;
-        Debug.LogError("Click down");
+
         _timeClickedDown = Time.time;
     }
 
