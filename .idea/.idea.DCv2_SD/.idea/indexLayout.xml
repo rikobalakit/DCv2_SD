@@ -28,6 +28,7 @@
       <Path>Library</Path>
       <Path>Logs</Path>
       <Path>QuickBuild</Path>
+      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>desktop logs</Path>
       <Path>obj</Path>

@@ -133,7 +133,7 @@ public class BluetoothConsole : MonoBehaviour
     private async void ScanAsync(IAdapter1 adapter)
     {
         var deviceAddressA = "58:CF:79:F3:29:BE";
-        var deviceAddressB = "58:CF:79:F1:FD:46";
+        var deviceAddressB = "58:CF:79:F0:A2:B4";
         var deviceAddressC = "58:CF:79:EA:CE:FE";
 
         //var device = await adapter.GetDeviceAsyncAnyByName("DataCollector_");
