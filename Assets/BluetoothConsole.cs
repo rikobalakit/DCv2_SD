@@ -306,7 +306,6 @@ public class BluetoothConsole : MonoBehaviour
 
             TelemetryValues.I.WeaponThrottle = w1Value;
             
-            Debug.LogError($"InputManager.I.L2: {InputManager.I.L2}, r1 pressed? {InputManager.I.R1}, w1 value: {w1Value}" );
 
             short driveThrottle = 0;
             float rawThrottle = InputManager.I.LY;
@@ -321,7 +320,9 @@ public class BluetoothConsole : MonoBehaviour
                 correctPolaritySquareRootThrottle = -squareRootAbsThrottle;
             }
             
-            driveThrottle = (short) (-correctPolaritySquareRootThrottle * 100);
+            driveThrottle = (short) (-correctPolaritySquareRootThrottle * 100f);
+            
+            Debug.LogError($"rawThrottle: {rawThrottle}, correctPolaritySquareRootThrottle: {correctPolaritySquareRootThrottle}, driveThrottle: {driveThrottle}" );
 
             short SecurityBytes = 0x69;
 
