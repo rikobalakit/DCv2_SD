@@ -309,20 +309,11 @@ public class BluetoothConsole : MonoBehaviour
 
             short driveThrottle = 0;
             float rawThrottle = InputManager.I.LY;
-            float squareRootAbsThrottle = Mathf.Sqrt(Mathf.Abs(rawThrottle));
-            float correctPolaritySquareRootThrottle = 0f;
-            if (rawThrottle > 0)
-            {
-                correctPolaritySquareRootThrottle = squareRootAbsThrottle;
-            }
-            else
-            {
-                correctPolaritySquareRootThrottle = -squareRootAbsThrottle;
-            }
+            float squaredThrottle = Mathf.Abs(rawThrottle)*rawThrottle;
             
-            driveThrottle = (short) (-correctPolaritySquareRootThrottle * 100f);
+            driveThrottle = (short) (-squaredThrottle * 100f);
             
-            Debug.LogError($"rawThrottle: {rawThrottle}, correctPolaritySquareRootThrottle: {correctPolaritySquareRootThrottle}, driveThrottle: {driveThrottle}" );
+            Debug.LogError($"rawThrottle: {rawThrottle}, correctPolaritySquareRootThrottle: {squaredThrottle}, driveThrottle: {driveThrottle}" );
 
             short SecurityBytes = 0x69;
 
