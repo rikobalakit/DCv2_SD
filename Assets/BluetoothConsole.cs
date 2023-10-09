@@ -308,7 +308,20 @@ public class BluetoothConsole : MonoBehaviour
             
             Debug.LogError($"InputManager.I.L2: {InputManager.I.L2}, r1 pressed? {InputManager.I.R1}, w1 value: {w1Value}" );
 
-            short driveThrottle = (short) (-InputManager.I.LY * 100);
+            short driveThrottle = 0;
+            float rawThrottle = InputManager.I.LY;
+            float squareRootAbsThrottle = Mathf.Sqrt(Mathf.Abs(rawThrottle));
+            float correctPolaritySquareRootThrottle = 0f;
+            if (rawThrottle > 0)
+            {
+                correctPolaritySquareRootThrottle = squareRootAbsThrottle;
+            }
+            else
+            {
+                correctPolaritySquareRootThrottle = -squareRootAbsThrottle;
+            }
+            
+            driveThrottle = (short) (-correctPolaritySquareRootThrottle * 100);
 
             short SecurityBytes = 0x69;
 
