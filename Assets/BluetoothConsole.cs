@@ -309,7 +309,7 @@ public class BluetoothConsole : MonoBehaviour
 
             short driveThrottle = 0;
             float rawThrottle = InputManager.I.LY;
-            float squaredThrottle = Mathf.Abs(rawThrottle)*rawThrottle;
+            float squaredThrottle = Mathf.Abs(rawThrottle)*Mathf.Abs(rawThrottle)*rawThrottle;
             
             driveThrottle = (short) (-squaredThrottle * 100f);
             
