@@ -27,6 +27,8 @@ public class InputManager : MonoBehaviour
     private float _ly;
     private float _ry;
 
+    public const float DEADZONE_RADIUS = 0.5f;
+
     public bool DPadUpPressed
     {
         get { return _dPadUpPressed; }
@@ -197,6 +199,16 @@ public class InputManager : MonoBehaviour
 
         I = this;
     }
+
+    private float GetDeadzonedAxis(float input)
+    {
+        if (MathF.Abs(input) < DEADZONE_RADIUS)
+        {
+            return 0f;
+        }
+
+        return input;
+    }
     
     private void Update()
     {
@@ -213,11 +225,10 @@ public class InputManager : MonoBehaviour
         _l2 = Input.GetAxis("L2");
         _r2 = Input.GetAxis("R2");
         
-        _lx = Input.GetAxis("LX");
-        _rx = Input.GetAxis("RX");
-        
-        _ly = Input.GetAxis("LY");
-        _ry = Input.GetAxis("RY");
+        _lx = GetDeadzonedAxis(Input.GetAxis("LX"));
+        _rx = GetDeadzonedAxis(Input.GetAxis("RX"));
+        _ly = GetDeadzonedAxis(Input.GetAxis("LY"));
+        _ry = GetDeadzonedAxis(Input.GetAxis("RY"));
 
         _l3 = Input.GetKey("1");
         _l4 = Input.GetKey("2");
