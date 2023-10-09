@@ -27,7 +27,8 @@ public class InputManager : MonoBehaviour
     private float _ly;
     private float _ry;
 
-    public const float DEADZONE_RADIUS = 0.5f;
+    public const float DEADZONE_JOYSTICK_RADIUS = 0.5f;
+    public const float DEADZONE_TRIGGER_THRESHOLD = 0.5f;
 
     public bool DPadUpPressed
     {
@@ -200,15 +201,26 @@ public class InputManager : MonoBehaviour
         I = this;
     }
 
-    private float GetDeadzonedAxis(float input)
+    private float GetDeadzonedAxisJoystick(float input)
     {
-        if (MathF.Abs(input) < DEADZONE_RADIUS)
+        if (MathF.Abs(input) < DEADZONE_JOYSTICK_RADIUS)
         {
             return 0f;
         }
 
         return input;
     }
+    
+    private float GetDeadzonedAxisTrigger(float input)
+    {
+        if (MathF.Abs(input) < DEADZONE_TRIGGER_THRESHOLD)
+        {
+            return 0f;
+        }
+
+        return input;
+    }
+    
     
     private void Update()
     {
@@ -222,13 +234,13 @@ public class InputManager : MonoBehaviour
         _l1 = Input.GetButton("L1");
         _r1 = Input.GetButton("R1");
         
-        _l2 = Input.GetAxis("L2");
-        _r2 = Input.GetAxis("R2");
+        _l2 = GetDeadzonedAxisTrigger(Input.GetAxis("L2"));
+        _r2 = GetDeadzonedAxisTrigger(Input.GetAxis("R2"));
         
-        _lx = GetDeadzonedAxis(Input.GetAxis("LX"));
-        _rx = GetDeadzonedAxis(Input.GetAxis("RX"));
-        _ly = GetDeadzonedAxis(Input.GetAxis("LY"));
-        _ry = GetDeadzonedAxis(Input.GetAxis("RY"));
+        _lx = GetDeadzonedAxisJoystick(Input.GetAxis("LX"));
+        _rx = GetDeadzonedAxisJoystick(Input.GetAxis("RX"));
+        _ly = GetDeadzonedAxisJoystick(Input.GetAxis("LY"));
+        _ry = GetDeadzonedAxisJoystick(Input.GetAxis("RY"));
 
         _l3 = Input.GetKey("1");
         _l4 = Input.GetKey("2");
