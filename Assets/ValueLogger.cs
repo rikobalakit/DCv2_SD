@@ -268,15 +268,16 @@ public class ValueLogger : MonoBehaviour
     {
         int logNumber = 0;
         bool logExists = false;
-        string dataLogFileName = $"logs/log_app_{logNumber}.csv";
+        string logFolder = "RobotLogs";
+        string dataLogFileName = $"{logFolder}/log_app_{logNumber}.csv";
 
         do
         {
-            dataLogFileName = $"logs/log_app_{logNumber}.csv";
+            dataLogFileName = $"{logFolder}/log_app_{logNumber}.csv";
 
-            if (!Directory.Exists("logs"))
+            if (!Directory.Exists($"{logFolder}"))
             {
-                Directory.CreateDirectory("logs");
+                Directory.CreateDirectory($"{logFolder}");
             }
             if (File.Exists(dataLogFileName))
             {
