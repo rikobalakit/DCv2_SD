@@ -338,7 +338,6 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.WeaponThrottleMultiplerNormalized)); //20
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.WeaponThrottleMultiplerNormalized)); //21 // placeholder, not really needed
 
-
             
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //22
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //24
