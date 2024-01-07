@@ -335,9 +335,11 @@ public class BluetoothConsole : MonoBehaviour
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.TurningMultiplierNormalized)); //17
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.AdditiveThrottleMultiplerNormalized)); //18
             ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.MaxWeaponThrottleNormalized)); //19
+            ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.WeaponThrottleMultiplerNormalized)); //20
+            ctrlValueList.Add(SoftValuesManager.NormalizedFloatToByte(SoftValuesManager.I.WeaponThrottleMultiplerNormalized)); //21 // placeholder, not really needed
 
 
-            ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //20
+            
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //22
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //24
             ctrlValueList.AddRange(BitConverter.GetBytes(placeholderBytes)); //26
@@ -353,6 +355,7 @@ public class BluetoothConsole : MonoBehaviour
 
             await Task.WhenAll(writeAll);
 
+            //Debug.LogError($"joystick task {Time.time:0.000}");
             //Debug.LogError($"joystick task {Time.time:0.000}");
         }
     }
