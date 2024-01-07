@@ -53,7 +53,7 @@ public class SoftValuesManager : MonoBehaviour
         AngleToleranceNormalized = _angleToleranceSlider.normalizedValue;
         TurningMultiplierNormalized = _turningMultiplierSlider.normalizedValue;
         AdditiveThrottleMultiplerNormalized = _additiveThrottleMultiplerSlider.normalizedValue;
-        WeaponThrottleMultiplerNormalized = _additiveThrottleMultiplerSlider.normalizedValue;
+        WeaponThrottleMultiplerNormalized = _weaponThrottleMultiplerSlider.normalizedValue;
     }
 
     public void SaveSlot(int slot)
