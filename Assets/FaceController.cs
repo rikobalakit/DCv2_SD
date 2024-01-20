@@ -32,6 +32,76 @@ public class FaceController : MonoBehaviour
         
     }
 
+    private void UpdateFaceFromStatus()
+    {
+        if (VOOnBigHit.I != null && VOOnBigHit.I.RecentBigHit)
+        {
+            SetFaceByIdentifier("Surprised");
+            return;
+        }
+        
+        if (BatteryWarningDisplay.I != null)
+        {
+            switch (BatteryWarningDisplay.I.CurrentBatteryStatus)
+            {
+                case BatteryWarningDisplay.BatteryStatus.USB:
+                    break;
+                case BatteryWarningDisplay.BatteryStatus.Dead:
+                    SetFaceByIdentifier("Tired");
+                    return;
+                case BatteryWarningDisplay.BatteryStatus.Critical:
+                    SetFaceByIdentifier("Sad");
+                    return;
+                case BatteryWarningDisplay.BatteryStatus.Low:
+                    break;
+                case BatteryWarningDisplay.BatteryStatus.High:
+                    break;
+                case BatteryWarningDisplay.BatteryStatus.Full:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        if (InputManager.I != null)
+        {
+            if (InputManager.I.R2 > 0.75f)
+            {
+                SetFaceByIdentifier("Fighting2");
+                return;
+            }
+            if (InputManager.I.R2 > 0.5f)
+            {
+                SetFaceByIdentifier("Fighting");
+                return;
+            }
+            if (InputManager.I.R2 > 0.25f)
+            {
+                SetFaceByIdentifier("Angry");
+                return;
+            }
+        }
+
+        if (BatteryWarningDisplay.I != null &&
+            BatteryWarningDisplay.I.CurrentBatteryStatus == BatteryWarningDisplay.BatteryStatus.Low)
+        {
+            SetFaceByIdentifier("Neutral");
+            return;
+        }
+        //Default face
+        SetFaceByIdentifier("Smug");
+    }
+    private void Update()
+    {
+        if (_testCycleAllFaces)
+        {
+            return;
+        }
+
+        UpdateFaceFromStatus();
+        
+    }
+    
     private IEnumerator CycleAllFaces()
     {
         var currentIndex = 0;

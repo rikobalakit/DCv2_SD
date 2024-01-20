@@ -7,7 +7,7 @@ public class BatteryWarningDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private enum BatteryStatus
+    public enum BatteryStatus
     {
         USB = 0,
         Dead = 1,
@@ -56,7 +56,24 @@ public class BatteryWarningDisplay : MonoBehaviour
 
     private float _lastTimeBatteryWasStable = float.MinValue;
     private const float BATTERY_STABILITY_PERIOD_SECONDS = 0.5f;
-    
+
+
+    private static BatteryWarningDisplay s_instance;
+    public static BatteryWarningDisplay I => s_instance;
+
+    public BatteryStatus CurrentBatteryStatus => _currentBatteryStatus;
+    private void Start()
+    {
+        if (s_instance != null)
+        {
+            Debug.LogError("why is there more than one of these you dumb fuck");
+        }
+        else
+        {
+            s_instance = this;
+        }
+    }
+
     void Update()
     {
         BatteryStatus newBatteryStatus = BatteryStatus.USB;
