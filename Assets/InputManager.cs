@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
     private float _ly;
     private float _ry;
 
-    public const float DEADZONE_JOYSTICK_RADIUS = 0.1f;
+    public const float DEADZONE_JOYSTICK_RADIUS = 0.3f;
     public const float DEADZONE_TRIGGER_THRESHOLD = 0.1f;
 
     public bool DPadUpPressed
