@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OWO</name>
+    </assembly>
+    <members>
+        <member name="P:OWOGame.OWO.DiscoveredApps">
+            <summary>
+            Returns all the discovered OWO apps.
+            </summary>
+        </member>
+        <member name="M:OWOGame.OWO.Configure(OWOGame.GameAuth)">
+            <summary>
+            Assigns a GameAuth file that will be used to authenticate with the owo app.
+            </summary>
+            <param name="game"></param>
+        </member>
+        <member name="M:OWOGame.OWO.AutoConnect">
+            <summary>
+            Searches nearby owo apps to connect.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OWOGame.OWO.StartScan">
+            <summary>
+            Searches for nearby OWO apps and stores them in the DiscoveredApps property.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OWOGame.OWO.Connect(System.String[])">
+            <summary>
+            Connects to a list of specific owo apps.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OWOGame.OWO.Stop">
+            <summary>
+            Stops the current sensation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OWOGame.OWO.Send(OWOGame.Sensation,OWOGame.Muscle[])">
+            <summary>
+            Sends a sensation to the connected owo app.
+            </summary>
+            <param name="sensation"></param>
+            <param name="muscles"></param>
+        </member>
+        <member name="M:OWOGame.OWO.Disconnect">
+            <summary>
+            Disconnects from the connected owo app.
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.Ball">
+            <summary>
+            SensationsFactory.Create(100, .1f)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.Dart">
+            <summary>
+            SensationsFactory.Create(10, .1f)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.Dagger">
+            <summary>
+            Sensation.DaggerEntry.Append(Sensation.DaggerMovement)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.DaggerEntry">
+            <summary>
+            SensationsFactory.Create(60, .2f)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.DaggerMovement">
+            <summary>
+            SensationsFactory.Create(100, 2, 100, .3f, .1f)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.ShotWithExit">
+            <summary>
+            Sensation.ShotEntry.Append(Sensation.ShotExit).Append(Sensation.ShotBleeding);
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.ShotEntry">
+            <summary>
+            SensationsFactory.Create(30, .1f).WithMuscles(Muscle.Pectoral_R)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.ShotExit">
+            <summary>
+            SensationsFactory.Create(20, .1f).WithMuscles(Muscle.Dorsal_R)
+            </summary>
+        </member>
+        <member name="P:OWOGame.Sensation.ShotBleeding">
+            <summary>
+            SensationsFactory.Create(50, .5f, 80, 0, .3f).WithMuscles(Muscle.Pectoral_R, Muscle.Pectoral_L)
+            </summary>
+        </member>
+    </members>
+</doc>
