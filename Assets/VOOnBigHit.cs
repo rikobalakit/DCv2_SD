@@ -93,7 +93,7 @@ public class VOOnBigHit : MonoBehaviour
                 _framesHighImpact = 0;
             }
 
-            if (_framesHighImpact > 2)
+            if (_framesHighImpact > 1)
             {
                 PlayPainSound();
                 _framesHighImpact = 0;
