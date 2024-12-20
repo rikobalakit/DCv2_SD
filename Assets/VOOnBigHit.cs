@@ -84,7 +84,7 @@ public class VOOnBigHit : MonoBehaviour
         }
         else
         {
-            if (_telemetryValues.BnoAcceleration.magnitude > 25f)
+            if (_telemetryValues.BnoAcceleration.magnitude > 15f)
             {
                 _framesHighImpact++;
             }
