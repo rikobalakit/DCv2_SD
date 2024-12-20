@@ -70,4 +70,17 @@ public class OWOController : MonoBehaviour
 
         Debug.Log("Baked sensation (Ball) sent!");
     }
+
+    // Public method to trigger Ball sensation from an external script
+    public void TriggerBallSensation()
+    {
+        if (isConnected)
+        {
+            StartCoroutine(SendBakedSensation());
+        }
+        else
+        {
+            Debug.LogWarning("OWO device is not connected. Cannot send Ball sensation.");
+        }
+    }
 }

@@ -14,6 +14,8 @@ public class VOOnBigHit : MonoBehaviour
 
     [SerializeField] private TelemetryValues _telemetryValues;
 
+    [SerializeField] private OWOController _owoController; // Serialized OWOController
+
     private float _testModeLastTimeSoundPlayed = 0f;
 
     private int _framesHighImpact = 0;
@@ -22,17 +24,12 @@ public class VOOnBigHit : MonoBehaviour
     public static VOOnBigHit I => s_instance;
 
     private float _lastTimeBigImpact = 0;
-    
+
     public bool RecentBigHit
     {
         get
         {
-            if (Time.time - _lastTimeBigImpact < 1f)
-            {
-                return true;
-            }
-
-            return false;
+            return Time.time - _lastTimeBigImpact < 1f;
         }
     }
 
@@ -58,10 +55,25 @@ public class VOOnBigHit : MonoBehaviour
         var chosenClip = _painSoundClips[Random.Range(0, _painSoundClips.Count)];
         _audioSource.PlayOneShot(chosenClip);
         _lastTimeBigImpact = Time.time;
+
+        // Trigger OWO Ball sensation
+        if (_owoController != null)
+        {
+            _owoController.TriggerBallSensation();
+        }
+        else
+        {
+            Debug.LogWarning("OWOController is not assigned!");
+        }
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PlayPainSound();
+        }
+
         if (_testModeEnabled)
         {
             if (Time.time > (_testModeLastTimeSoundPlayed + 3f))
@@ -72,7 +84,6 @@ public class VOOnBigHit : MonoBehaviour
         }
         else
         {
-            //Debug.LogError($"_telemetryValues.Acceleration.magnitude: {_telemetryValues.BnoAcceleration.magnitude}");
             if (_telemetryValues.BnoAcceleration.magnitude > 25f)
             {
                 _framesHighImpact++;

@@ -13777,7 +13777,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2028340172}
   - component: {fileID: 2028340171}
-  - component: {fileID: 2028340170}
   - component: {fileID: 2028340169}
   - component: {fileID: 2028340168}
   m_Layer: 7
@@ -13864,14 +13863,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!81 &2028340170
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028340167}
-  m_Enabled: 1
 --- !u!20 &2028340171
 Camera:
   m_ObjectHideFlags: 0
@@ -14290,6 +14281,7 @@ MonoBehaviour:
   _audioSource: {fileID: 2050553694}
   _testModeEnabled: 0
   _telemetryValues: {fileID: 574888231}
+  _owoController: {fileID: 1477238427}
 --- !u!82 &2050553694
 AudioSource:
   m_ObjectHideFlags: 0
