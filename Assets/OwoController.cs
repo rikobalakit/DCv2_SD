@@ -18,6 +18,7 @@ public class OWOController : MonoBehaviour
         // Check for key presses to send sensations
         if (isConnected)
         {
+            /*
             if (Input.GetKeyDown(KeyCode.B))
             {
                 StartCoroutine(SendBakedSensation());
@@ -26,6 +27,7 @@ public class OWOController : MonoBehaviour
             {
                 SendDynamicSensation();
             }
+            */
         }
     }
 

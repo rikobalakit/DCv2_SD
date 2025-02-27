@@ -69,11 +69,6 @@ public class VOOnBigHit : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PlayPainSound();
-        }
-
         if (_testModeEnabled)
         {
             if (Time.time > (_testModeLastTimeSoundPlayed + 3f))
