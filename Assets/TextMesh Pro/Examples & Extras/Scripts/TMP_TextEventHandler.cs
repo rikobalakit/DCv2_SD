@@ -124,6 +124,15 @@ namespace TMPro
         {
             if (TMP_TextUtilities.IsIntersectingRectTransform(m_TextComponent.rectTransform, Input.mousePosition, m_Camera))
             {
+                #region Nearest Character
+                /*int charIndex = TMP_TextUtilities.FindNearestCharacterOnLine(m_TextComponent, Input.mousePosition, 0, m_Camera, false);
+                if (charIndex != -1 && charIndex != m_lastCharIndex)
+                {
+                    m_lastCharIndex = charIndex;
+                }*/
+                #endregion
+
+
                 #region Example of Character or Sprite Selection
                 int charIndex = TMP_TextUtilities.FindIntersectingCharacter(m_TextComponent, Input.mousePosition, m_Camera, true);
                 if (charIndex != -1 && charIndex != m_lastCharIndex)
@@ -192,10 +201,18 @@ namespace TMPro
                     // Get information about the link.
                     TMP_LinkInfo linkInfo = m_TextComponent.textInfo.linkInfo[linkIndex];
 
-                    // Send the event to any listeners. 
+                    // Send the event to any listeners.
                     SendOnLinkSelection(linkInfo.GetLinkID(), linkInfo.GetLinkText(), linkIndex);
                 }
                 #endregion
+            }
+            else
+            {
+                // Reset all selections given we are hovering outside the text container bounds.
+                m_selectedLink = -1;
+                m_lastCharIndex = -1;
+                m_lastWordIndex = -1;
+                m_lastLineIndex = -1;
             }
         }
 

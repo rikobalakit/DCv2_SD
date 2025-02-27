@@ -5,4 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes: []
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 26cbeaa0f4f9d364d84380304afdec6c,
+      type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: cf00d68e64eccbd48a7b0c48f315ad91,
+      type: 3}
+  m_UseUCBPForAssetBundles: 0

@@ -106,11 +106,15 @@ namespace TMPro.Examples
                 // Draw visible as well as invisible characters
                 TMP_CharacterInfo characterInfo = m_TextInfo.characterInfo[i];
 
-                bool isCharacterVisible = i >= m_TextComponent.maxVisibleCharacters ||
-                                          characterInfo.lineNumber >= m_TextComponent.maxVisibleLines ||
-                                          (m_TextComponent.overflowMode == TextOverflowModes.Page && characterInfo.pageNumber + 1 != m_TextComponent.pageToDisplay) ? false : true;
+                bool isCharacterVisible = i < m_TextComponent.maxVisibleCharacters &&
+                                          characterInfo.lineNumber < m_TextComponent.maxVisibleLines &&
+                                          i >= m_TextComponent.firstVisibleCharacter;
 
-                if (!isCharacterVisible) continue;
+                if (m_TextComponent.overflowMode == TextOverflowModes.Page)
+                    isCharacterVisible = isCharacterVisible && characterInfo.pageNumber + 1 == m_TextComponent.pageToDisplay;
+
+                if (!isCharacterVisible)
+                    continue;
 
                 float dottedLineSize = 6;
 

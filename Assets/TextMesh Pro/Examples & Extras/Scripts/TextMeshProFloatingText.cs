@@ -21,8 +21,18 @@ namespace TMPro.Examples
         Quaternion lastRotation = Quaternion.identity;
 
         public int SpawnType;
+        public bool IsTextObjectScaleStatic;
 
         //private int m_frame = 0;
+
+        static WaitForEndOfFrame k_WaitForEndOfFrame = new WaitForEndOfFrame();
+        static WaitForSeconds[] k_WaitForSecondsRandom = new WaitForSeconds[]
+        {
+            new WaitForSeconds(0.05f), new WaitForSeconds(0.1f), new WaitForSeconds(0.15f), new WaitForSeconds(0.2f), new WaitForSeconds(0.25f),
+            new WaitForSeconds(0.3f), new WaitForSeconds(0.35f), new WaitForSeconds(0.4f), new WaitForSeconds(0.45f), new WaitForSeconds(0.5f),
+            new WaitForSeconds(0.55f), new WaitForSeconds(0.6f), new WaitForSeconds(0.65f), new WaitForSeconds(0.7f), new WaitForSeconds(0.75f),
+            new WaitForSeconds(0.8f), new WaitForSeconds(0.85f), new WaitForSeconds(0.9f), new WaitForSeconds(0.95f), new WaitForSeconds(1.0f),
+        };
 
         void Awake()
         {
@@ -55,9 +65,9 @@ namespace TMPro.Examples
                 m_textMeshPro.fontSize = 24;
                 //m_textMeshPro.enableExtraPadding = true;
                 //m_textMeshPro.enableShadows = false;
-                m_textMeshPro.enableKerning = false;
+                m_textMeshPro.fontFeatures.Clear();
                 m_textMeshPro.text = string.Empty;
-                m_textMeshPro.isTextObjectScaleStatic = true;
+                m_textMeshPro.isTextObjectScaleStatic = IsTextObjectScaleStatic;
 
                 StartCoroutine(DisplayTextMeshProFloatingText());
             }
@@ -143,12 +153,12 @@ namespace TMPro.Examples
                     m_transform.forward = new Vector3(dir.x, 0, dir.z);
                 }
 
-                yield return new WaitForEndOfFrame();
+                yield return k_WaitForEndOfFrame;
             }
 
             //Debug.Log("Done Counting down.");
 
-            yield return new WaitForSeconds(Random.Range(0.1f, 1.0f));
+            yield return k_WaitForSecondsRandom[Random.Range(0, 19)];
 
             m_floatingText_Transform.position = start_pos;
 
@@ -198,14 +208,12 @@ namespace TMPro.Examples
                     m_transform.forward = new Vector3(dir.x, 0, dir.z);
                 }
 
-
-
-                yield return new WaitForEndOfFrame();
+                yield return k_WaitForEndOfFrame;
             }
 
             //Debug.Log("Done Counting down.");
 
-            yield return new WaitForSeconds(Random.Range(0.1f, 1.0f));
+            yield return k_WaitForSecondsRandom[Random.Range(0, 20)];
 
             m_floatingText_Transform.position = start_pos;
 
