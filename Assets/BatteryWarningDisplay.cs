@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GSA;
 using UnityEngine;
 
 public class BatteryWarningDisplay : MonoBehaviour
@@ -20,7 +21,7 @@ public class BatteryWarningDisplay : MonoBehaviour
     }
     
     [SerializeField]
-    private TelemetryValues _telemetryValues;
+    private NewGameManager _newGameManager;
 
     [SerializeField]
     private List<GameObject> _lowBatteryWarningObjects;
@@ -78,27 +79,27 @@ public class BatteryWarningDisplay : MonoBehaviour
     {
         BatteryStatus newBatteryStatus = BatteryStatus.USB;
         
-        if (_telemetryValues.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_FULL)
+        if (_newGameManager.CurrentTelemetryState.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_FULL)
         {
             newBatteryStatus = BatteryStatus.Full;
         }
-        else if (_telemetryValues.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_HIGH &&  _telemetryValues.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_FULL )
+        else if (_newGameManager.CurrentTelemetryState.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_HIGH &&  _newGameManager.CurrentTelemetryState.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_FULL )
         {
             newBatteryStatus = BatteryStatus.High;
         }
-        else if (_telemetryValues.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_LOW &&  _telemetryValues.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_HIGH )
+        else if (_newGameManager.CurrentTelemetryState.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_LOW &&  _newGameManager.CurrentTelemetryState.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_HIGH )
         {
             newBatteryStatus = BatteryStatus.Low;
         }
-        else if (_telemetryValues.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_DEAD &&  _telemetryValues.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_LOW )
+        else if (_newGameManager.CurrentTelemetryState.BatteryVoltage >= MINIMUM_VOLTAGE_BATTERY_DEAD &&  _newGameManager.CurrentTelemetryState.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_LOW )
         {
             newBatteryStatus = BatteryStatus.Critical;
         }
-        else if (_telemetryValues.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_DEAD && _telemetryValues.BatteryVoltage > MINIMUM_VOLTAGE_USING_USB)
+        else if (_newGameManager.CurrentTelemetryState.BatteryVoltage < MINIMUM_VOLTAGE_BATTERY_DEAD && _newGameManager.CurrentTelemetryState.BatteryVoltage > MINIMUM_VOLTAGE_USING_USB)
         {
             newBatteryStatus = BatteryStatus.Dead;
         }
-        else if (_telemetryValues.BatteryVoltage <= MINIMUM_VOLTAGE_USING_USB)
+        else if (_newGameManager.CurrentTelemetryState.BatteryVoltage <= MINIMUM_VOLTAGE_USING_USB)
         {
             newBatteryStatus = BatteryStatus.USB;
         }

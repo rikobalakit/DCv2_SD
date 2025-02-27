@@ -4,7 +4,7 @@ using PearlSoft.Scripts.Runtime.ScreenUI.InputElements;
 using PearlSoft.Scripts.Runtime.ScreenUI.OutputElements;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class OldGameManager : MonoBehaviour
 {
 
     [SerializeField]

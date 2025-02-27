@@ -2,6 +2,7 @@ using System.IO;
 using System.Text;
 using PearlSoft.Scripts.Runtime.ScreenUI.OutputElements;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ValueLogger : MonoBehaviour
 {
@@ -9,8 +10,8 @@ public class ValueLogger : MonoBehaviour
     [SerializeField]
     private MonospaceTextLogOutput _console;
 
-    [SerializeField]
-    private BluetoothConsole _bluetoothController;
+    [FormerlySerializedAs("_bluetoothController")] [SerializeField]
+    private CommsManager _commsManager;
     
     private bool isInitialized = false;
 
@@ -323,7 +324,7 @@ public class ValueLogger : MonoBehaviour
             return;
         }
 
-        if (!_bluetoothController.IsConnected)
+        if (!_commsManager.IsConnected)
         {
             return;
         }

@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class CommsManager : BaseManager
 {
+    public bool IsConnected => _isConnected;
+    private bool _isConnected = false;
+
     [Header("Serial Port Settings")]
     public string portName = "COM3"; // Replace with your ESP32 port name
     public int baudRate = 115200;
@@ -56,6 +59,7 @@ public class CommsManager : BaseManager
                 {
                     isHandshakeComplete = true;
                     Debug.Log("Handshake Complete!");
+                    _isConnected = true;
                 }
             }
             catch (TimeoutException)

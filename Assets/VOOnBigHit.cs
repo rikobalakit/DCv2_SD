@@ -79,6 +79,7 @@ public class VOOnBigHit : MonoBehaviour
         }
         else
         {
+            /*
             if (_telemetryValues.BnoAcceleration.magnitude > 15f)
             {
                 _framesHighImpact++;
@@ -93,6 +94,7 @@ public class VOOnBigHit : MonoBehaviour
                 PlayPainSound();
                 _framesHighImpact = 0;
             }
+            */
         }
     }
 }
